@@ -1,13 +1,16 @@
 const User = require("../models/user");
+const Role = require("../models/user");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+const moment = require('moment');
+const path = require('path');
+const fs = require('fs');
 
 const createAdmin = async (req, res) => {
     if (
         !req.body.name ||
         !req.body.email ||
         !req.body.password ||
-        !req.body.userImg ||
         !req.body.roleId
     )
         return res.status(400).send("Process failed: Incomplete data.");
@@ -54,12 +57,11 @@ const createAdmin = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
+  console.log(req.body);
     if (
         !req.body.name ||
         !req.body.email ||
-        !req.body.password ||
-        !req.body.userImg ||
-        !req.body.roleId
+        !req.body.password
     )
         return res.status(400).send("Error: Incomplete data.");
 
@@ -174,6 +176,8 @@ const updateUser = async (req, res) => {
       );
       imageUrl = url + serverImg.slice(2);
     }
+  } else {
+    imageUrl = req.body.userImg;
   }
 
   //guardamos la ruta de la imagen anterior para eliminarla
