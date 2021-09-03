@@ -5,14 +5,14 @@ const moment = require("moment");
 const mongoose = require("mongoose");
 
 const createTask = async (req, res) => {
-  if (!req.body.boardId || !req.body.title || !req.body.description)
+  if (!req.body.userId || !req.body.boardId || !req.body.title || !req.body.description)
     return res.status(400).send("Process failed: Incomplete data");
 
   let imageUrl = "";
   if (req.files.image) {
     const url = req.protocol + "://" + req.get("host") + "/";
     const serverImg =
-      "./uploads" + moment().unix() + path.extname(req.files.image.path);
+      "./uploads/" + moment().unix() + path.extname(req.files.image.path);
     fs.createReadStream(req.files.image.path).pipe(
       fs.createWriteStream(serverImg)
     );
@@ -62,22 +62,21 @@ const updateTask = async (req, res) => {
 const deleteTask = async (req, res) => {
   const validId = mongoose.Types.ObjectId.isValid(req.params._id);
   if (!validId) return res.status(400).send("Invalid id");
- 
+
+  let taskImg = await Task.findById(req.params._id);
+  taskImg = taskImg.imgUrl;
+  taskImg = taskImg.split("/")[4];
+  let serverImg = "./uploads/" + taskImg;
 
   const task = await Task.findByIdAndDelete(req.params._id);
   if (!task) return res.status(400).send("Task not found");
-
-  let taskImg = await Task.findById(req.params._id);
-  taskImg = taskImg.imageUrl;
-  taskImg = taskImg.split("/")[4];
-  let serverImg = "./uploads/" + taskImg;
 
   try {
     fs.unlinkSync(serverImg);
   } catch (e) {
     console.log("Image no found in server");
   }
-  
+
   return res.status(200).send({ message: "Task deleted" });
 }; 
 
