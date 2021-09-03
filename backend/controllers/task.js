@@ -8,7 +8,6 @@ const createTask = async (req, res) => {
   if (!req.body.boardId || !req.body.title || !req.body.description)
     return res.status(400).send("Process failed: Incomplete data");
 
-  /*  
   let imageUrl = "";
   if (req.files.image) {
     const url = req.protocol + "://" + req.get("host") + "/";
@@ -20,13 +19,13 @@ const createTask = async (req, res) => {
     imageUrl =
       url + "uploads/" + moment().unix() + path.extname(req.files.image.path);
   }
-  */
+
   const task = new Task({
     userId: req.body.userId,
     boardId: req.body.boardId,
     title: req.body.title,
     description: req.body.description,
-    //imgUrl: imageUrl,
+    imgUrl: imageUrl,
     taskStatus: "to-do",
   });
 
@@ -67,7 +66,7 @@ const deleteTask = async (req, res) => {
 
   const task = await Task.findByIdAndDelete(req.params._id);
   if (!task) return res.status(400).send("Task not found");
-  /*
+
   let taskImg = await Task.findById(req.params._id);
   taskImg = taskImg.imageUrl;
   taskImg = taskImg.split("/")[4];
@@ -78,7 +77,7 @@ const deleteTask = async (req, res) => {
   } catch (e) {
     console.log("Image no found in server");
   }
-  */
+  
   return res.status(200).send({ message: "Task deleted" });
 }; 
 
