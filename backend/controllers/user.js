@@ -90,7 +90,7 @@ const createUser = async (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: hash,
-        userImg: userImg,
+        userImg: imageUrl,
         roleId: role._id,
     });
 
@@ -177,10 +177,13 @@ const updateUser = async (req, res) => {
   }
 
   //guardamos la ruta de la imagen anterior para eliminarla
+  let serverImg = "";
   let userImg = await User.findById(req.body._id);
-  userImg = userImg.userImg;
-  userImg = userImg.split("/")[4];
-  let serverImg = "./uploads/" + userImg;
+  if (userImg.userImg !== "") {    
+    let userImage = userImg.userImg;
+    userImage = userImage.split("/")[4];
+    serverImg = "./uploads/" + userImage;
+  }
 
   const user = await User.findByIdAndUpdate(req.body._id, {
     name: req.body.name,
@@ -192,10 +195,12 @@ const updateUser = async (req, res) => {
 
   if (!user) return res.status(400).send("Error editing user");
   //si todo va bien, borramos la imagen anterior
-  try {
-    fs.unlinkSync(serverImg);
-  } catch (err) {
-    console.log("Image no found in server");
+  if (userImg.userImg !== "") {
+    try {
+      fs.unlinkSync(serverImg);
+    } catch (err) {
+      console.log("Image no found in server");
+    }
   }
   return res.status(200).send({ user });
 };
