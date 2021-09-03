@@ -21,13 +21,25 @@ const createAdmin = async (req, res) => {
 
     const hash = await bcrypt.hash(req.body.password, 10);
 
+    let imageUrl = "";
+    if (req.files.image) {
+      if (req.files.image.type != null) {
+        const url = req.protocol + "://" + req.get("host") + "/";
+        const serverImg =
+          "./uploads/" + moment().unix() + path.extname(req.files.image.path);
+        fs.createReadStream(req.files.image.path).pipe(
+          fs.createWriteStream(serverImg)
+        );
+        imageUrl = url + serverImg.slice(2);
+      }
+    }
+
     const user = new User({
         name: req.body.name,
         email: req.body.email,
         password: hash,
-        userImg: req.body.userImg,
+        userImg: imageUrl,
         roleId: req.body.roleId,
-        dbStatus: true,
     });
 
     const result = await user.save();
@@ -60,13 +72,26 @@ const createUser = async (req, res) => {
     const role = await Role.findOne({ name: "user" });
     if (!role) return res.status(400).send("Error: No role was assigned.");
 
+    let imageUrl = "";
+    if (req.files.image) {
+      if (req.files.image.type != null) {
+        const url = req.protocol + "://" + req.get("host") + "/";
+        const serverImg =
+          "./uploads/" + moment().unix() + path.extname(req.files.image.path);
+        fs.createReadStream(req.files.image.path).pipe(
+          fs.createWriteStream(serverImg)
+        );
+        
+        imageUrl = url + serverImg.slice(2);
+      }
+    }
+
     const user = new User({
         name: req.body.name,
         email: req.body.email,
         password: hash,
-        userImg: req.body.userImg,
+        userImg: userImg,
         roleId: role._id,
-        dbStatus: true,
     });
 
     const result = await user.save();
@@ -124,6 +149,7 @@ const getRole = async (req, res) => {
   const role = user.roleId.name;
   return res.status(200).send({ role });
 };
+//esta funcion esta diseñada para que un admin actualice a cualquierusuario, peor por cuestiones de seguridad no puede usarla un usuario para actualizar sus propios datos, para ello será necesario registrar posteriormente otra funcion
 const updateUser = async (req, res) => {
   if (!req.body._id || !req.body.name || !req.body.email || !req.body.roleId)
     return res.status(400).send("Error: Empty fields");
@@ -146,10 +172,15 @@ const updateUser = async (req, res) => {
       fs.createReadStream(req.files.image.path).pipe(
         fs.createWriteStream(serverImg)
       );
-      imageUrl =
-        url + "uploads/" + moment().unix() + path.extname(req.files.image.path);
+      imageUrl = url + serverImg.slice(2);
     }
   }
+
+  //guardamos la ruta de la imagen anterior para eliminarla
+  let userImg = await User.findById(req.body._id);
+  userImg = userImg.userImg;
+  userImg = userImg.split("/")[4];
+  let serverImg = "./uploads/" + userImg;
 
   const user = await User.findByIdAndUpdate(req.body._id, {
     name: req.body.name,
@@ -160,9 +191,23 @@ const updateUser = async (req, res) => {
   });
 
   if (!user) return res.status(400).send("Error editing user");
+  //si todo va bien, borramos la imagen anterior
+  try {
+    fs.unlinkSync(serverImg);
+  } catch (err) {
+    console.log("Image no found in server");
+  }
   return res.status(200).send({ user });
 };
-const deleteUser = async (req, res) => {}; //se actualiza el estado a false
+const deleteUser = async (req, res) => {
+  if (!req.body._id) return res.status(400).send("Incomplete data");
+
+  const user = await User.findByIdAndUpdate(req.body._id, {
+    dbStatus: false,
+  });
+  if (!user) return res.status(400).send("Error delete user");
+  return res.status(200).send({ user });
+}; 
 
 module.exports = {
     createAdmin,
