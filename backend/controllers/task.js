@@ -21,23 +21,27 @@ const createTask = async (req, res) => {
   }
   */
   const task = new Task({
-    userId: req.body._id,
+    userId: req.body.userId,
     boardId: req.body.boardId,
     title: req.body.title,
     description: req.body.description,
     //imgUrl: imageUrl,
-    taskStatus: "to-do"
+    taskStatus: "to-do",
   });
 
   const result = await task.save();
-  if(!result) return res.status(400).send("Error register task");
-  return res.status(200).send({result});
+  if (!result) return res.status(400).send("Error register task");
+  return res.status(200).send({ result });
 };
 
-const listTask = async (req, res) => {};
+const listTask = async (req, res) => {
+    const task = await Task.find({ boardId: req.params.boardId });
+    if(!task || task.length == 0) return res.status(400).send("You have no assigned task");
+    return res.status(200).send({ task });
+};
 
 const updateTask = async (req, res) => {};
 
 const deleteTask = async (req, res) => {}; //este si elimina definitivamente
 
-module.exports = { createTask, listTask, updateTask, deleteTask };
+module.exports = { createTask, listTask, updateTask, deleteTask,};
