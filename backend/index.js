@@ -17,7 +17,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/role", Role);
 app.use("/api/user", User);
 app.use("/api/board", Board);
-app.use("/api/task", Task);  
+app.use("/api/task", Task);
 app.use("/api/comment", Comment);
 
 app.listen(
@@ -25,4 +25,4 @@ app.listen(
   console.log("Backend server running on port: " + process.env.PORT)
 );
 
-dbConnection(); 
+dbConnection();

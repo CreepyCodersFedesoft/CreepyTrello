@@ -1,76 +1,131 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-const moment = require("moment");
-//importar bcrypt
+const mongoose = require("mongoose");
 
-const createUser = async (req, res) => {};
-const createAdmin = async (req, res) => {};
-const login = async (req, res) => {};
-const listUser = async (req, res) => {};
-const listUserAll = async (req, res) => {
-  const users = await User.find({ name: new RegExp(req.params["name"], "i") })
-    .populate("roleId")
-    .exec();
-  if (!users || users.length === 0)
-    return res.status(400).send("Error: No users");
-  return res.status(200).send({ users });
-};
-const getRole = async (req, res) => {
-  const user = await User.findOne({ email: req.params.email })
-    .populate("roleId")
-    .exec();
-  if (!user || user.length === 0)
-    return res.status(400).send("Error: User no found");
-  const role = user.roleId.name;
-  return res.status(200).send({ role });
-};
-const updateUser = async (req, res) => {
-  if (!req.body._id || !req.body.name || !req.body.email || !req.body.roleId)
-    return res.status(400).send("Error: Empty fields");
+const createAdmin = async (req, res) => {
+    if (
+        !req.body.name ||
+        !req.body.email ||
+        !req.body.password ||
+        !req.body.userImg ||
+        !req.body.roleId
+    )
+        return res.status(400).send("Process failed: Incomplete data.");
 
-  let pass = "";
-  let imageUrl = "";
+    const validId = await mongoose.Types.ObjectId.isValid(req.body.roleId);
+    if (!validId) return res.status(400).send("Invalid role ID");
+    const existingUser = await User.findOne({ email: req.body.email });
 
-  if (req.body.password) {
-    pass = await bcrypt.hash(req.body.password, 10);
-  } else {
-    const userFind = await User.findOne({ email: req.body.email });
-    pass = userFind.password;
-  }
+    if (existingUser)
+        return res.status(400).send("Error: The user is already registered.");
 
-  if (req.files.image) {
-    if (req.files.image.type != null) {
-      const url = req.protocol + "://" + req.get("host") + "/";
-      const serverImg =
-        "./uploads/" + moment().unix() + path.extname(req.files.image.path);
-      fs.createReadStream(req.files.image.path).pipe(
-        fs.createWriteStream(serverImg)
-      );
-      imageUrl =
-        url + "uploads/" + moment().unix() + path.extname(req.files.image.path);
+    const hash = await bcrypt.hash(req.body.password, 10);
+
+    const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: hash,
+        userImg: req.body.userImg,
+        roleId: req.body.roleId,
+        dbStatus: true,
+    });
+
+    const result = await user.save();
+    if (!result) return res.status(400).send("Error: Failed to register user.");
+
+    try {
+        const jwtToken = user.generateJWT();
+        res.status(200).send({ jwtToken });
+    } catch (e) {
+        return res.status(400).send("Error: Token generation failed.");
     }
-  }
-
-  const user = await User.findByIdAndUpdate(req.body._id, {
-    name: req.body.name,
-    email: req.body.email,
-    password: pass,
-    roleId: req.body.roleId,
-    userImg: imageUrl,
-  });
-
-  if (!user) return res.status(400).send("Error editing user");
-  return res.status(200).send({ user });
 };
-const deleteUser = async (req, res) => {}; //se actualiza el estado a false
+
+const createUser = async (req, res) => {
+    if (
+        !req.body.name ||
+        !req.body.email ||
+        !req.body.password ||
+        !req.body.userImg ||
+        !req.body.roleId
+    )
+        return res.status(400).send("Error: Incomplete data.");
+
+    const existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser)
+        return res.status(400).send("Error: The user is already registered.");
+
+    const hash = await bcrypt.hash(req.body.password, 10);
+
+    const role = await Role.findOne({ name: "user" });
+    if (!role) return res.status(400).send("Error: No role was assigned.");
+
+    const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: hash,
+        userImg: req.body.userImg,
+        roleId: role._id,
+        dbStatus: true,
+    });
+
+    const result = await user.save();
+    if (!result) return res.status(400).send("Error: Failed to register user.");
+    try {
+        const jwtToken = user.generateJWT();
+        res.status(200).send({ jwtToken });
+    } catch (e) {
+        return res.status(400).send("Error: Token generation failed.");
+    }
+};
+
+const login = async (req, res) => {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) return res.status(400).send("Error: Wrong email or password.");
+
+    if (!user.dbStatus)
+        return res.status(400).send("Error: Wrong email or password.");
+
+    const hash = await bcrypt.compare(req.body.password, user.password);
+    if (!hash) return res.status(400).send("Error: Wrong email or password.");
+
+    try {
+        const jwtToken = user.generateJWT();
+        return res.status(200).send({ jwtToken });
+    } catch (e) {
+        return res.status(400).send("Error: Login error.");
+    }
+};
+
+const listUser = async (req, res) => {
+    const users = await User.find({
+        $and: [{ name: new RegExp(req.params["name"], "i") }, { dbStatus: "true" }],
+    })
+        .populate("roleId")
+        .exec();
+    if (!users || users.length === 0)
+        return res.status(400).send("No search results");
+    return res.status(200).send({ users });
+};
+const listUserAll = async (req, res) => {
+    const users = await User.find({ name: new RegExp(req.params["name"], "i") })
+        .populate("roleId")
+        .exec();
+    if (!users || users.length === 0)
+        return res.status(400).send("No search results");
+    return res.status(200).send({ users });
+};
+const getRole = async (req, res) => { };
+const updateUser = async (req, res) => { };
+const deleteUser = async (req, res) => { }; //se actualiza el estado a false
 
 module.exports = {
-  createAdmin,
-  createUser,
-  login,
-  listUser,
-  updateUser,
-  deleteUser,
-  listUserAll,
-  getRole,
+    createAdmin,
+    createUser,
+    login,
+    listUser,
+    updateUser,
+    deleteUser,
+    listUserAll,
+    getRole,
 };
