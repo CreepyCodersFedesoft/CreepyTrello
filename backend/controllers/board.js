@@ -4,8 +4,6 @@ const fs = require("fs");
 const path = require("path");
 const moment = require("moment");
 
-let userList = [];
-
 const createBoard = async (req, res) => {
   if (!req.body.name || !req.body.description)
     return res.status(400).send("Incomplete Data");
@@ -30,7 +28,7 @@ const createBoard = async (req, res) => {
     description: req.body.description,
     boardImg: boardImgUrl,
     dbStatus: true,
-    userList: userList,
+    userList: [],
   });
 
   const result = await board.save();
@@ -39,7 +37,9 @@ const createBoard = async (req, res) => {
 };
 
 const listBoard = async (req, res) => {
-  const board = await Board.find({ $or: [{ userId: req.user._id }, { userList: req.user._id }] });
+  const board = await Board.find({
+    $or: [{ userId: req.user._id }, { userList: req.user._id }],
+  });
   if (!board || board.length === 0)
     return res.status(400).send("You do not have any board");
   return res.status(200).send({ board });
@@ -111,5 +111,64 @@ const deleteBoard = async (req, res) => {
   }
   return res.status(200).send({ message: "Board deleted" });
 };
+const addListBoard = async (req, res) => {
+  if (!req.body._id || !req.body.newUserId)
+    return res.status(400).send("Error: empty data");
 
-module.exports = { createBoard, listBoard, updateBoard, deleteBoard };
+  let board = await Board.findById(req.body._id);
+  if (
+    !board ||
+    board.length === 0 ||
+    !board.userId.equals(mongoose.Types.ObjectId(req.user._id))
+  )
+    return res
+      .status(400)
+      .send("Error: No board found or you are not the owner");
+
+  const doesBoardExist = await Board.exists({ userList: req.body.newUserId });
+  if (doesBoardExist)
+    return res.status(400).send("Error: User Already Invited");
+
+  board = await Board.findByIdAndUpdate(req.body._id, {
+    $push: { userList: req.body.newUserId },
+  });
+
+  if (!board) return res.status(400).send("Error: error to update board");
+
+  res.status(200).send({ board });
+};
+const dropListBoard = async (req, res) => {
+  if (!req.body._id || !req.body.newUserId)
+    return res.status(400).send("Error: empty data");
+
+  let board = await Board.findById(req.body._id);
+  if (
+    !board ||
+    board.length === 0 ||
+    !board.userId.equals(mongoose.Types.ObjectId(req.user._id))
+  )
+    return res
+      .status(400)
+      .send("Error: No board found or you are not the owner");
+
+  const doesBoardExist = await Board.exists({ userList: req.body.newUserId });
+  if (!doesBoardExist)
+    return res.status(400).send("Error: User doesn't exist in board");
+
+  board = await Board.findByIdAndUpdate(req.body._id, {
+    $pull: { userList: req.body.newUserId },
+  });
+
+  if (!board) return res.status(400).send("Error: error to update board");
+
+  res.status(200).send("User deleted of board");
+};
+
+module.exports = {
+  createBoard,
+  listBoard,
+  updateBoard,
+  deleteBoard,
+  addListBoard,
+  dropListBoard,
+};
