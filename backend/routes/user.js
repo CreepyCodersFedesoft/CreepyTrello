@@ -5,6 +5,7 @@ const Upload = require('../middleware/upload');
 const router = require('express').Router();
 
 router.post('/createUser', mult, Upload, UserController.createUser);
+//router.post('/createUser',  UserController.createUser);
 router.post('/createAdmin', mult, Upload, UserController.createAdmin);
 router.post('/login', UserController.createAdmin);
 router.get('/listUser/:name?', UserController.listUser);
