@@ -1,1 +1,0 @@
-//opcional, valida si un board pertenece a un usuario o si este se encuentra invitado al board
