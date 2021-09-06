@@ -1,5 +1,5 @@
 const User = require("../models/user");
-const Role = require("../models/user");
+const Role = require("../models/role");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const moment = require('moment');
@@ -57,7 +57,8 @@ const createAdmin = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-  console.log(req.body);
+  console.log(req.body)
+  /*
     if (
         !req.body.name ||
         !req.body.email ||
@@ -104,9 +105,13 @@ const createUser = async (req, res) => {
     } catch (e) {
         return res.status(400).send("Error: Token generation failed.");
     }
+    */
 };
 
+
+
 const login = async (req, res) => {
+  /*
     const user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(400).send("Error: Wrong email or password.");
 
@@ -122,9 +127,11 @@ const login = async (req, res) => {
     } catch (e) {
         return res.status(400).send("Error: Login error.");
     }
+    */
 };
 
 const listUser = async (req, res) => {
+  /*
     const users = await User.find({
         $and: [{ name: new RegExp(req.params["name"], "i") }, { dbStatus: "true" }],
     })
@@ -133,16 +140,20 @@ const listUser = async (req, res) => {
     if (!users || users.length === 0)
         return res.status(400).send("No search results");
     return res.status(200).send({ users });
+    */
 };
 const listUserAll = async (req, res) => {
+  /*
     const users = await User.find({ name: new RegExp(req.params["name"], "i") })
         .populate("roleId")
         .exec();
     if (!users || users.length === 0)
         return res.status(400).send("No search results");
     return res.status(200).send({ users });
+    */
 };
 const getRole = async (req, res) => {
+  /*
   const user = await User.findOne({ email: req.params.email })
     .populate("roleId")
     .exec();
@@ -150,9 +161,14 @@ const getRole = async (req, res) => {
     return res.status(400).send("Error: User no found");
   const role = user.roleId.name;
   return res.status(200).send({ role });
+  */
 };
-//esta funcion esta diseñada para que un admin actualice a cualquierusuario, peor por cuestiones de seguridad no puede usarla un usuario para actualizar sus propios datos, para ello será necesario registrar posteriormente otra funcion
+
+//esta funcion esta diseñada para que un admin actualice a cualquierusuario, pero por cuestiones 
+//de seguridad no puede usarla un usuario para actualizar sus propios datos, para ello será necesario 
+//registrar posteriormente otra funcion
 const updateUser = async (req, res) => {
+  /*
   if (!req.body._id || !req.body.name || !req.body.email || !req.body.roleId)
     return res.status(400).send("Error: Empty fields");
 
@@ -207,8 +223,11 @@ const updateUser = async (req, res) => {
     }
   }
   return res.status(200).send({ user });
+  */
 };
+
 const deleteUser = async (req, res) => {
+  /*
   if (!req.body._id) return res.status(400).send("Incomplete data");
 
   const user = await User.findByIdAndUpdate(req.body._id, {
@@ -216,6 +235,7 @@ const deleteUser = async (req, res) => {
   });
   if (!user) return res.status(400).send("Error delete user");
   return res.status(200).send({ user });
+  */
 }; 
 
 module.exports = {
