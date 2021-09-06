@@ -1,5 +1,4 @@
 const upload = async (req, res, next) => {
-  console.log("upload")
   if (!req.files.image) {
     next();
   } else {
