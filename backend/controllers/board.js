@@ -17,9 +17,10 @@ const createBoard = async (req, res) => {
       const boardServerImg =
         "./uploads/" + moment().unix() + path.extname(req.files.image.path);
       fs.createReadStream(req.files.image.path).pipe(
-        fs.createReadStream(boardServerImg)
+        fs.createWriteStream(boardServerImg)
       );
       boardImgUrl = url + boardServerImg.slice(2);
+      console.log(boardImgUrl);
     }
   }
 
@@ -38,7 +39,7 @@ const createBoard = async (req, res) => {
 };
 
 const listBoard = async (req, res) => {
-  const board = await Board.find({ userId: req.user._id });
+  const board = await Board.find({ $or: [{ userId: req.user._id }, { userList: req.user._id }] });
   if (!board || board.length === 0)
     return res.status(400).send("You do not have any board");
   return res.status(200).send({ board });
@@ -46,17 +47,49 @@ const listBoard = async (req, res) => {
 const updateBoard = async (req, res) => {
   let validId = mongoose.Types.ObjectId.isValid(req.body._id);
   if (!validId) return res.status(400).send("Invalid id");
-  if (!req.body._id || !req.body.name || !req.board.description)
+  if (!req.body._id || !req.body.name || !req.body.description)
     return res.status(400).send("Incomplete Data");
+
+  let imageUrl = "";
+  if (req.files.image) {
+    if (req.files.image.type != null) {
+      const url = req.protocol + "://" + req.get("host") + "/";
+      const serverImg =
+        "./uploads/" + moment().unix() + path.extname(req.files.image.path);
+      fs.createReadStream(req.files.image.path).pipe(
+        fs.createWriteStream(serverImg)
+      );
+      imageUrl = url + serverImg.slice(2);
+    }
+  } else {
+    imageUrl = req.body.userImg;
+  }
+
+  //guardamos la ruta de la imagen anterior para eliminarla
+  let serverImg = "";
+  let userImg = await Board.findById(req.body._id);
+  if (userImg.boardImg !== "") {
+    let userImage = userImg.boardImg;
+    userImage = userImage.split("/")[4];
+    serverImg = "./uploads/" + userImage;
+  }
 
   const board = await Board.findByIdAndUpdate(req.body._id, {
     userId: req.user._id,
     name: req.body.name,
     description: req.body.description,
-    userList: userList,
     statusList: req.body.statusList,
+    boardImg: imageUrl,
   });
   if (!board) return res.status(400).send("Task not found");
+  //si todo va bien, borramos la imagen anterior
+  if (userImg.userImg !== "") {
+    try {
+      fs.unlinkSync(serverImg);
+    } catch (err) {
+      console.log("Image no found in server");
+    }
+  }
   return res.status(200).send({ board });
 };
 const deleteBoard = async (req, res) => {
