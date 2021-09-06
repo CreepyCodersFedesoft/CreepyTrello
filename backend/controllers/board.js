@@ -19,11 +19,7 @@ const createBoard = async (req, res) => {
       fs.createReadStream(req.files.image.path).pipe(
         fs.createReadStream(boardServerImg)
       );
-      boardImgUrl =
-        url +
-        "uploads/" +
-        moment().unix() +
-        path.extname(req.files.images.path);
+      boardImgUrl = url + boardServerImg.slice(2);
     }
   }
 
@@ -34,7 +30,6 @@ const createBoard = async (req, res) => {
     boardImg: boardImgUrl,
     dbStatus: true,
     userList: userList,
-    statusList: ["to-do"],
   });
 
   const result = await board.save();

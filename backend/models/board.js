@@ -8,7 +8,7 @@ const boardSchema = mongoose.Schema({
   date: { type: Date, default: Date.now },
   dbStatus: { type: Boolean, default: true },
   userList: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
-  statusList: [ "to-do", "in-progres", "done" ],
+  statusList: { type: [String], default: [ "to-do", "in-progres", "done" ]},
 });
 
 const board = mongoose.model('board', boardSchema);

@@ -8,7 +8,7 @@ const validateUser = require('../middleware/validateUser');
 const invitedUser = require('../middleware/invitedUser');
 
 router.post('/createBoard', auth, validateUser , mult, Upload, BoardController.createBoard);
-router.get('/listBoard', BoardController.listBoard);
+router.get('/listBoard',  auth, validateUser, BoardController.listBoard);
 router.put('/updateBoard', BoardController.updateBoard);
 router.put('/deleteBoard', BoardController.deleteBoard);
 
