@@ -4,8 +4,6 @@ const fs = require("fs");
 const path = require("path");
 const moment = require("moment");
 
-let userList = [];
-
 const createBoard = async (req, res) => {
   if (!req.body.name || !req.body.description)
     return res.status(400).send("Incomplete Data");
@@ -17,13 +15,10 @@ const createBoard = async (req, res) => {
       const boardServerImg =
         "./uploads/" + moment().unix() + path.extname(req.files.image.path);
       fs.createReadStream(req.files.image.path).pipe(
-        fs.createReadStream(boardServerImg)
+        fs.createWriteStream(boardServerImg)
       );
-      boardImgUrl =
-        url +
-        "uploads/" +
-        moment().unix() +
-        path.extname(req.files.images.path);
+      boardImgUrl = url + boardServerImg.slice(2);
+      console.log(boardImgUrl);
     }
   }
 
@@ -33,8 +28,7 @@ const createBoard = async (req, res) => {
     description: req.body.description,
     boardImg: boardImgUrl,
     dbStatus: true,
-    userList: userList,
-    statusList: ["to-do"],
+    userList: [],
   });
 
   const result = await board.save();
@@ -43,7 +37,9 @@ const createBoard = async (req, res) => {
 };
 
 const listBoard = async (req, res) => {
-  const board = await Board.find({ userId: req.user._id });
+  const board = await Board.find({
+    $or: [{ userId: req.user._id }, { userList: req.user._id }],
+  });
   if (!board || board.length === 0)
     return res.status(400).send("You do not have any board");
   return res.status(200).send({ board });
@@ -51,17 +47,49 @@ const listBoard = async (req, res) => {
 const updateBoard = async (req, res) => {
   let validId = mongoose.Types.ObjectId.isValid(req.body._id);
   if (!validId) return res.status(400).send("Invalid id");
-  if (!req.body._id || !req.body.name || !req.board.description)
+  if (!req.body._id || !req.body.name || !req.body.description)
     return res.status(400).send("Incomplete Data");
+
+  let imageUrl = "";
+  if (req.files.image) {
+    if (req.files.image.type != null) {
+      const url = req.protocol + "://" + req.get("host") + "/";
+      const serverImg =
+        "./uploads/" + moment().unix() + path.extname(req.files.image.path);
+      fs.createReadStream(req.files.image.path).pipe(
+        fs.createWriteStream(serverImg)
+      );
+      imageUrl = url + serverImg.slice(2);
+    }
+  } else {
+    imageUrl = req.body.userImg;
+  }
+
+  //guardamos la ruta de la imagen anterior para eliminarla
+  let serverImg = "";
+  let userImg = await Board.findById(req.body._id);
+  if (userImg.boardImg !== "") {
+    let userImage = userImg.boardImg;
+    userImage = userImage.split("/")[4];
+    serverImg = "./uploads/" + userImage;
+  }
 
   const board = await Board.findByIdAndUpdate(req.body._id, {
     userId: req.user._id,
     name: req.body.name,
     description: req.body.description,
-    userList: userList,
     statusList: req.body.statusList,
+    boardImg: imageUrl,
   });
   if (!board) return res.status(400).send("Task not found");
+  //si todo va bien, borramos la imagen anterior
+  if (userImg.userImg !== "") {
+    try {
+      fs.unlinkSync(serverImg);
+    } catch (err) {
+      console.log("Image no found in server");
+    }
+  }
   return res.status(200).send({ board });
 };
 const deleteBoard = async (req, res) => {
@@ -83,5 +111,64 @@ const deleteBoard = async (req, res) => {
   }
   return res.status(200).send({ message: "Board deleted" });
 };
+const addListBoard = async (req, res) => {
+  if (!req.body._id || !req.body.newUserId)
+    return res.status(400).send("Error: empty data");
 
-module.exports = { createBoard, listBoard, updateBoard, deleteBoard };
+  let board = await Board.findById(req.body._id);
+  if (
+    !board ||
+    board.length === 0 ||
+    !board.userId.equals(mongoose.Types.ObjectId(req.user._id))
+  )
+    return res
+      .status(400)
+      .send("Error: No board found or you are not the owner");
+
+  const doesBoardExist = await Board.exists({ userList: req.body.newUserId });
+  if (doesBoardExist)
+    return res.status(400).send("Error: User Already Invited");
+
+  board = await Board.findByIdAndUpdate(req.body._id, {
+    $push: { userList: req.body.newUserId },
+  });
+
+  if (!board) return res.status(400).send("Error: error to update board");
+
+  res.status(200).send({ board });
+};
+const dropListBoard = async (req, res) => {
+  if (!req.body._id || !req.body.newUserId)
+    return res.status(400).send("Error: empty data");
+
+  let board = await Board.findById(req.body._id);
+  if (
+    !board ||
+    board.length === 0 ||
+    !board.userId.equals(mongoose.Types.ObjectId(req.user._id))
+  )
+    return res
+      .status(400)
+      .send("Error: No board found or you are not the owner");
+
+  const doesBoardExist = await Board.exists({ userList: req.body.newUserId });
+  if (!doesBoardExist)
+    return res.status(400).send("Error: User doesn't exist in board");
+
+  board = await Board.findByIdAndUpdate(req.body._id, {
+    $pull: { userList: req.body.newUserId },
+  });
+
+  if (!board) return res.status(400).send("Error: error to update board");
+
+  res.status(200).send("User deleted of board");
+};
+
+module.exports = {
+  createBoard,
+  listBoard,
+  updateBoard,
+  deleteBoard,
+  addListBoard,
+  dropListBoard,
+};
