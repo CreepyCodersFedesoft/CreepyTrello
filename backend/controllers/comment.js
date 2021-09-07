@@ -2,11 +2,12 @@ const Comment = require("../models/comment");
 
 
 const createComment = async (req, res) => {
-  if (!req.body.text) return res.status(400).send("Incomplete Data");
+  if (!req.body.text || !req.body.taskId || !req.body.text ) return res.status(400).send("Incomplete Data");
 
   const comment = new Comment({
     userId: req.user._id,
-    boardId: req.board._id,
+    taskId: req.task._id,
+    likes: 0,
     text: req.body.text,
     dbStatus: true,
   });
@@ -53,5 +54,9 @@ const deleteComment = async (req, res) => {
 
   return res.status(200).send({ message: "comment deleted" });
 };
+
+const giveLike= async (req, res) =>{}
+
+
 
 module.exports = { createComment, updateComment, listComment, deleteComment };
