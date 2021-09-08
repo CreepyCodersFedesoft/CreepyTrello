@@ -7,6 +7,11 @@
       >Create board</a
     >
   </ul>
+  <ul>
+    <a *ngIf="_userService.loggedIn()" mat-button routerLink="listBoard"
+      >List board</a
+    >
+  </ul>
   <span class="headerSpacer"></span>
   <span class="headerSpacer"></span>
   <ul>
