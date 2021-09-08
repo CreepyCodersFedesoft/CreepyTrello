@@ -17,6 +17,24 @@ import { ListCommentsComponent } from './board/comments/list-comments/list-comme
 import { CreateRoleComponent } from './admin/create-role/create-role.component';
 import { ListRoleComponent } from './admin/list-role/list-role.component';
 import { ListUserComponent } from './admin/list-user/list-user.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from "@angular/common/http";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatButtonModule } from "@angular/material/button";
+import { MatFormField, MatFormFieldModule } from "@angular/material/form-field";
+import { MatCardModule } from "@angular/material/card";
+import { MatInputModule } from "@angular/material/input";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { BoardService } from './services/board.service';
+import { CommentService } from './services/comment.service';
+import { RoleService } from './services/role.service';
+import { TaskService } from './services/task.service';
+import { TokenInterceptorService } from './services/token-interceptor.service';
+import { UserService } from './services/user.service';
+import { UtilitiesService } from './services/utilities.service';
+import { AuthGuard } from './guard/auth.guard';
 
 @NgModule({
   declarations: [
@@ -38,9 +56,20 @@ import { ListUserComponent } from './admin/list-user/list-user.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatFormField,
+    MatFormFieldModule,
+    MatCardModule,
+    MatInputModule,
+    MatSnackBarModule,
   ],
-  providers: [],
+  providers: [BoardService, CommentService, RoleService, TaskService, TokenInterceptorService, UserService, UtilitiesService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
