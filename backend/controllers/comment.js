@@ -1,20 +1,23 @@
 const Comment = require("../models/comment");
 
+
 const createComment = async (req, res) => {
-  if (!req.body.userId || !req.body.taskId || !req.body.text || !req.body.likes)
-    return res.status(400).send("Process failed: Incomplete data");
+  if (!req.body.text || !req.body.taskId || !req.body.text ) return res.status(400).send("Incomplete Data");
 
   const comment = new Comment({
-    userId: req.body.userId,
-    taskId: req.body.taskId,
+    userId: req.user._id,
+    taskId: req.task._id,
+    likes: 0,
     text: req.body.text,
-    likes: req.body.likes,
+    dbStatus: true,
   });
 
   const result = await comment.save();
-  if (!result) return res.status(400).send("Error register comment");
-  return res.status(200).send({ result });
-};
+  if(!result) return res.status(400).send("Error registering comment");
+  return res.status(200).send({result});
+}; 
+
+
 
 const updateComment = async (req, res) => {
   let validId = mongoose.Types.ObjectId.isValid(req.body._id);
@@ -51,5 +54,9 @@ const deleteComment = async (req, res) => {
 
   return res.status(200).send({ message: "comment deleted" });
 };
+
+const giveLike= async (req, res) =>{}
+
+
 
 module.exports = { createComment, updateComment, listComment, deleteComment };
