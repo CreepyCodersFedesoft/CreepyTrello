@@ -1,1 +1,33 @@
-<p>header works!</p>
+<mat-toolbar class="bgHeader">
+  <ul>
+    <a >List task</a>
+  </ul>
+  <ul>
+    <a  >Create task</a>
+  </ul>
+  <ul>
+    <mat-form-field
+     
+      appearance="fill"
+    >
+      <mat-label>Choose an admin option</mat-label>
+      <mat-select>
+        <mat-option value="option1" routerLink="listUser">Users</mat-option>
+        <mat-option value="option2" routerLink="listRole">Role</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ul>
+  <span class="headerSpacer"></span>
+  <ul>
+    <a  mat-button routerLink="register"
+      >Sign Up</a
+    >
+    <a  mat-button routerLink="login">Login</a>
+    <a
+      
+      mat-button
+      
+      >Logout</a
+    >
+  </ul>
+</mat-toolbar>
