@@ -4,7 +4,7 @@
 
 a {
   text-decoration: none;
-  color: white;
+  color: #000000;
 }
 
 ul {
@@ -12,10 +12,7 @@ ul {
 }
 
 .bgHeader {
-  color: #FFFFFF;
-  background: #0054AD;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #288DF4, #0054AD);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #288DF4, #0054AD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #FFCA6F;
 
 }
 
