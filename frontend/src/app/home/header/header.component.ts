@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from "../../services/user.service";
 
 @Component({
   selector: 'app-header',
@@ -6,10 +7,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  profileImage: string = '';
+  userName: string = 'My User';
 
-  constructor() { }
+  constructor(public _userService: UserService) { }
 
   ngOnInit(): void {
+    if(this._userService.loggedIn()){
+      this._userService.getEmail().subscribe(
+        (res) => {
+          console.log(res);
+          
+          this.profileImage = res.userImg;
+          this.userName = res.name;
+        },
+        (err) => {
+
+        }
+      );
+    }
   }
 
 }
