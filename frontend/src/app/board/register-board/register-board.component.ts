@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BoardService } from "../../services/board.service";
 
 @Component({
   selector: 'app-register-board',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register-board.component.css']
 })
 export class RegisterBoardComponent implements OnInit {
-
-  constructor() { }
+  registerBoard: any;
+  constructor() {
+    this.registerBoard = {};
+   }
 
   ngOnInit(): void {
   }
