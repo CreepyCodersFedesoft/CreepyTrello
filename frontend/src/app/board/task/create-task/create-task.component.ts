@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from "../../../services/task.service";
 import { Router } from '@angular/router';
 import { UtilitiesService } from "../../../services/utilities.service";
+import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class CreateTaskComponent implements OnInit {
   selectedFile: any;
   message: string = '';
 
-  constructor(private _taskService: TaskService ,private _router: Router, private _utilitiesService: UtilitiesService) { 
+  constructor(private _taskService: TaskService, private _router: Router, private _utilitiesService: UtilitiesService, public _dialogRef: MatDialog) {
     this.registerData = {};
     this.selectedFile = null;
   }
@@ -30,7 +31,7 @@ export class CreateTaskComponent implements OnInit {
   createTask() {
     if (!this.registerData.title || !this.registerData.description) {
       this.message = 'Failed process: Imcomplete data';
-     
+
       this.registerData = {};
     } else {
       const data = new FormData();
@@ -53,5 +54,7 @@ export class CreateTaskComponent implements OnInit {
       );
     }
   }
-
+onClose(): void{
+  this._dialogRef.closeAll();
+}
 }

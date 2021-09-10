@@ -1,14 +1,18 @@
 <div class="container at-5">
   <div class="row">
     <h2 class="text-center">Proceso de las Tareas</h2>
-    <!--</div>
-    <div class="row">
+    </div>
+   <!-- <div class="row">
       <div class="col-lg-8 offset-lg-2 mb-4">
         <input type="text" [(ngModel)]= "tarea" (keyup.enter)="agregarTarea()" class="form-control form-control-lg text-center" placeholder="Ingrese tarea">
   
       </div>
     </div>-->
 
+    <div>
+        <mat-icon color="primary" (click)="onCreate()" >delete</mat-icon
+            >
+    </div>
     <div cdkDropListGroup multi="true" class="row">
       <div class="col-lg-4">
         <h4>To Do</h4>
@@ -146,7 +150,8 @@
                 done-
               </button>
               <span class="spacer"></span>
-              <mat-icon color="primary" (click)="deleteTask(task)"
+            <!-- <mat-icon color="primary" (click)="deleteTask(task)"--> 
+                <mat-icon color="primary" (click)="onCreate()"
                 >delete</mat-icon
               >
             </mat-action-row>
@@ -252,7 +257,8 @@
           <mat-action-row>
            
             <span class="spacer"></span>
-            <mat-icon color="primary" (click)="deleteTask(task)"
+          <!--  <mat-icon color="primary" (click)="deleteTask(task)"-->
+            <mat-icon color="primary" (click)="onCreate()"
               >delete</mat-icon
             >
           </mat-action-row>

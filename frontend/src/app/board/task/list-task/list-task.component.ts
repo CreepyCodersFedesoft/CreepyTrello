@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from "../../../services/task.service";
 import { UtilitiesService } from "../../../services/utilities.service";
 import {CdkDragDrop, CdkDragEnd, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {MatDialogModule, MatDialogConfig, MatDialog} from '@angular/material/dialog';
+import { CreateTaskComponent } from '../create-task/create-task.component';
 
 @Component({
   selector: 'app-list-task',
@@ -9,25 +11,17 @@ import {CdkDragDrop, CdkDragEnd, moveItemInArray, transferArrayItem} from '@angu
   styleUrls: ['./list-task.component.css']
 })
 export class ListTaskComponent implements OnInit {
-  todo: string[] = ["Hacer comida", "jugar", "salir hacer deporte", "dormir"]
-  progress: string[]=[];
-  done: string[]=[];
-  tarea = '';
-  done2: string[]=[];
-  nombres: any[];
-
+  
   taskData: any[];
   taskData1: string[]=[];
   taskData2: any[]=[];
   taskData3: any[]=[];
   message: string = '';
 
-  constructor(private _taskService: TaskService, private _utilitiesService: UtilitiesService ) { 
+  constructor(private _taskService: TaskService, private _utilitiesService: UtilitiesService, private _matDialog: MatDialog) { 
     this.taskData = [];
     this.taskData2 = [];
     this.taskData3 = [];
-    this.done2 = [];
-    this.nombres = [];
   }
 
   ngOnInit(): void {
@@ -90,5 +84,11 @@ export class ListTaskComponent implements OnInit {
                         event.currentIndex);
     }
   }
-
+ onCreate(){
+   const matDialog= new MatDialogConfig();
+   matDialog.disableClose=true;
+   matDialog.autoFocus=true;
+   matDialog.width="50%";
+   this._matDialog.open(CreateTaskComponent, matDialog);
+ }
 }
