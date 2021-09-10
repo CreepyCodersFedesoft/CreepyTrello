@@ -1,0 +1,61 @@
+.profileConfig{
+  background-image: url('../../../assets/img/userExample.png');
+  background-size: cover;
+  width: 3em;
+  height: 3em;
+  border-radius: 75%;
+  border-color: #000;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  box-sizing: border-box;
+  display: none;
+  position: absolute;
+  background-color: #FFCA6F;
+  min-width: 100%;
+  padding: 0 0;
+  margin: 0% 0% 0% 0%;
+  text-align: center;
+  z-index: 1;
+}
+
+.dropdown-content-element:hover {
+  background-color: #b98c3d;
+}
+.dropdown-content-element {
+  min-width: 100%;
+  padding: 7px 18px;
+  margin: 0%;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.headerSpacer {
+  flex: 1 1 auto;
+}
+
+a {
+  text-decoration: none;
+  color: #000000;
+}
+
+ul {
+  margin: auto;
+}
+
+.bgHeader {
+  background: #FFCA6F;
+  background: -webkit-linear-gradient(to right, #FFCA6F, #b98c3d);
+  background: linear-gradient(to right, #FFCA6F, #b98c3d); 
+}
+
+mat-form-field {
+  margin: 5px 0px;
+  font-size: 15px;
+  width: 300px;
+  padding: 6px;
+}

@@ -6,6 +6,7 @@ require("dotenv").config();
 const Role = require('./routes/role');
 const User = require('./routes/user');
 const Board = require('./routes/board');
+const Spring = require('./routes/spring');
 const Task = require('./routes/task');
 const Comment = require('./routes/comment');
 const SendMail = require('./routes/sendgrid');

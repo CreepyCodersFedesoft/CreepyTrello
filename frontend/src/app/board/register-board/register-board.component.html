@@ -1,0 +1,27 @@
+<div class="bgComponent">
+  <div class="form">
+    <mat-card class="card">
+      <mat-card-title>Create Board</mat-card-title>
+      <mat-card-content>
+        <div class="container">
+          <mat-form-field>
+            <input
+              [(ngModel)]="registerBoard.name"
+              matInput
+              placeholder="Board name"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field>
+              <input
+              [(ngModel)]="registerBoard.description"
+              matInput
+              placeholder="Description"
+              required
+              >
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
