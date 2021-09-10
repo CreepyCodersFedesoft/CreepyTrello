@@ -35,10 +35,10 @@ const createSpring = async (req, res) => {
   return res.status(200).send({ result });
 };
 const listSpring = async (req, res) => {
-  let spring = await Spring.find({ boardId: req.body.boardId });
+  let spring = await Spring.find({ boardId: req.params["boardId"] }).populate('boardId').exec();
   if(!spring) return res.status(400).send('No spring for this board');
   return res.status(200).send({ spring });
 };
-const updateSpring = async (req, res) => {};
+const updateSpring = async (req, res) => {};//actualizar fechas, titulo, descripcion y estado
 
 module.exports = { createSpring, updateSpring, listSpring };

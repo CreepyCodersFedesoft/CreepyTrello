@@ -33,6 +33,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import { HeaderComponent } from './home/header/header.component';
 import { RegisterComponent } from './home/register/register.component';
@@ -48,6 +49,8 @@ import { ListCommentsComponent } from './board/comments/list-comments/list-comme
 import { CreateRoleComponent } from './admin/create-role/create-role.component';
 import { ListRoleComponent } from './admin/list-role/list-role.component';
 import { ListUserComponent } from './admin/list-user/list-user.component';
+import { ListSpringComponent } from './board/spring/list-spring/list-spring.component';
+import { CreateSpringComponent } from './board/spring/create-spring/create-spring.component';
 
 
 
@@ -68,6 +71,8 @@ import { ListUserComponent } from './admin/list-user/list-user.component';
     CreateRoleComponent,
     ListRoleComponent,
     ListUserComponent,
+    ListSpringComponent,
+    CreateSpringComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,6 +94,7 @@ import { ListUserComponent } from './admin/list-user/list-user.component';
     MatPaginatorModule,
     MatSortModule,
     MatSidenavModule,
+    DragDropModule,
   ],
   providers: [
     UserService,
