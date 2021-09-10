@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
     if(this._userService.loggedIn()){
       this._userService.getEmail().subscribe(
         (res) => {
-          console.log(res);
+          //console.log(res);
           
           this.profileImage = res.userImg;
           this.userName = res.name;

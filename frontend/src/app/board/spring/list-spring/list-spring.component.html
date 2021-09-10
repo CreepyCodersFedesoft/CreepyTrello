@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-md-2 bg-info">
+    <div>
+      <button
+        mat-button
+        *ngFor="let spring of this.springData.spring; let i = index"
+        value="{{ spring._id }}"
+        (click)="chargeSpring(spring._id)"
+      >
+        {{ spring.title }}
+      </button>
+    </div>
+  </div>
+  <div class="col-md-10 bg-danger">
+    <app-list-task *ngIf="springId != null"  ></app-list-task>
+  </div>
+</div>

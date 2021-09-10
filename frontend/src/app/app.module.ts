@@ -49,6 +49,8 @@ import { ListCommentsComponent } from './board/comments/list-comments/list-comme
 import { CreateRoleComponent } from './admin/create-role/create-role.component';
 import { ListRoleComponent } from './admin/list-role/list-role.component';
 import { ListUserComponent } from './admin/list-user/list-user.component';
+import { ListSpringComponent } from './board/spring/list-spring/list-spring.component';
+import { CreateSpringComponent } from './board/spring/create-spring/create-spring.component';
 
 
 
@@ -69,6 +71,8 @@ import { ListUserComponent } from './admin/list-user/list-user.component';
     CreateRoleComponent,
     ListRoleComponent,
     ListUserComponent,
+    ListSpringComponent,
+    CreateSpringComponent,
   ],
   imports: [
     BrowserModule,
