@@ -11,7 +11,8 @@
       </button>
     </div>
   </div>
-  <div class="col-md-10 bg-danger">
-    <app-list-task *ngIf="springId != null"  ></app-list-task>
+  <div class="col-md-10">
+    <app-list-task *ngIf="springId != null"  [springId]="this.springId"
+    ></app-list-task>
   </div>
 </div>

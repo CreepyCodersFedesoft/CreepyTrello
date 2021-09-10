@@ -5,8 +5,7 @@ const moment = require("moment");
 const mongoose = require("mongoose");
 
 const createTask = async (req, res) => {
-  //if (!req.user._id || !req.body.boardId || !req.body.title || !req.body.description)
-  if (!req.body.title || !req.body.description)
+  if (!req.user._id || !req.body.springId || !req.body.title || !req.body.description)
     return res.status(400).send("Process failed: Incomplete data");
 
   let imageUrl = "";
@@ -23,7 +22,7 @@ const createTask = async (req, res) => {
 
   const task = new Task({
     userId: req.user._id,
-    boardId: req.body.boardId,
+    springId: req.body.springId,
     title: req.body.title,
     description: req.body.description,
     imgUrl: imageUrl,
@@ -36,7 +35,7 @@ const createTask = async (req, res) => {
 };
 
 const listTask = async (req, res) => {
-  const task = await Task.find({ boardId: req.params.boardId });
+  const task = await Task.find({ springId: req.params.springId });
   if (!task || task.length == 0)
     return res.status(400).send("You have no assigned task");
   return res.status(200).send({ task });
