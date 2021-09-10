@@ -150,12 +150,22 @@ const getRole = async (req, res) => {
   return res.status(200).send({ role });
 
 };
-
+const getEmail = async (req, res) => {
+  const user = await User.findOne({ _id: req.user._id });
+  if (!user || user.length === 0)
+    return res.status(400).send("Error: User no found");
+  const email = user.email;
+  const name = user.name;
+  const userImg = user.userImg;
+  return res.status(200).send({ name, email, userImg });
+};
 //esta funcion esta disenada para que un admin actualice a cualquier usuario, pero por cuestiones
 //de seguridad no puede usarla un usuario para actualizar sus propios datos, para ello será necesario
 //registrar posteriormente otra funcion
 const updateUser = async (req, res) => {
-  if (!req.body._id || !req.body.name || !req.body.email || !req.body.roleId)
+  console.log(req.files.image);
+  console.log(req.body);
+  if (!req.user._id || !req.body.name || !req.body.email)
     return res.status(400).send("Error: Empty fields");
 
   let pass = "";
@@ -184,30 +194,30 @@ const updateUser = async (req, res) => {
 
   //guardamos la ruta de la imagen anterior para eliminarla
   let serverImg = "";
-  let userImg = await User.findById(req.body._id);
+  let userImg = await User.findById(req.user._id);
   if (userImg.userImg !== "") {    
     let userImage = userImg.userImg;
     userImage = userImage.split("/")[4];
     serverImg = "./uploads/" + userImage;
   }
 
-  const user = await User.findByIdAndUpdate(req.body._id, {
+  const user = await User.findByIdAndUpdate(req.user._id, {
     name: req.body.name,
     email: req.body.email,
     password: pass,
-    roleId: req.body.roleId,
     userImg: imageUrl,
   });
 
   if (!user) return res.status(400).send("Error editing user");
   //si todo va bien, borramos la imagen anterior
-  if (userImg.userImg !== "") {
+  if (imageUrl !== "" && userImg.userImg !== "" && req.files.image != undefined) {
     try {
       fs.unlinkSync(serverImg);
     } catch (err) {
       console.log("Image no found in server");
     }
   }
+
   return res.status(200).send({ user });
 
 };
@@ -232,4 +242,5 @@ module.exports = {
   deleteUser,
   listUserAll,
   getRole,
+  getEmail,
 };

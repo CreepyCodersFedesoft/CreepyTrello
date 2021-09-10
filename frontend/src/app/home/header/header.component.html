@@ -19,11 +19,23 @@
       >Sign Up</a
     >
     <a *ngIf="!_userService.loggedIn()" mat-button routerLink="login">Login</a>
-    <a
-      *ngIf="_userService.loggedIn()"
-      mat-button
-      (click)="_userService.logout()"
-      >Logout</a
-    >
+    <a mat-button class="dropdown" *ngIf="this._userService.loggedIn()">
+      <img
+        [src]="this.profileImage"
+        class="imgDoesnExist profileConfig"
+        alt=""
+      />
+      <span> ¡Bienvenido {{ this.userName.split(" ")[0] }}!</span>
+      <div class="dropdown-content">
+        <a class="dropdown-content-element" mat-button routerLink="updateUser">
+          Profile Settings
+        </a>
+        <br />
+        <a class="dropdown-content-element" mat-button>
+          <mat-icon>exit_to_app</mat-icon>
+          Logout
+        </a>
+      </div>
+    </a>
   </ul>
 </mat-toolbar>

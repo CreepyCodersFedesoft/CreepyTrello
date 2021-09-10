@@ -7,10 +7,25 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  profileImage: string = '';
+  userName: string = 'My User';
 
   constructor(public _userService: UserService) { }
 
   ngOnInit(): void {
+    if(this._userService.loggedIn()){
+      this._userService.getEmail().subscribe(
+        (res) => {
+          console.log(res);
+          
+          this.profileImage = res.userImg;
+          this.userName = res.name;
+        },
+        (err) => {
+
+        }
+      );
+    }
   }
 
 }
