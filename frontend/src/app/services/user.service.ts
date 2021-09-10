@@ -20,9 +20,7 @@ export class UserService {
   updateUser(user: any) {
     return this._http.put<any>(this.env + 'user/updateUser', user);
   } 
-  
 
-  //otras rutas
   loggedIn() {
     return !!localStorage.getItem('token');
   }

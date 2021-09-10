@@ -5,7 +5,7 @@ const moment = require("moment");
 const mongoose = require("mongoose");
 
 const createTask = async (req, res) => {
-  if (!req.body.userId || !req.body.boardId || !req.body.title || !req.body.description)
+  if (!req.user._id || !req.body.boardId || !req.body.title || !req.body.description)
     return res.status(400).send("Process failed: Incomplete data");
 
   let imageUrl = "";
@@ -21,7 +21,7 @@ const createTask = async (req, res) => {
   }
 
   const task = new Task({
-    userId: req.body.userId,
+    userId: req.user._id,
     boardId: req.body.boardId,
     title: req.body.title,
     description: req.body.description,

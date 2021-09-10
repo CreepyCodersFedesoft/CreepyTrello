@@ -14,7 +14,7 @@
   box-sizing: border-box;
   display: none;
   position: absolute;
-  background-color: #288DF4;
+  background-color: #FFCA6F;
   min-width: 100%;
   padding: 0 0;
   margin: 0% 0% 0% 0%;
@@ -23,7 +23,7 @@
 }
 
 .dropdown-content-element:hover {
-  background-color: #3379c0;
+  background-color: #b98c3d;
 }
 .dropdown-content-element {
   min-width: 100%;
@@ -40,7 +40,7 @@
 
 a {
   text-decoration: none;
-  color: white;
+  color: #000000;
 }
 
 ul {
@@ -48,11 +48,9 @@ ul {
 }
 
 .bgHeader {
-  color: #FFFFFF;
-  background: #0054AD;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #288DF4, #0054AD);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #288DF4, #0054AD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+  background: #FFCA6F;
+  background: -webkit-linear-gradient(to right, #FFCA6F, #b98c3d);
+  background: linear-gradient(to right, #FFCA6F, #b98c3d); 
 }
 
 mat-form-field {
