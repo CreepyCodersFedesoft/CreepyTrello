@@ -10,7 +10,7 @@ export class RegisterBoardComponent implements OnInit {
   registerBoard: any;
   constructor() {
     this.registerBoard = {};
-   }
+  }
 
   ngOnInit(): void {
   }

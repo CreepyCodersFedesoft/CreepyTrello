@@ -3,7 +3,7 @@ const multiparty = require("connect-multiparty");
 const mult = multiparty();
 const Upload = require('../middleware/upload');
 const validateUser = require('../middleware/validateUser');
-const auth = require('../middleware/auth')
+const auth = require('../middleware/auth');
 const router = require('express').Router();
 
 router.post('/createUser', mult, Upload, UserController.createUser);
