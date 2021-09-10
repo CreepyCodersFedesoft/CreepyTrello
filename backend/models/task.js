@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const taskSchema = mongoose.Schema({
   userId: { type: mongoose.Schema.ObjectId, ref: 'user' },
-  boardId: { type: mongoose.Schema.ObjectId, ref: 'board' },
+  springId: { type: mongoose.Schema.ObjectId, ref: 'spring' },
   title: String,
   description: String,
   imgUrl: String,

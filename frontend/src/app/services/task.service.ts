@@ -14,8 +14,8 @@ export class TaskService {
    createTask(task: any) {
     return this._http.post<any>(this.env + 'task/createTask', task);
   }
-  listTask() {
-    return this._http.get<any>(this.env + 'task/listTask');
+  listTask(springId: any) {
+    return this._http.get<any>(this.env + 'task/listTask/' + springId);
   }
   updateTask(task: any) {
     return this._http.put<any>(this.env + 'task/updateTask', task);

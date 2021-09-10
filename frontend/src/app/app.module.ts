@@ -4,15 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-
-
-
 import { UserService } from './services/user.service';
 import { RoleService } from './services/role.service';
 import { BoardService } from './services/board.service';
-import { TaskService } from "./services/task.service";
-import { CommentService } from "./services/comment.service";
-import { UtilitiesService } from "./services/utilities.service";
+import { TaskService } from './services/task.service';
+import { CommentService } from './services/comment.service';
+import { UtilitiesService } from './services/utilities.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AuthGuard } from './guard/auth.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -52,8 +49,6 @@ import { ListRoleComponent } from './admin/list-role/list-role.component';
 import { ListUserComponent } from './admin/list-user/list-user.component';
 import { ListSpringComponent } from './board/spring/list-spring/list-spring.component';
 import { CreateSpringComponent } from './board/spring/create-spring/create-spring.component';
-
-
 
 @NgModule({
   declarations: [

@@ -1,1 +1,13 @@
-<p>list-board works!</p>
+<div class="card-wrapper" *ngIf="boardData.length">
+  <div *ngFor="let board of boardData">
+    <mat-card class="information-card" (click)="doStuff(board._id)">
+      <mat-card-header>
+        <mat-card-title>{{ board.name }}</mat-card-title>
+      </mat-card-header>
+      <img mat-card-image src="{{ board.boardImg }}" />
+      <mat-card-content>
+        <p>{{ board.description }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

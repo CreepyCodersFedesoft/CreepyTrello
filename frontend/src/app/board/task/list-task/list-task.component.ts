@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TaskService } from "../../../services/task.service";
 import { UtilitiesService } from "../../../services/utilities.service";
 import {CdkDragDrop, CdkDragEnd, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
@@ -10,8 +10,10 @@ import { CreateTaskComponent } from '../create-task/create-task.component';
   templateUrl: './list-task.component.html',
   styleUrls: ['./list-task.component.css']
 })
-export class ListTaskComponent implements OnInit {
-  
+export class ListTaskComponent {
+  @Input() springId: any = null;
+ 
+
   taskData: any[];
   taskData1: string[]=[];
   taskData2: any[]=[];
@@ -24,11 +26,14 @@ export class ListTaskComponent implements OnInit {
     this.taskData3 = [];
   }
 
-  ngOnInit(): void {
-    this._taskService.listTask().subscribe(
+  ngOnChanges(): void {
+    this.chargeTask();
+  }
+  chargeTask(){
+    this._taskService.listTask(this.springId).subscribe(
       (res) => {
         this.taskData = res.task;
-        console.log(res.Task); 
+        console.log(res); 
       },
       (err) => {
         this.message = err.error;
@@ -37,7 +42,7 @@ export class ListTaskComponent implements OnInit {
       
     );
     const nombres= JSON.stringify(this.taskData, ['name']);
-        console.log("los valores son" + nombres)
+    //console.log("los valores son" + nombres)
   }
   updateTask(task: any, status: string) {
     let tempStatus = task.taskStatus;
