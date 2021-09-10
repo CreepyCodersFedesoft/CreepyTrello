@@ -6,6 +6,7 @@ const SpringSchema = mongoose.Schema({
   description: {type: String},
   startDate: { type: Date },
   endDate: { type: Date },
+  springStatus: { type: Boolean, default: true},
   date: { type: Date, default: Date.now },
 });
 
