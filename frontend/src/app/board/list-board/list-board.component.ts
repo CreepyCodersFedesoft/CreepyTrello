@@ -29,6 +29,6 @@ export class ListBoardComponent implements OnInit {
 
   doStuff(id: any):void {
     console.log(id);
-    this._router.navigate(['/login']);
+    this._router.navigate([`springs/${id}`]);
   }
 }
