@@ -53,7 +53,6 @@ export class UpdateUserComponent implements OnInit {
   }
 
   UpdateUser(){
-    
     if (
       !this.updateData.name ||
       !this.updateData.email
