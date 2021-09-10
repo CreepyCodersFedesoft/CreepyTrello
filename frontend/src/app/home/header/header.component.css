@@ -14,7 +14,7 @@
   box-sizing: border-box;
   display: none;
   position: absolute;
-  background-color: #288DF4;
+  background-color: #FFCA6F;
   min-width: 100%;
   padding: 0 0;
   margin: 0% 0% 0% 0%;
@@ -23,7 +23,7 @@
 }
 
 .dropdown-content-element:hover {
-  background-color: #3379c0;
+  background-color: #FFCA6F;
 }
 .dropdown-content-element {
   min-width: 100%;
