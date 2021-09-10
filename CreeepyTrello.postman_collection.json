@@ -1,0 +1,746 @@
+{
+	"info": {
+		"_postman_id": "687280c8-7b73-40ff-a70d-20f8b9f87497",
+		"name": "CreeepyTrello",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "Crear Usuario con image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Diego",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "asda2sd@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/D:/Imagenes/Memes 2021/62805_60b6c72f772fc.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/user/createUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								"createUser"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "http://localhost:3001/api/user/createUser",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Diego",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "asda2sd@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/D:/Imagenes/Memes 2021/62805_60b6c72f772fc.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3001/api/user/createUser",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"user",
+										"createUser"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "184"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b8-n3leiE73wIkGqILcgqkgn/sYmg0\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 03 Sep 2021 22:35:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"jwtToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTMyYTMzNTUzOWIxYWNjNDYzZjAxOTMiLCJuYW1lIjoiRGllZ28iLCJpYXQiOjE2MzA3MDg1MzN9.E4mjq6ZtevioCtjTCkiDzKpzLRbPGaKtbMhg5N_XQco\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Crear Usuario sin imagen",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "juan",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "juan@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/user/createUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								"createUser"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "http://localhost:3001/api/user/createUser",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "juan",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "juan@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3001/api/user/createUser",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"user",
+										"createUser"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "183"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b7-7i1ZcTnEYz5fV72T1ZOAaTjn510\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 03 Sep 2021 23:01:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"jwtToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTMyYTk1ZmVjNzBjMTQzNWMwNDZiZTUiLCJuYW1lIjoianVhbiIsImlhdCI6MTYzMDcxMDExMX0.QymlIMwLh8BN3HEt3aWAnXaZIxCIK-IvRpjVDFqg-qA\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Actualizar Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "juan calavera",
+									"type": "text"
+								},
+								{
+									"key": "_id",
+									"value": "6132a95fec70c1435c046be5",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "juan@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/D:/Imagenes/Memes 2021/62867_60b92504664cd.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/user/updateUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								"updateUser"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "http://localhost:3001/api/user/updateUser",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "juan calavera",
+											"type": "text"
+										},
+										{
+											"key": "_id",
+											"value": "6132a95fec70c1435c046be5",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "juan@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/D:/Imagenes/Memes 2021/62867_60b92504664cd.jpg"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3001/api/user/updateUser",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"user",
+										"updateUser"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "233"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e9-sn4s6iOm6O4x5BIGwda9QE4mTzM\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 03 Sep 2021 23:03:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"_id\": \"6132a95fec70c1435c046be5\",\n        \"name\": \"Saratustra\",\n        \"email\": \"juan@gmail.com\",\n        \"password\": \"$2b$10$XDSlIyv3xHS5q1zq.KF/N.G4qDM7uXEP1MMyKV9r1clT11MMmslMq\",\n        \"userImg\": \"\",\n        \"dbStatus\": true,\n        \"date\": \"2021-09-03T23:01:51.306Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Eliminar usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\": \"61329f719e0b84fecf64075d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/user/deleteUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								"deleteUser"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"61329f719e0b84fecf64075d\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3001/api/user/deleteUser",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"user",
+										"deleteUser"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "227"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e3-COTjWjUC6yy9F0hxEPVEsKSa//Q\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 03 Sep 2021 23:12:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"_id\": \"61329f719e0b84fecf64075d\",\n        \"name\": \"Diego\",\n        \"email\": \"hjg@gmail.com\",\n        \"password\": \"$2b$10$GOvhaPRyxmj6d0HUaTEKLOK6nHjplyJJaRzRyqdp8wYCnYbk5McTu\",\n        \"userImg\": \"\",\n        \"dbStatus\": true,\n        \"date\": \"2021-09-03T22:19:29.922Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Listar todos los usuarios Activos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/user/listUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								"listUser"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Listar todos los usuarios",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3001/api/user/listUser",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"user",
+										"listUser"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2147"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"863-sYtpzyRAzbh+6n/mUGu8beprwog\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 03 Sep 2021 23:14:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"users\": [\n        {\n            \"_id\": \"61329d88ecaed65dee29ee4d\",\n            \"name\": \"Diego\",\n            \"email\": \"alejorvela@gmail.com\",\n            \"password\": \"$2b$10$adtbdoeBZ1kI74k2gXnoNuEBMYLZswXGEWFyzeEXTuXMpJvkmzNsu\",\n            \"userImg\": \"\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:11:20.060Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61329fee38bf1d5c75fcaf26\",\n            \"name\": \"Diego\",\n            \"email\": \"hjsg@gmail.com\",\n            \"password\": \"$2b$10$.39kxqQvsizSa7QG1w0gjenIO778J8aGAkfRr12KsQWGQogqZ7dCG\",\n            \"userImg\": \"\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:21:34.966Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6132a0b686f4d6fe0ddf31c4\",\n            \"name\": \"Diego\",\n            \"email\": \"ss@gmail.com\",\n            \"password\": \"$2b$10$fdZfMOuovjtP3kIbnkQeouFG4Lig4YRTiYh80Hhrt06JwA1k6EHwW\",\n            \"userImg\": \"\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:24:54.142Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6132a1108bb56cc0713017fd\",\n            \"name\": \"Diego\",\n            \"email\": \"sss@gmail.com\",\n            \"password\": \"$2b$10$S3q/9taBMqcZAHIXFgPZxu46w2HzObWtYzWt0i4aoo.Mon6AHAhhe\",\n            \"userImg\": \"\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:26:24.874Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6132a1239cf74a248e882212\",\n            \"name\": \"Diego\",\n            \"email\": \"s2ss@gmail.com\",\n            \"password\": \"$2b$10$1vVhj47P6/k96blzI4GcduExydyUPn/s/zNFR4TFfnLxJzbS6qx1u\",\n            \"userImg\": \"\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:26:43.505Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6132a17dc5471b717ceefc81\",\n            \"name\": \"Diego\",\n            \"email\": \"wqewqeq@gmail.com\",\n            \"password\": \"$2b$10$jYhvIYzFgX6YQCmaw57qteKYmdoQ0rdaTgbRWXFcaiq2JBJnvlFmm\",\n            \"userImg\": \"\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:28:13.723Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6132a2c3e836ce55c6674870\",\n            \"name\": \"Diego\",\n            \"email\": \"asdasd@gmail.com\",\n            \"password\": \"$2b$10$4NTZXJHWBsjLRB6QBvjy9.z9EYMbA7tFw2koaRN9OZ2EF4qoGBrzO\",\n            \"userImg\": \"http://localhost:3001/uploads/1630708419.jpg\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:33:39.127Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6132a335539b1acc463f0193\",\n            \"name\": \"Saratustra\",\n            \"email\": \"asda2sd@gmail.com\",\n            \"password\": \"$2b$10$MhNNHFJ4D1eQtJrepN08NeCInVAm4GBEvb4lYgjrHUccTNEdsFaP2\",\n            \"userImg\": \"http://localhost:3001/uploads/1630709638.jpg\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:35:33.384Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6132a95fec70c1435c046be5\",\n            \"name\": \"juan calavera\",\n            \"email\": \"juan@gmail.com\",\n            \"password\": \"$2b$10$XDSlIyv3xHS5q1zq.KF/N.G4qDM7uXEP1MMyKV9r1clT11MMmslMq\",\n            \"userImg\": \"http://localhost:3001/uploads/1630710201.jpg\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T23:01:51.306Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Listar todos los usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/user/listUserAll",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								"listUserAll"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Listar todos los usuarios",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3001/api/user/listUserAll",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"user",
+										"listUserAll"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2367"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"93f-x3OEaVOjl/KOcC12KQG9jd3Xck8\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 03 Sep 2021 23:17:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"users\": [\n        {\n            \"_id\": \"61329d88ecaed65dee29ee4d\",\n            \"name\": \"Diego\",\n            \"email\": \"alejorvela@gmail.com\",\n            \"password\": \"$2b$10$adtbdoeBZ1kI74k2gXnoNuEBMYLZswXGEWFyzeEXTuXMpJvkmzNsu\",\n            \"userImg\": \"\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:11:20.060Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61329f719e0b84fecf64075d\",\n            \"name\": \"Diego\",\n            \"email\": \"hjg@gmail.com\",\n            \"password\": \"$2b$10$GOvhaPRyxmj6d0HUaTEKLOK6nHjplyJJaRzRyqdp8wYCnYbk5McTu\",\n            \"userImg\": \"\",\n            \"dbStatus\": false,\n            \"date\": \"2021-09-03T22:19:29.922Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61329fee38bf1d5c75fcaf26\",\n            \"name\": \"Diego\",\n            \"email\": \"hjsg@gmail.com\",\n            \"password\": \"$2b$10$.39kxqQvsizSa7QG1w0gjenIO778J8aGAkfRr12KsQWGQogqZ7dCG\",\n            \"userImg\": \"\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:21:34.966Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6132a0b686f4d6fe0ddf31c4\",\n            \"name\": \"Diego\",\n            \"email\": \"ss@gmail.com\",\n            \"password\": \"$2b$10$fdZfMOuovjtP3kIbnkQeouFG4Lig4YRTiYh80Hhrt06JwA1k6EHwW\",\n            \"userImg\": \"\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:24:54.142Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6132a1108bb56cc0713017fd\",\n            \"name\": \"Diego\",\n            \"email\": \"sss@gmail.com\",\n            \"password\": \"$2b$10$S3q/9taBMqcZAHIXFgPZxu46w2HzObWtYzWt0i4aoo.Mon6AHAhhe\",\n            \"userImg\": \"\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:26:24.874Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6132a1239cf74a248e882212\",\n            \"name\": \"Diego\",\n            \"email\": \"s2ss@gmail.com\",\n            \"password\": \"$2b$10$1vVhj47P6/k96blzI4GcduExydyUPn/s/zNFR4TFfnLxJzbS6qx1u\",\n            \"userImg\": \"\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:26:43.505Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6132a17dc5471b717ceefc81\",\n            \"name\": \"Diego\",\n            \"email\": \"wqewqeq@gmail.com\",\n            \"password\": \"$2b$10$jYhvIYzFgX6YQCmaw57qteKYmdoQ0rdaTgbRWXFcaiq2JBJnvlFmm\",\n            \"userImg\": \"\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:28:13.723Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6132a2c3e836ce55c6674870\",\n            \"name\": \"Diego\",\n            \"email\": \"asdasd@gmail.com\",\n            \"password\": \"$2b$10$4NTZXJHWBsjLRB6QBvjy9.z9EYMbA7tFw2koaRN9OZ2EF4qoGBrzO\",\n            \"userImg\": \"http://localhost:3001/uploads/1630708419.jpg\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:33:39.127Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6132a335539b1acc463f0193\",\n            \"name\": \"Saratustra\",\n            \"email\": \"asda2sd@gmail.com\",\n            \"password\": \"$2b$10$MhNNHFJ4D1eQtJrepN08NeCInVAm4GBEvb4lYgjrHUccTNEdsFaP2\",\n            \"userImg\": \"http://localhost:3001/uploads/1630709638.jpg\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T22:35:33.384Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6132a95fec70c1435c046be5\",\n            \"name\": \"juan calavera\",\n            \"email\": \"juan@gmail.com\",\n            \"password\": \"$2b$10$XDSlIyv3xHS5q1zq.KF/N.G4qDM7uXEP1MMyKV9r1clT11MMmslMq\",\n            \"userImg\": \"http://localhost:3001/uploads/1630710201.jpg\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T23:01:51.306Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Listar usuario con filtro",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/user/listUser/jua",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								"listUser",
+								"jua"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Listar usuario con filtro",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3001/api/user/listUser/jua",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"user",
+										"listUser",
+										"jua"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "283"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"11b-NTkjxNpyzz5dFNLg6V9CyGcUNto\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 03 Sep 2021 23:15:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"users\": [\n        {\n            \"_id\": \"6132a95fec70c1435c046be5\",\n            \"name\": \"juan calavera\",\n            \"email\": \"juan@gmail.com\",\n            \"password\": \"$2b$10$XDSlIyv3xHS5q1zq.KF/N.G4qDM7uXEP1MMyKV9r1clT11MMmslMq\",\n            \"userImg\": \"http://localhost:3001/uploads/1630710201.jpg\",\n            \"dbStatus\": true,\n            \"date\": \"2021-09-03T23:01:51.306Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
