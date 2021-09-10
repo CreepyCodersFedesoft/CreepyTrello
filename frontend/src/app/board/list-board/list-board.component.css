@@ -1,0 +1,10 @@
+.information-card {
+  max-width: 200px;
+  margin: 10px 10px 10px 10px;
+  min-height: 270px;
+  border-radius: 10%;
+}
+
+.card-wrapper {
+  display: flex;
+}
