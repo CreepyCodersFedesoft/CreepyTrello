@@ -33,6 +33,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 import { HeaderComponent } from './home/header/header.component';
 import { RegisterComponent } from './home/register/register.component';
@@ -89,6 +90,7 @@ import { ListUserComponent } from './admin/list-user/list-user.component';
     MatPaginatorModule,
     MatSortModule,
     MatSidenavModule,
+    MaterialFileInputModule,
   ],
   providers: [
     UserService,
