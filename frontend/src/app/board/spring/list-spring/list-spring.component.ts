@@ -7,7 +7,7 @@ import { SpringService } from "../../../services/spring.service";
   styleUrls: ['./list-spring.component.css']
 })
 export class ListSpringComponent implements OnInit {
-
+  show: boolean = true;
   springData: any;
   springId: any;
 
@@ -29,6 +29,7 @@ export class ListSpringComponent implements OnInit {
         console.log(res);
         if(res.spring.length === 0){
           console.log("no hay spring en este board!");//cambiar por mensaje de snackbar de utilities
+          
           //this._router.navigate(['createSpring']);
         } else {
           this.springData = res;
@@ -43,7 +44,14 @@ export class ListSpringComponent implements OnInit {
 
   chargeSpring(springId: any ){
     console.log(`My spring ID is ${springId}`);
-    //this._router.navigate([`/listTask/${springId}`])
+    //this._router.navigate([`/springs/${springId}`])
     this.springId = springId;
   }
+
+
+  change() {
+    this.show = !this.show;
+  }
+
+
 }

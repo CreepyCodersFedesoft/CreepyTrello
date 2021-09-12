@@ -1,18 +1,26 @@
-<div class="row">
-  <div class="col-md-2 bg-info">
-    <div>
-      <button
-        mat-button
-        *ngFor="let spring of this.springData.spring; let i = index"
-        value="{{ spring._id }}"
-        (click)="chargeSpring(spring._id)"
-      >
-        {{ spring.title }}
-      </button>
-    </div>
-  </div>
-  <div class="col-md-10">
-    <app-list-task *ngIf="springId != null"  [springId]="this.springId"
-    ></app-list-task>
+<div id="mySidebar" class="sidebar"       
+  [style]="
+  this.show == true
+    ?  'width:250px'
+    : 'width:0'
+  ">
+  <a
+  *ngFor="let spring of this.springData.spring; let i = index"
+  (click)="chargeSpring(spring._id)">
+  {{ spring.title }}
+  </a>
+</div>
+
+<div id="main"
+[style]="
+this.show == true
+  ? 'margin-left: 250px'
+  : 'margin-left: 0;'
+">
+<div class="overflow-auto">
+    <button class="openbtn" (click)="this.show = !this.show">
+      <mat-icon>{{this.show == true ? 'keyboard_arrow_left': 'keyboard_arrow_right'}}</mat-icon>
+    </button>  
+    <app-list-task *ngIf="springId != null"  [springId]="this.springId"></app-list-task>
   </div>
 </div>
