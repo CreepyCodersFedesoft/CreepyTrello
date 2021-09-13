@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       this._userService.login(this.loginData).subscribe(
         (res) => {
           localStorage.setItem('token', res.jwtToken);
-          this._router.navigate(['/listTask']);
+          this._router.navigate(['/listBoard']);
           this.getRole(this.loginData.email);
           this.loginData = {};
           this._userService.changeDataUser(true);
