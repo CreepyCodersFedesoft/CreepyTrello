@@ -22,6 +22,7 @@ app.use("/api/board", Board);
 app.use("/api/task", Task);
 app.use("/api/comment", Comment);
 app.use("/api/sendMail", SendMail);
+app.use("/api/spring", Spring);
 
 app.listen(
   process.env.PORT || 3000, () =>

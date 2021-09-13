@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { SpringService } from "../../../services/spring.service";
 import { CreateTaskComponent } from '../../task/create-task/create-task.component';
+import { CreateSpringComponent } from '../create-spring/create-spring.component';
 @Component({
   selector: 'app-list-spring',
   templateUrl: './list-spring.component.html',
@@ -61,6 +62,14 @@ export class ListSpringComponent implements OnInit {
     this.springId = springId;
   }
 
+  
+  onCreate(){
+    const matDialog= new MatDialogConfig();
+    matDialog.disableClose=true;
+    matDialog.autoFocus=true;
+    matDialog.width="50%";
+    this._matDialog.open(CreateSpringComponent, matDialog);
+  }
 
   change() {
     this.show = !this.show;
