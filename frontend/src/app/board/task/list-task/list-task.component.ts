@@ -4,6 +4,7 @@ import { UtilitiesService } from "../../../services/utilities.service";
 import {CdkDragDrop, CdkDragEnd, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {MatDialogModule, MatDialogConfig, MatDialog} from '@angular/material/dialog';
 import { CreateTaskComponent } from '../create-task/create-task.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-task',
@@ -12,7 +13,7 @@ import { CreateTaskComponent } from '../create-task/create-task.component';
 })
 export class ListTaskComponent {
   @Input() springId: any = null;
- 
+  @Input() boardId: any = null;
 
   taskData: any[];
   taskData1: string[]=[];
@@ -20,7 +21,7 @@ export class ListTaskComponent {
   taskData3: any[]=[];
   message: string = '';
 
-  constructor(private _taskService: TaskService, private _utilitiesService: UtilitiesService, private _matDialog: MatDialog) { 
+  constructor(private _taskService: TaskService, private _utilitiesService: UtilitiesService, private _matDialog: MatDialog, private _router: Router) { 
     this.taskData = [];
     this.taskData2 = [];
     this.taskData3 = [];
@@ -37,13 +38,14 @@ export class ListTaskComponent {
       },
       (err) => {
         this.message = err.error;
-        
+        this._utilitiesService.openSnackBarError(this.message);
       }
       
     );
     const nombres= JSON.stringify(this.taskData, ['name']);
     //console.log("los valores son" + nombres)
   }
+  
   updateTask(task: any, status: string) {
     let tempStatus = task.taskStatus;
     task.taskStatus = status;
@@ -89,11 +91,11 @@ export class ListTaskComponent {
                         event.currentIndex);
     }
   }
- onCreate(){
-   const matDialog= new MatDialogConfig();
-   matDialog.disableClose=true;
-   matDialog.autoFocus=true;
-   matDialog.width="50%";
-   this._matDialog.open(CreateTaskComponent, matDialog);
- }
+  onCreate(){
+    const matDialog= new MatDialogConfig();
+    matDialog.disableClose=true;
+    matDialog.autoFocus=true;
+    matDialog.width="50%";
+    this._matDialog.open(CreateTaskComponent, matDialog);
+  }
 }

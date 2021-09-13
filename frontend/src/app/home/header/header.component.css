@@ -49,8 +49,8 @@ ul {
 
 .bgHeader {
   background: #FFCA6F;
-  background: -webkit-linear-gradient(to right, #FFCA6F, #b98c3d);
-  background: linear-gradient(to right, #FFCA6F, #b98c3d); 
+  background: -webkit-linear-gradient(to right, #FFCA6F, #ddb063);
+  background: linear-gradient(to right, #FFCA6F, #ddb063); 
 }
 
 mat-form-field {
