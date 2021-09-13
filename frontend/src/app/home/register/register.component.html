@@ -1,1 +1,47 @@
-<p>register works!</p>
+<div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
+    <mat-card-header>
+      <mat-card-title>Registro de Usuario<br /></mat-card-title>
+    </mat-card-header>
+
+    <div class="example-form">
+      <mat-card-content>
+        <mat-form-field class="example-full-width">
+          <input             
+            matInput 
+            placeholder="Name and lastname" 
+            required        
+             [(ngModel)]="registerData.name"    
+          />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input 
+            matInput
+            [(ngModel)]="registerData.email"
+            type="email"
+            placeholder="Email"
+            required          
+          />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input 
+            [(ngModel)]="registerData.password"
+            type="password"
+            matInput
+            placeholder="Password"
+            required          
+          />
+        </mat-form-field>
+        <mat-form-field>
+            <ngx-mat-file-input  placeholder="Enter a image" class="input-file" (change)="uploadImg($event)"></ngx-mat-file-input>
+            <mat-icon matSuffix>folder</mat-icon>
+        </mat-form-field>
+      </mat-card-content>
+      <button mat-stroked-button (click)="registerUser()"  color="accent" class="btn-block">
+        Register
+      </button>
+    </div>
+  </mat-card>
+</div>

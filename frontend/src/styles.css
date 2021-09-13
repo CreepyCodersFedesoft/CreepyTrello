@@ -2,3 +2,27 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* cambios scrollbar del sidebar */
+body::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+body::-webkit-scrollbar:vertical {
+  width:8px;
+}
+
+body::-webkit-scrollbar-button:increment,.sidebar::-webkit-scrollbar-button {
+  display: none;
+} 
+
+body::-webkit-scrollbar:horizontal {
+  height: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #cfa358;
+  border-radius: 20px;
+  border: 0;
+}
+/*Terminan cambios scrollbar del sidebar */

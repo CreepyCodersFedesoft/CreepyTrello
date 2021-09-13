@@ -3,6 +3,7 @@
       <mat-card class="card">
         <mat-card-title>Create Task</mat-card-title>
         <mat-card-content>
+          
           <div class="container">
             <mat-form-field>
               <input
@@ -27,7 +28,7 @@
           <!-- <button (click)="saveTask()" class="button" mat-raised-button>
             Create
           </button> -->
-          <button (click)="createTask()" class="button" mat-raised-button>
+          <button (click)="createTask(); onClose()" class="button" mat-raised-button>
             Create
           </button>
         </mat-card-actions>
