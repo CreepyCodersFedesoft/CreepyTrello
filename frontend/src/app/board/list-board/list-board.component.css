@@ -1,0 +1,21 @@
+.information-card {
+  width: 210px;
+  margin: 10px 10px 10px 10px;
+  max-height: 275px;
+  border-radius: 10%;
+  border: 2px solid #ffca6f;
+  height: 240px;
+}
+
+img {
+  max-height: 120px;
+  max-width: 210px;
+}
+
+.card-wrapper {
+  display: flex;
+}
+
+.icon{
+  justify-content: flex-end;
+}

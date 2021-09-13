@@ -1,15 +1,15 @@
 <mat-toolbar class="bgHeader">
   <ul>
-    <img src="../../../assets/img/logo/logo.gif" alt="logo CreepyCoders" />
+    <img src="../../../assets/img/logo/logo.gif" alt="logo CreepyCoders" routerLink="listBoard"/>
   </ul>
   <ul>
     <a *ngIf="_userService.loggedIn()" mat-button routerLink="registerBoard"
-      >Create board</a
+      >Crear Tablero</a
     >
   </ul>
   <ul>
     <a *ngIf="_userService.loggedIn()" mat-button routerLink="listBoard"
-      >List board</a
+      >Lista de Tableros</a
     >
   </ul>
   <span class="headerSpacer"></span>
@@ -25,10 +25,15 @@
         class="imgDoesnExist profileConfig"
         alt=""
       />
-      <span> ¡Bienvenido {{ this.userName.split(" ")[0] }}!</span>
+      <span class="mx-2 text-capitalize"> {{ this.userName.split(" ")[0] }}</span>
       <div class="dropdown-content">
-        <a class="dropdown-content-element" mat-button routerLink="updateUser">
-          Profile Settings
+        <a>
+          Welcome {{ this.userName.split(" ")[0] }}
+        </a>
+        <br />
+        <a class="dropdown-content-element" mat-button (click)="settings()">
+          <mat-icon>settings</mat-icon>
+          Settings
         </a>
         <br />
         <a class="dropdown-content-element" mat-button>
