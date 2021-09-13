@@ -6,6 +6,7 @@ import { SpringService } from '../../../services/spring.service';
 import { CreateTaskComponent } from '../../task/create-task/create-task.component';
 import { CreateSpringComponent } from '../create-spring/create-spring.component';
 import swal from 'sweetalert2';
+import { BoardService } from 'src/app/services/board.service';
 
 @Component({
   selector: 'app-list-spring',
@@ -24,8 +25,9 @@ export class ListSpringComponent implements OnInit {
     private _router: Router,
     private _activeRoute: ActivatedRoute,
     private _matDialog: MatDialog,
-    private _utilitiesService: UtilitiesService
-  ) { 
+    private _utilitiesService: UtilitiesService,
+    private _boardService: BoardService,
+  ) {
     this.springData = {};
     this.boardData = {};
     this.springId = null;
@@ -34,6 +36,8 @@ export class ListSpringComponent implements OnInit {
 
   ngOnInit(): void {
     //debe llegar el id del board y en base a este listar los springs
+    console.log("this._activeRoute.snapshot.params.boardId",this._activeRoute.snapshot.params.boardId);
+    
     this._springService
       .listSpring(this._activeRoute.snapshot.params.boardId)
       .subscribe(
@@ -42,14 +46,9 @@ export class ListSpringComponent implements OnInit {
           if (res.spring.length === 0) {
             this.message = 'No hay Springs creados en este board';
             this._utilitiesService.openSnackBarError(this.message);
-          } else {
-            this.springData = res;
-            this.boardData._id = this._activeRoute.snapshot.params.boardId;
-            this.boardData.boardImg = res.spring[0].boardId.boardImg;
-            this.boardData.name = res.spring[0].boardId.name;
-            this.boardData.description = res.spring[0].boardId.description;
-            console.log(this.boardData);
           }
+          this.springData = res;
+          this.chargeBoard();
         },
         (err) => {}
       );
@@ -59,18 +58,28 @@ export class ListSpringComponent implements OnInit {
     this.chargeSpring(entryId);
   }
 
+  chargeBoard(){
+    this._boardService.getBoardById(this._activeRoute.snapshot.params.boardId).subscribe(
+      (res) => {
+        this.boardData = res.board;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
   chargeSpring(springId: any) {
     this.springId = springId;
   }
 
-  
-  onCreate(springId: any){
-    const matDialog= new MatDialogConfig();
-    matDialog.disableClose=false;
-    matDialog.autoFocus=true;
-    matDialog.width="50%";
+  onCreate(springId: any) {
+    const matDialog = new MatDialogConfig();
+    matDialog.disableClose = false;
+    matDialog.autoFocus = true;
+    matDialog.width = '50%';
     let dialog = this._matDialog.open(CreateSpringComponent, matDialog);
-    const sub = dialog.componentInstance.onAdd.subscribe((data)=>{
+    const sub = dialog.componentInstance.onAdd.subscribe((data) => {
       this.saveSprint(data);
       this.ngOnInit();
     });
@@ -81,14 +90,14 @@ export class ListSpringComponent implements OnInit {
 
   saveSprint(registerData: any) {
     console.log(registerData);
-    
-    if(!registerData.title || !registerData.description) {
-      this._utilitiesService.openSnackBarError("Datos incompletos");
-    }else{
+
+    if (!registerData.title || !registerData.description) {
+      this._utilitiesService.openSnackBarError('Datos incompletos');
+    } else {
       registerData.boardId = this.boardData._id;
       this._springService.createSpring(registerData).subscribe(
         (res) => {
-          this._utilitiesService.openSnackBarSuccesfull("Sprint creado");
+          this._utilitiesService.openSnackBarSuccesfull('Sprint creado');
         },
         (err) => {
           this._utilitiesService.openSnackBarError(err.error);
@@ -116,7 +125,7 @@ export class ListSpringComponent implements OnInit {
   async deleteSprint() {
     let result = await swal.fire({
       title: '¿Esta seguro de que desea eliminar el sprint seleccionado?',
-      text: "¡No serás capaz de revertir estos cambios!",
+      text: '¡No serás capaz de revertir estos cambios!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -126,7 +135,7 @@ export class ListSpringComponent implements OnInit {
 
     if (result.isConfirmed) {
       this._springService.deleteSpring(this.springId).subscribe();
-      swal.fire('Proceso Exitoso', '¡Sprint eliminado con existo!', 'success')
+      swal.fire('Proceso Exitoso', '¡Sprint eliminado con existo!', 'success');
       this.ngOnInit();
     }
   }
