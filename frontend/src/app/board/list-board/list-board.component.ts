@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BoardService } from 'src/app/services/board.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { Router } from '@angular/router';
+import {MatDialogModule, MatDialogConfig, MatDialog} from '@angular/material/dialog';
+import { RegisterBoardComponent } from '../register-board/register-board.component';
 
 @Component({
   selector: 'app-list-board',
@@ -11,7 +13,7 @@ import { Router } from '@angular/router';
 export class ListBoardComponent implements OnInit {
   boardData: any;
 
-  constructor(private _boardService: BoardService, private _utilitiesServices: UtilitiesService, private _router: Router) {
+  constructor(private _boardService: BoardService, private _utilitiesServices: UtilitiesService, private _router: Router, private _matDialog: MatDialog) {
     this.boardData = {};
   }
 
@@ -44,5 +46,13 @@ export class ListBoardComponent implements OnInit {
         this._utilitiesServices.openSnackBarError(err.error);
       }
     );
+  }
+
+  onCreate(){
+    const matDialog= new MatDialogConfig();
+    matDialog.disableClose=true;
+    matDialog.autoFocus=true;
+    matDialog.width="50%";
+    this._matDialog.open(RegisterBoardComponent, matDialog);
   }
 }
