@@ -39,6 +39,41 @@ const listSpring = async (req, res) => {
   if(!spring) return res.status(400).send('No spring for this board');
   return res.status(200).send({ spring });
 };
-const updateSpring = async (req, res) => {};//actualizar fechas, titulo, descripcion y estado
+const updateSpring = async (req, res) => {
+  if (
+    !req.body._id ||
+    !req.body.boardId ||
+    !req.body.title ||
+    !req.body.description ||
+    !req.body.springStatus ||
+    !req.body.startDate ||
+    !req.body.endDate
+  )
+    return res.status(400).send("Error: Empty Data");
+
+  //revisamos que el usuario pertenezca al board
+  const board = await Board.find({
+    $or: [{ userId: req.user._id }, { userList: req.user._id }],
+  });
+  let arrayBoardId = []
+  board.forEach(boardId => {
+    arrayBoardId.push(String(boardId._id));
+  });
+  if(!arrayBoardId.includes(String(req.body.boardId)))
+    return res.status(400).send('You no have permission to update');
+
+  //actualizamos
+  let result = await Spring.findByIdAndUpdate(req.body._id , {
+    boardId: req.body.boardId,
+    title: req.body.title,
+    description: req.body.description,
+    startDate: req.body.startDate,
+    endDate: req.body.endDate,
+    springStatus: req.body.springStatus,
+  });
+  if(!result) return res.status(400).send('Error to update spring')
+
+  return res.status(201).send({result});
+};//actualizar fechas, titulo, descripcion y estado
 
 module.exports = { createSpring, updateSpring, listSpring };
