@@ -66,12 +66,13 @@ export class ListSpringComponent implements OnInit {
   
   onCreate(springId: any){
     const matDialog= new MatDialogConfig();
-    matDialog.disableClose=true;
+    matDialog.disableClose=false;
     matDialog.autoFocus=true;
     matDialog.width="50%";
     let dialog = this._matDialog.open(CreateSpringComponent, matDialog);
     const sub = dialog.componentInstance.onAdd.subscribe((data)=>{
       this.saveSprint(data);
+      this.ngOnInit();
     });
     dialog.afterClosed().subscribe(() => {
       sub.unsubscribe();
