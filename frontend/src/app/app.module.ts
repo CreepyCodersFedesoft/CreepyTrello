@@ -34,6 +34,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { HeaderComponent } from './home/header/header.component';
 import { RegisterComponent } from './home/register/register.component';
@@ -51,6 +52,7 @@ import { ListRoleComponent } from './admin/list-role/list-role.component';
 import { ListUserComponent } from './admin/list-user/list-user.component';
 import { ListSpringComponent } from './board/spring/list-spring/list-spring.component';
 import { CreateSpringComponent } from './board/spring/create-spring/create-spring.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -97,6 +99,8 @@ import { CreateSpringComponent } from './board/spring/create-spring/create-sprin
     DragDropModule,
     MatDialogModule,
     MatMenuModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     UserService,
