@@ -1,14 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { TaskService } from "../../../services/task.service";
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { TaskService } from '../../../services/task.service';
 import { Router } from '@angular/router';
-import { UtilitiesService } from "../../../services/utilities.service";
-import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-
+import { UtilitiesService } from '../../../services/utilities.service';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
-  styleUrls: ['./create-task.component.css']
+  styleUrls: ['./create-task.component.css'],
 })
 export class CreateTaskComponent implements OnInit {
   @Input() springId: any = null;
@@ -16,13 +20,21 @@ export class CreateTaskComponent implements OnInit {
   selectedFile: any;
   message: string = '';
 
-  constructor(private _taskService: TaskService, private _router: Router, private _utilitiesService: UtilitiesService, public _dialogRef: MatDialog) {
+  constructor(
+    private _taskService: TaskService,
+    private _router: Router,
+    private _utilitiesService: UtilitiesService,
+    public _dialogRef: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: {
+      springId: string,
+      boardId: string
+    },
+  ) {
     this.registerData = {};
     this.selectedFile = null;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   uploadImg(event: any) {
     this.selectedFile = <File>event.target.files[0];
@@ -40,22 +52,22 @@ export class CreateTaskComponent implements OnInit {
       }
       data.append('title', this.registerData.title);
       data.append('description', this.registerData.description);
-console.log(this.springId);
+      data.append('springId', this.data.springId);
 
       this._taskService.createTask(data).subscribe(
         (res) => {
-          this._router.navigate(['/listTask']);
-          this._utilitiesService.openSnackBarSuccesfull("Task Create")
+          //this._router.navigate([`springs/${this.data.boardId}`])
+          this._utilitiesService.openSnackBarSuccesfull('Task Create');
           this.registerData = {};
         },
         (err) => {
           this.message = err.error;
-          this._utilitiesService.openSnackBarError(this.message)
+          this._utilitiesService.openSnackBarError(this.message);
         }
       );
     }
   }
-onClose(): void{
-  this._dialogRef.closeAll();
-}
+  onClose(): void {
+    this._dialogRef.closeAll();
+  }
 }

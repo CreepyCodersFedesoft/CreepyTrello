@@ -1,20 +1,22 @@
+/*Termina cambios sidebar */
 .sidebar {
   height: 100%;
   width: 0;
   position: absolute;
   z-index: 0;
   left: 0;
-  background-color: #111;
+  background: #288DFA;
+  background: -webkit-linear-gradient(to bottom, #288DFA, #288DFA);
+  background: linear-gradient(to bottom, #288DFA, #288DFA); 
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 80px;
 }
 
 .sidebar a {
-  padding: 8px 8px 8px 32px;
+  padding-bottom: 7px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: #ffffff;
   display: block;
   transition: 0.3s;
 }
@@ -23,25 +25,22 @@
   color: #f1f1f1;
 }
 
-.sidebar .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+.sidebar-board {
+  background: #2272c9;
 }
 
 .openbtn {
   font-size: 20px;
   cursor: pointer;
-  background-color: #111;
+  background-color: #0394c0;
   color: white;
   padding: 10px 15px;
   border: none;
+  border-radius: 5%;
 }
 
 .openbtn:hover {
-  background-color: #444;
+  background-color: #0084AD;
 }
 
 #main {
@@ -50,3 +49,29 @@
   max-height: 100%;
   height: 100%;
 }
+/*Termina cambios sidebar */
+
+/* cambios scrollbar del sidebar */
+.sidebar::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.sidebar::-webkit-scrollbar:vertical {
+  width:8px;
+}
+
+.sidebar::-webkit-scrollbar-button:increment,.sidebar::-webkit-scrollbar-button {
+  display: none;
+} 
+
+.sidebar::-webkit-scrollbar:horizontal {
+  height: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #217bdb;
+  border-radius: 20px;
+  border: 0;
+}
+/*Terminan cambios scrollbar del sidebar */
+
