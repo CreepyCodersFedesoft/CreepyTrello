@@ -2,7 +2,7 @@
   <div *ngFor="let board of boardData">
     <mat-card class="information-card" fxFlexAlign="stretch">
       <mat-card-header>
-        <mat-card-title class="title" (click)="doStuff(board._id)">{{
+        <mat-card-title class="title" (click)="enterSprint(board._id)">{{
           board.name
         }}</mat-card-title>
         <div>
@@ -18,7 +18,7 @@
               <mat-icon>edit</mat-icon>
               <span>Editar</span>
             </button>
-            <button mat-menu-item>
+            <button (click)="deleteBoard(board)" mat-menu-item>
               <mat-icon>delete</mat-icon>
               <span>Eliminar</span>
             </button>
@@ -27,7 +27,7 @@
       </mat-card-header>
       <img
         mat-card-image
-        (click)="doStuff(board._id)"
+        (click)="enterSprint(board._id)"
         src="{{ board.boardImg }}"
       />
       <mat-card-content>
