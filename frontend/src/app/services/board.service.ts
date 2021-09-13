@@ -18,7 +18,9 @@ export class BoardService {
   listBoard(){
     return this._http.get<any>(this.env + 'board/listBoard');
   }
-
+  getBoardById(boardId: any){
+    return this._http.get<any>(this.env + 'board/getBoardById/'+boardId);
+  }
   deleteBoard(board: any){
     return this._http.delete<any>(this.env + 'board/deleteBoard/' + board._id);
   }
