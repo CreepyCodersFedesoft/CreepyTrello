@@ -8,6 +8,8 @@ import { ListCommentsComponent } from './board/comments/list-comments/list-comme
 import { InviteUserComponent } from './board/invite-user/invite-user.component';
 import { ListBoardComponent } from './board/list-board/list-board.component';
 import { RegisterBoardComponent } from './board/register-board/register-board.component';
+import { CreateSpringComponent } from './board/spring/create-spring/create-spring.component';
+import { ListSpringComponent } from './board/spring/list-spring/list-spring.component';
 import { CreateTaskComponent } from './board/task/create-task/create-task.component';
 import { ListTaskComponent } from './board/task/list-task/list-task.component';
 import { LoginComponent } from './home/login/login.component';
@@ -85,6 +87,16 @@ const routes: Routes = [
   {
     path: 'listUser',
     component: ListUserComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'springs/:boardId',
+    component: ListSpringComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'createSpring',
+    component: CreateSpringComponent,
     pathMatch: 'full',
   },
 ];

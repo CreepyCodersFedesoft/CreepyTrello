@@ -15,4 +15,7 @@ export class BoardService {
     return this._http.post<any>(this.env + 'board/createBoard', board);
   }
 
+  listBoard(){
+    return this._http.get<any>(this.env + 'board/listBoard');
+  }
 }
