@@ -6,6 +6,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-register-board',
@@ -15,14 +16,10 @@ import {
 export class RegisterBoardComponent implements OnInit {
   registerBoard: any;
   selectedFile: any;
-  message: string = '';
-  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
-  verticalPosition: MatSnackBarVerticalPosition = 'top';
-  durationInSeconds: number = 2;
   constructor(
     private _boardService: BoardService,
     private _router: Router,
-    private _snackBar: MatSnackBar
+    private _utilitiesServices:UtilitiesService
   ) {
     this.registerBoard = {};
     this.selectedFile = null;
@@ -33,8 +30,7 @@ export class RegisterBoardComponent implements OnInit {
 
   createBoard(){
     if(!this.registerBoard.name || !this.registerBoard.description){
-      this.message = 'Fallo el proceso: Datos icompletos';
-      this.openSnackBarError();
+      this._utilitiesServices.openSnackBarError('Fallo el proceso: Datos icompletos')
       this.registerBoard = {};
     }else{
       const data = new FormData();
@@ -48,8 +44,7 @@ export class RegisterBoardComponent implements OnInit {
       this._boardService.createBoard(data).subscribe(
         (res)=>{
           this._router.navigate(['/listBoard']);
-          this.message = 'Tablero Creado';
-          this.openSnackBarSuccesfull();
+          this._utilitiesServices.openSnackBarSuccesfull('Tablero Creado');
           this.registerBoard = {};
         }
       )
@@ -58,25 +53,5 @@ export class RegisterBoardComponent implements OnInit {
 
   uploadImg(event:any){
     this.selectedFile = <File> event.target.files[0];
-  }
-
-
-
-  openSnackBarSuccesfull(){
-    this._snackBar.open(this.message, 'X', {
-      horizontalPosition:this.horizontalPosition,
-      verticalPosition:this.verticalPosition,
-      duration: this.durationInSeconds *1000,
-      panelClass: ['style-snackBarTrue'],
-    });
-  }
-
-  openSnackBarError(){
-    this._snackBar.open(this.message, 'X', {
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-      duration: this.durationInSeconds * 1000,
-      panelClass: ['style-snackBarFalse']
-    });
   }
 }

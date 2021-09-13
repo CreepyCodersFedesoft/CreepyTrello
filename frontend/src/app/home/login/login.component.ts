@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   
   constructor(
     private _userService: UserService,
-    private _router: Router,    
+    private _router: Router,
+    private _utilitiesServices:UtilitiesService    
   ) { 
     this.loginData = {};    
   }
@@ -24,8 +26,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (!this.loginData.email || !this.loginData.password) {
-      this.message = 'Failed process: Imcomplete data';
-      //this.openSnackBarError();
+      this._utilitiesServices.openSnackBarError('Failed process: Imcomplete data');
       this.loginData = {};
     } else {
       this._userService.login(this.loginData).subscribe(
@@ -37,8 +38,7 @@ export class LoginComponent implements OnInit {
           this._userService.changeDataUser(true);
         },
         (err) => {
-          this.message = err.error;
-          //this.openSnackBarError();
+          this._utilitiesServices.openSnackBarError(err.error);
         }
       );
     }
