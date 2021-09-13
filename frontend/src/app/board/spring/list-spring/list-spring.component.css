@@ -1,3 +1,4 @@
+/*Termina cambios sidebar */
 .sidebar {
   height: 100%;
   width: 0;
@@ -9,7 +10,6 @@
   background: linear-gradient(to bottom, #288DFA, #288DFA); 
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 40px;
 }
 
 .sidebar a {
@@ -23,6 +23,10 @@
 
 .sidebar a:hover {
   color: #f1f1f1;
+}
+
+.sidebar-board {
+  background: #2272c9;
 }
 
 .openbtn {
@@ -45,6 +49,7 @@
   max-height: 100%;
   height: 100%;
 }
+/*Termina cambios sidebar */
 
 /* cambios scrollbar del sidebar */
 .sidebar::-webkit-scrollbar {
