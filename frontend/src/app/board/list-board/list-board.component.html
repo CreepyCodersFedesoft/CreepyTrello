@@ -1,10 +1,35 @@
 <div class="card-wrapper" *ngIf="boardData.length">
   <div *ngFor="let board of boardData">
-    <mat-card class="information-card" (click)="doStuff(board._id)">
+    <mat-card class="information-card" fxFlexAlign="stretch">
       <mat-card-header>
-        <mat-card-title>{{ board.name }}</mat-card-title>
+        <mat-card-title class="title" (click)="enterSprint(board._id)">{{
+          board.name
+        }}</mat-card-title>
+        <div>
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="onCreate()" mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button (click)="deleteBoard(board)" mat-menu-item>
+              <mat-icon>delete</mat-icon>
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
+        </div>
       </mat-card-header>
-      <img mat-card-image src="{{ board.boardImg }}" />
+      <img
+        mat-card-image
+        (click)="enterSprint(board._id)"
+        src="{{ board.boardImg }}"
+      />
       <mat-card-content>
         <p>{{ board.description }}</p>
       </mat-card-content>
