@@ -14,6 +14,7 @@ import {
 })
 export class RegisterBoardComponent implements OnInit {
   registerBoard: any;
+  selectedFile: any;
   message: string = '';
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
@@ -24,6 +25,7 @@ export class RegisterBoardComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) {
     this.registerBoard = {};
+    this.selectedFile = null;
   }
 
   ngOnInit(): void {
@@ -35,7 +37,15 @@ export class RegisterBoardComponent implements OnInit {
       this.openSnackBarError();
       this.registerBoard = {};
     }else{
-      this._boardService.createBoard(this.registerBoard).subscribe(
+      const data = new FormData();
+      if(this.selectedFile !=null){
+        data.append('image', this.selectedFile, this.selectedFile.name);
+      }
+      data.append('name', this.registerBoard.name)
+      data.append('description', this.registerBoard.description)
+
+
+      this._boardService.createBoard(data).subscribe(
         (res)=>{
           this._router.navigate(['/listBoard']);
           this.message = 'Tablero Creado';
@@ -45,6 +55,12 @@ export class RegisterBoardComponent implements OnInit {
       )
     }
   }
+
+  uploadImg(event:any){
+    this.selectedFile = <File> event.target.files[0];
+  }
+
+
 
   openSnackBarSuccesfull(){
     this._snackBar.open(this.message, 'X', {
