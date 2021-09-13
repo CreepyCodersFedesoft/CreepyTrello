@@ -53,7 +53,9 @@ export class CreateTaskComponent implements OnInit {
       data.append('title', this.registerData.title);
       data.append('description', this.registerData.description);
       data.append('springId', this.data.springId);
-
+    
+      this._utilitiesService.openSnackBarSuccesfull('creando tarea con inf'+ data);
+      
       this._taskService.createTask(data).subscribe(
         (res) => {
           //this._router.navigate([`springs/${this.data.boardId}`])

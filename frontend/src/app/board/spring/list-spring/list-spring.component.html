@@ -8,11 +8,11 @@
   </a>
   <div *ngFor="let spring of this.springData.spring; let i = index"
   (click)="chargeSpring(spring._id)" class="text-center">
-    <a class="p-2 fs-5" mat-button>
+    <a class="p-2 fs-5 text-wrap" mat-button>
       {{ spring.title }}
     </a>
     <button mat-button (click)="addTask(spring._id, boardData._id)"><mat-icon class="text-white text-wrap fs-6">library_add</mat-icon></button>
-    <button mat-button><mat-icon class="text-white fs-6">delete_forever</mat-icon></button>
+    <button mat-button (click)="deleteSprint()"><mat-icon class="text-white fs-6">delete_forever</mat-icon></button>
     <button mat-button><mat-icon class="text-white fs-6">settings</mat-icon></button>
   </div>
   <a mat-button class="fs-6" (click)="onCreate(boardData._id)">Add Spring <mat-icon>library_add</mat-icon></a>
