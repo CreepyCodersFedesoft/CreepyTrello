@@ -5,9 +5,9 @@
   position: absolute;
   z-index: 0;
   left: 0;
-  background: #288DFA;
-  background: -webkit-linear-gradient(to bottom, #288DFA, #288DFA);
-  background: linear-gradient(to bottom, #288DFA, #288DFA); 
+  background: #AD6F03;
+  background: -webkit-linear-gradient(to bottom, #AD6F03, #AD6F03);
+  background: linear-gradient(to bottom, #AD6F03, #AD6F03); 
   overflow-x: hidden;
   transition: 0.5s;
 }
@@ -26,10 +26,10 @@
 }
 
 .sidebar-board {
-  background: #2272c9;
+  background: #a06704;
 }
 
-.openbtn {
+.openbtn { 
   font-size: 20px;
   cursor: pointer;
   background-color: #0394c0;
@@ -69,7 +69,7 @@
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-  background-color: #217bdb;
+  background-color: #915f0b;
   border-radius: 20px;
   border: 0;
 }

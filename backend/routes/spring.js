@@ -5,6 +5,7 @@ const validateUser = require('../middleware/validateUser');
 
 router.post('/createSpring', auth, validateUser, SpringController.createSpring);
 router.get('/listSpring/:boardId?', auth, validateUser, SpringController.listSpring);
-router.put('/updateSpring', auth, validateUser, SpringController.updateSpring);
+router.put('/updateSprint', auth, validateUser, SpringController.updateSprint);
+router.delete('/deleteSprint/:_id', auth, validateUser, SpringController.deleteSprint);
 
 module.exports = router;
