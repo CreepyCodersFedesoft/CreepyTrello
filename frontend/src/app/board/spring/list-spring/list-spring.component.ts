@@ -22,7 +22,7 @@ export class ListSpringComponent implements OnInit {
     private _router: Router,
     private _activeRoute: ActivatedRoute,
     private _matDialog: MatDialog,
-    private _utilitiesService: UtilitiesService,
+    private _utilitiesService: UtilitiesService
   ) { 
     this.springData = {};
     this.boardData = {};
@@ -63,12 +63,36 @@ export class ListSpringComponent implements OnInit {
   }
 
   
-  onCreate(){
+  onCreate(springId: any){
     const matDialog= new MatDialogConfig();
     matDialog.disableClose=true;
     matDialog.autoFocus=true;
     matDialog.width="50%";
-    this._matDialog.open(CreateSpringComponent, matDialog);
+    let dialog = this._matDialog.open(CreateSpringComponent, matDialog);
+    const sub = dialog.componentInstance.onAdd.subscribe((data)=>{
+      this.saveSprint(data);
+    });
+    dialog.afterClosed().subscribe(() => {
+      sub.unsubscribe();
+    });
+  }
+
+  saveSprint(registerData: any) {
+    console.log(registerData);
+    
+    if(!registerData.title || !registerData.description) {
+      this._utilitiesService.openSnackBarError("Datos incompletos");
+    }else{
+      registerData.boardId = this.boardData._id;
+      this._springService.createSpring(registerData).subscribe(
+        (res) => {
+          this._utilitiesService.openSnackBarSuccesfull("Sprint creado");
+        },
+        (err) => {
+          this._utilitiesService.openSnackBarError(err.error);
+        }
+      );
+    }
   }
 
   change() {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { SpringService } from 'src/app/services/spring.service';
 import { Router } from '@angular/router';
 import { UtilitiesService } from 'src/app/services/utilities.service';
@@ -10,6 +10,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 })
 export class CreateSpringComponent implements OnInit {
   registerData: any;
+  onAdd = new EventEmitter();
 
   constructor(private _sprintService: SpringService, private _utilitiesService: UtilitiesService) { 
     this.registerData = {};
@@ -19,20 +20,6 @@ export class CreateSpringComponent implements OnInit {
   }
 
   saveSprint(){
-    if(!this.registerData.title || !this.registerData.description) {
-      this._utilitiesService.openSnackBarError("Datos incompletos");
-      this.registerData = {};
-    }else{
-      this._sprintService.createSpring(this.registerData).subscribe(
-        (res) => {
-          this._utilitiesService.openSnackBarSuccesfull("Sprint creado");
-          this.registerData = {};
-        },
-        (err) => {
-          this._utilitiesService.openSnackBarError(err.error);
-        }
-      );
-    }
+    this.onAdd.emit(this.registerData);
   }
-
 }
