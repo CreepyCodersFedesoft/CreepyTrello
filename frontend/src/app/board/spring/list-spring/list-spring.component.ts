@@ -25,11 +25,7 @@ export class ListSpringComponent implements OnInit {
     private _activeRoute: ActivatedRoute,
     private _matDialog: MatDialog,
     private _utilitiesService: UtilitiesService
-<<<<<<< HEAD
   ) { 
-=======
-  ) {
->>>>>>> devDiego
     this.springData = {};
     this.boardData = {};
     this.springId = null;
