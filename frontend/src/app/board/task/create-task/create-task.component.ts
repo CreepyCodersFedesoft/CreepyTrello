@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { TaskService } from '../../../services/task.service';
 import { Router } from '@angular/router';
 import { UtilitiesService } from '../../../services/utilities.service';
@@ -15,6 +15,7 @@ import {
   styleUrls: ['./create-task.component.css'],
 })
 export class CreateTaskComponent implements OnInit {
+  @Input() springId: any = null;
   registerData: any;
   selectedFile: any;
   message: string = '';

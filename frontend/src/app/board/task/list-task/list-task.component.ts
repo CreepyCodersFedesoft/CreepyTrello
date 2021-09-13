@@ -4,6 +4,9 @@ import { UtilitiesService } from "../../../services/utilities.service";
 import {CdkDragDrop, CdkDragEnd, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {MatDialogModule, MatDialogConfig, MatDialog} from '@angular/material/dialog';
 import { CreateTaskComponent } from '../create-task/create-task.component';
+
+import {MatMenuModule} from '@angular/material/menu';
+
 import { Router } from '@angular/router';
 
 @Component({
