@@ -1,14 +1,14 @@
 <div class="bgComponent">
   <div class="form">
     <mat-card class="card">
-      <mat-card-title>Create Board</mat-card-title>
+      <mat-card-title>Crear Tablero</mat-card-title>
       <mat-card-content>
         <div class="container">
           <mat-form-field>
             <input
               [(ngModel)]="registerBoard.name"
               matInput
-              placeholder="Board name"
+              placeholder="Nombre del tablero"
               required
             />
           </mat-form-field>
@@ -16,12 +16,18 @@
               <input
               [(ngModel)]="registerBoard.description"
               matInput
-              placeholder="Description"
+              placeholder="Descripcion del tablero"
               required
               >
           </mat-form-field>
+          <input type="file" (change)="uploadImg($event)"/>
         </div>
       </mat-card-content>
+      <mat-card-actions>
+        <button (click)="createBoard()" class="button" mat-raised-button>
+          Crear
+        </button>
+      </mat-card-actions>
     </mat-card>
   </div>
 </div>

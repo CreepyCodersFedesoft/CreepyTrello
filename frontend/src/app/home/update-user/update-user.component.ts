@@ -77,6 +77,7 @@ export class UpdateUserComponent implements OnInit {
           this.message = 'Usuario Actualizado correctamente';
           this.openSnackBarSuccess();
           this.chargeData();
+          this._userService.changeDataUser(true);
         },
         (err) => {
           this.message = err.error;

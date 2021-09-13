@@ -8,20 +8,16 @@ const createBoard = async (req, res) => {
   if (!req.body.name || !req.body.description)
     return res.status(400).send("Incomplete Data");
 
-  let boardImgUrl = "";
-  if (req.files.image) {
-    if (req.files.image.type != null) {
-      const url = req.protocol + "://" + req.get("host") + "/";
-      const boardServerImg =
-        "./uploads/" + moment().unix() + path.extname(req.files.image.path);
-      fs.createReadStream(req.files.image.path).pipe(
-        fs.createWriteStream(boardServerImg)
-      );
-      boardImgUrl = url + boardServerImg.slice(2);
-      console.log(boardImgUrl);
-    }
-  }
-
+   console.log(req.files);
+   let boardImgUrl = "";
+   if(req.files !== undefined && req.files.image.type){
+    let url = req.protocol + "://" + req.get("host")
+    let serverImg = "./uploads/" + moment().unix() + path.extname(req.files.image.path);
+    fs.createReadStream(req.files.image.path).pipe(fs.createWriteStream(serverImg));
+    boardImgUrl=url + "/uploads/" + moment().unix() + path.extname(req.files.image.path);
+    console.log(boardImgUrl);
+   }
+   
   const board = new Board({
     userId: req.user._id,
     name: req.body.name,

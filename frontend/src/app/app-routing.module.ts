@@ -17,6 +17,7 @@ import { RegisterComponent } from './home/register/register.component';
 import { UpdateUserComponent } from './home/update-user/update-user.component';
 
 
+
 const routes: Routes = [
   {
     path: '',

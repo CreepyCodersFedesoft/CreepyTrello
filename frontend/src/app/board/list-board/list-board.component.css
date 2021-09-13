@@ -4,7 +4,10 @@
   max-height: 275px;
   border-radius: 10%;
   border: 2px solid #ffca6f;
-  height: 240px;
+}
+
+.title{
+  font-size: 17px;
 }
 
 img {
