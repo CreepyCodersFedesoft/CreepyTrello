@@ -32,6 +32,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatMenuModule} from '@angular/material/menu';
 
 import { HeaderComponent } from './home/header/header.component';
 import { RegisterComponent } from './home/register/register.component';
@@ -92,6 +93,7 @@ import { CreateSpringComponent } from './board/spring/create-spring/create-sprin
     MatSidenavModule,
     DragDropModule,
     MatDialogModule,
+    MatMenuModule,
   ],
   providers: [
     UserService,

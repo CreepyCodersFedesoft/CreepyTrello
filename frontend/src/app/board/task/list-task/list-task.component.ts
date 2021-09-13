@@ -4,6 +4,7 @@ import { UtilitiesService } from "../../../services/utilities.service";
 import {CdkDragDrop, CdkDragEnd, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {MatDialogModule, MatDialogConfig, MatDialog} from '@angular/material/dialog';
 import { CreateTaskComponent } from '../create-task/create-task.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 @Component({
   selector: 'app-list-task',
@@ -91,9 +92,11 @@ export class ListTaskComponent {
   }
  onCreate(){
    const matDialog= new MatDialogConfig();
-   matDialog.disableClose=true;
-   matDialog.autoFocus=true;
-   matDialog.width="50%";
+   matDialog.disableClose=false;
+   matDialog.autoFocus=false;
+  // matDialog.width="50%";
    this._matDialog.open(CreateTaskComponent, matDialog);
  }
+
+ 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TaskService } from "../../../services/task.service";
 import { Router } from '@angular/router';
 import { UtilitiesService } from "../../../services/utilities.service";
@@ -11,7 +11,7 @@ import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angula
   styleUrls: ['./create-task.component.css']
 })
 export class CreateTaskComponent implements OnInit {
-
+  @Input() springId: any = null;
   registerData: any;
   selectedFile: any;
   message: string = '';
@@ -40,6 +40,7 @@ export class CreateTaskComponent implements OnInit {
       }
       data.append('title', this.registerData.title);
       data.append('description', this.registerData.description);
+console.log(this.springId);
 
       this._taskService.createTask(data).subscribe(
         (res) => {
