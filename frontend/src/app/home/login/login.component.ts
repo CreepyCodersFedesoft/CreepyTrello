@@ -30,11 +30,11 @@ export class LoginComponent implements OnInit {
     } else {
       this._userService.login(this.loginData).subscribe(
         (res) => {
-
           localStorage.setItem('token', res.jwtToken);
           this._router.navigate(['/listTask']);
           this.getRole(this.loginData.email);
           this.loginData = {};
+          this._userService.changeDataUser(true);
         },
         (err) => {
           this.message = err.error;

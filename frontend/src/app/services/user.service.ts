@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -8,12 +9,21 @@ import { environment } from 'src/environments/environment';
 })
 export class UserService {
   env: string;
+  
+  private messageSource = new BehaviorSubject(true);
+  isChanged = this.messageSource.asObservable();
+
   constructor(
     private _http: HttpClient,
     private _router: Router,
   ) { 
     this. env = environment.APP_URL;
   }
+
+  changeDataUser(message: boolean) {
+    this.messageSource.next(message)
+  }
+  
   getEmail() {
     return this._http.get<any>(this.env + 'user/getEmail');
   }
