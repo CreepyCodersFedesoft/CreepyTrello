@@ -1,5 +1,16 @@
+
+<div class="bgContentInput">
+  <input type="text" mat-input 
+  class="bgInput form-control text-center rounded-0 border-0  my-2" 
+  placeholder="Busca Tus Boards"
+  (keyup)="filteredWords()" 
+  [(ngModel)]="textFiltered"
+  autofocus 
+  >
+</div>
+
 <div class="card-wrapper" *ngIf="boardData.length">
-  <div *ngFor="let board of boardData">
+  <div *ngFor="let board of filteredBoards">
     <mat-card class="information-card" fxFlexAlign="stretch">
       <mat-card-header>
         <mat-card-title class="title" (click)="enterSprint(board._id)">{{

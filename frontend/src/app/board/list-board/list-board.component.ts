@@ -12,6 +12,8 @@ import { RegisterBoardComponent } from '../register-board/register-board.compone
 })
 export class ListBoardComponent implements OnInit {
   boardData: any;
+  textFiltered: string = "";
+  filteredBoards: any[] = [];
 
   constructor(private _boardService: BoardService, private _utilitiesServices: UtilitiesService, private _router: Router, private _matDialog: MatDialog) {
     this.boardData = {};
@@ -21,11 +23,22 @@ export class ListBoardComponent implements OnInit {
     this._boardService.listBoard().subscribe(
       (res) => {
         this.boardData = res.board;
+        this.filteredBoards = res.board;
       },
       (err) => {
         this._utilitiesServices.openSnackBarError(err.error);
       }
     );
+  }
+
+  filteredWords(){
+    //console.log(this.textFiltered);
+    this.filteredBoards = this.boardData.filter(
+      (board: any) => board.name.toLocaleLowerCase()
+      .includes(this.textFiltered.toLocaleLowerCase())
+    );
+    console.log(this.filteredBoards);
+    
   }
 
   enterSprint(id: any):void {
