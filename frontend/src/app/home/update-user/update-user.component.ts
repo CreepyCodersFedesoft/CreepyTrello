@@ -1,29 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 @Component({
   selector: 'app-update-user',
   templateUrl: './update-user.component.html',
   styleUrls: ['./update-user.component.css']
 })
 export class UpdateUserComponent implements OnInit {
-  message: string = '';
   updateData: any;
   selectedFile: any;
-  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
-  verticalPosition: MatSnackBarVerticalPosition = 'top';
-  durationInSeconds: number = 5;
-  pimage: string = '';
 
   constructor(
     private _userService: UserService,
-    private _matSnackBar: MatSnackBar,
-    private _router: Router,
+    private _sanitizer: DomSanitizer,
+    private _utilitiesServices:UtilitiesService
   ) { 
     this.updateData = {};
     this.selectedFile = null;
@@ -36,7 +27,6 @@ export class UpdateUserComponent implements OnInit {
   chargeData() {
     this._userService.getEmail().subscribe(
       (res) => {
-
         this.updateData.name = res.name;
         this.updateData.email = res.email;
         this.updateData.userImg = res.userImg;
@@ -48,8 +38,9 @@ export class UpdateUserComponent implements OnInit {
     );
   }
 
-  uploadImg(event: any){  
+  uploadImg(event: any){    
     this.selectedFile = <File>event.target.files[0];
+    this.updateData.userImg = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.selectedFile));
   }
 
   UpdateUser(){
@@ -57,11 +48,9 @@ export class UpdateUserComponent implements OnInit {
       !this.updateData.name ||
       !this.updateData.email
     ) {
-      this.message = 'Failed process: Imcomplete data';
-      this.openSnackBarError();
+      this._utilitiesServices.openSnackBarError('Failed process: Imcomplete data')
       this.updateData = {};      
     } else {
-      console.log(this.updateData);
       const data = new FormData();
       if(this.selectedFile != null) {           
         data.append('image', this.selectedFile, this.selectedFile.name);        
@@ -73,33 +62,15 @@ export class UpdateUserComponent implements OnInit {
       data.append('email', this.updateData.email);
 
       this._userService.updateUser(data).subscribe(
-        (res) => {
-          this.message = 'Usuario Actualizado correctamente';
-          this.openSnackBarSuccess();
-          this.chargeData();
+        (res) => {          
+          this._utilitiesServices.openSnackBarSuccesfull("Usuario Actualizado correctamente")
+          //this.chargeData();
+          this._userService.changeDataUser(true);
         },
         (err) => {
-          this.message = err.error;
-          this.openSnackBarError();
+          this._utilitiesServices.openSnackBarError(err.error)
         }
       );      
     }
-  }
-
-  openSnackBarSuccess() {
-    this._matSnackBar.open(this.message, 'X', {
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-      duration: this.durationInSeconds *1000,
-      panelClass: ['style-snackBarTrue'],
-    });
-  }
-  openSnackBarError() {
-    this._matSnackBar.open(this.message, 'X', {
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-      duration: this.durationInSeconds * 1000,
-      panelClass: ['style-snackBarTrue'],
-    });
   }
 }

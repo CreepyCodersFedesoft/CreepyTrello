@@ -18,11 +18,17 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this._userService.isChanged.subscribe((resp) => {
+      if (resp) {
+        this.chargeData();
+      }
+    });
+  }
+  chargeData() {
     if (this._userService.loggedIn()) {
       this._userService.getEmail().subscribe(
         (res) => {
           //console.log(res);
-
           this.profileImage = res.userImg;
           this.userName = res.name;
         },

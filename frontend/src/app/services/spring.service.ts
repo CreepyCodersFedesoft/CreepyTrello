@@ -20,6 +20,9 @@ export class SpringService {
     return this._http.post<any>(this.env + 'spring/createSpring', spring);
   } 
   updateSpring(spring: any) {
-    return this._http.put<any>(this.env + 'spring/updateSpring', spring);
+    return this._http.put<any>(this.env + 'spring/updateSprint', spring);
+  } 
+  deleteSpring(spring: any) {
+    return this._http.delete<any>(this.env + 'spring/deleteSprint/' + spring);
   } 
 }

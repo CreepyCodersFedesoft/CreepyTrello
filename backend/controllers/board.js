@@ -88,6 +88,13 @@ const updateBoard = async (req, res) => {
   }
   return res.status(200).send({ board });
 };
+const getBoardById = async (req, res) => {
+  const board = await Board.findById(req.params._id);
+  if (!board || board.length === 0)
+    return res.status(400).send("You do not have any board");
+  return res.status(200).send({ board });
+}
+
 const deleteBoard = async (req, res) => {
   const validId = mongoose.Types.ObjectId.isValid(req.params._id);
   if (!validId) return res.status(400).send("Invalid id");
@@ -167,4 +174,5 @@ module.exports = {
   deleteBoard,
   addListBoard,
   dropListBoard,
+  getBoardById,
 };
