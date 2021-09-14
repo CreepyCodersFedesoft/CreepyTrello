@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
     this.registerData = {};
   }
 
-  registerUser() {
+  registerUser() { 
     if (
       !this.registerData.name ||
       !this.registerData.email ||
@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit {
       this.registerData = {};
       this.selectedFile = null;
     } else {
+
       const data = new FormData();
       if (this.selectedFile != null) {
         data.append('image', this.selectedFile, this.selectedFile.name);
@@ -42,7 +43,7 @@ export class RegisterComponent implements OnInit {
       data.append('password', this.registerData.password);
       this._userService.createUser(data).subscribe(
         (res) => {
-          this._router.navigate(['/createBoard']);
+          this._router.navigate(['/login']);
           this._utilitiesServices.openSnackBarSuccesfull('Successfull user registration.');
           this.registerData = {};
         },
@@ -51,6 +52,7 @@ export class RegisterComponent implements OnInit {
           this._utilitiesServices.openSnackBarError(err.error);
         }
       );
+
     }
   }
 
