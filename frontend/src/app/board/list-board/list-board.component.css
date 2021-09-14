@@ -1,3 +1,17 @@
+.bgContentInput {
+  text-align: center;
+}
+.bgInput {
+  display: inline-block;
+  justify-content: right;
+  background: #cc8f25;
+  width: 500px;
+  color: white;
+}
+.bgInput::placeholder {
+  color: white;
+  border-radius: 10%;
+}
 .information-card {
   width: 210px;
   margin: 10px 10px 10px 10px;
@@ -17,6 +31,10 @@ img {
 
 .card-wrapper {
   display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
 }
 
 .icon{
