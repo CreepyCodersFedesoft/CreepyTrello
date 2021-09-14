@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema({
   userImg: String,
   roleId: { type: mongoose.Schema.ObjectId, ref: 'role' },
   date: { type: Date, default: Date.now },
-  dbStatus: { type: Boolean, default: true } ,
+  dbStatus: { type: Boolean, default: false } ,
 });
 
 userSchema.methods.generateJWT = function () {

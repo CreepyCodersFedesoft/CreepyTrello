@@ -2,22 +2,31 @@ const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const sendMail = async (req, res) => {
+  const urlMail = process.env.URL_MESSAGES + "/api/user/activateUser/" + req.body.email;
+
   const msg = {
-    to: "dianaeleira@servinformacion.com", // Change to your recipient
+    to: req.body.email, // Change to your recipient
     from: "dianaeleira@gmail.com", // Change to your verified sender
-    subject: "Sending with SendGrid is Fun",
-    text: "and easy to do anywhere, even with Node.js",
-    html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+    subject: "Welcome to Creppy Trello Software",
+    fromname: "Creppy Trello",
+    html:
+      "Hi, " +
+      req.body.name +
+      "!<br />Welcome to Creppy Trello Software." +
+      "Please activate your email by clicking <strong><a href='" +
+      urlMail +
+      "'>here</a></strong>",
   };
 
   sgMail
     .send(msg)
     .then((response) => {
-      return res.status(200).send({ message: response[0].statusCode });
+      //return res.status(200).send({ message: response[0].statusCode });
+      return "ok";
     })
     .catch((error) => {
-      return res.status(response[0].statusCode).send({ message: response[0].headers });
+      return "error";
+      //return res.status(response[0].statusCode).send({ message: response[0].headers });
     });
 };
 module.exports = { sendMail };
-

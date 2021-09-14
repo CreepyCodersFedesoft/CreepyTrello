@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const moment = require("moment");
 const path = require("path");
 const fs = require("fs");
+const sendMail = require("./sendgrid");
+var validator = require("email-validator");
 
 const createAdmin = async (req, res) => {
   if (
@@ -94,6 +96,7 @@ const createUser = async (req, res) => {
   const result = await user.save();
   if (!result) return res.status(400).send("Error: Failed to register user.");
   try {
+    sendMail.sendMail(req);
     const jwtToken = user.generateJWT();
     res.status(200).send({ jwtToken });
   } catch (e) {
@@ -102,43 +105,41 @@ const createUser = async (req, res) => {
 };
 
 const login = async (req, res) => {
-    const user = await User.findOne({ email: req.body.email });
-    if (!user) return res.status(400).send("Error: Wrong email or password.");
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) return res.status(400).send("Error: Wrong email or password.");
 
-    if (!user.dbStatus)
-        return res.status(400).send("Error: Wrong email or password.");
+  if (!user.dbStatus)
+    return res.status(400).send("Error: Wrong email or password.");
 
-    const hash = await bcrypt.compare(req.body.password, user.password);
-    if (!hash) return res.status(400).send("Error: Wrong email or password.");
+  const hash = await bcrypt.compare(req.body.password, user.password);
+  if (!hash) return res.status(400).send("Error: Wrong email or password.");
 
-    try {
-        const jwtToken = user.generateJWT();
-        return res.status(200).send({ jwtToken });
-    } catch (e) {
-        return res.status(400).send("Error: Login error.");
-    }
+  try {
+    const jwtToken = user.generateJWT();
+    return res.status(200).send({ jwtToken });
+  } catch (e) {
+    return res.status(400).send("Error: Login error.");
+  }
 };
 
 const listUser = async (req, res) => {
-    const users = await User.find({
-        $and: [{ name: new RegExp(req.params["name"], "i") }, { dbStatus: "true" }],
-    })
-        .populate("roleId")
-        .exec();
-    if (!users || users.length === 0)
-        return res.status(400).send("No search results");
-    return res.status(200).send({ users });
+  const users = await User.find({
+    $and: [{ name: new RegExp(req.params["name"], "i") }, { dbStatus: "true" }],
+  })
+    .populate("roleId")
+    .exec();
+  if (!users || users.length === 0)
+    return res.status(400).send("No search results");
+  return res.status(200).send({ users });
 };
 
 const listUserAll = async (req, res) => {
-
-    const users = await User.find({ name: new RegExp(req.params["name"], "i") })
-        .populate("roleId")
-        .exec();
-    if (!users || users.length === 0)
-        return res.status(400).send("No search results");
-    return res.status(200).send({ users });
-
+  const users = await User.find({ name: new RegExp(req.params["name"], "i") })
+    .populate("roleId")
+    .exec();
+  if (!users || users.length === 0)
+    return res.status(400).send("No search results");
+  return res.status(200).send({ users });
 };
 const getRole = async (req, res) => {
   const user = await User.findOne({ email: req.params.email })
@@ -148,7 +149,6 @@ const getRole = async (req, res) => {
     return res.status(400).send("Error: User no found");
   const role = user.roleId.name;
   return res.status(200).send({ role });
-
 };
 const getEmail = async (req, res) => {
   const user = await User.findOne({ _id: req.user._id });
@@ -195,7 +195,7 @@ const updateUser = async (req, res) => {
   //guardamos la ruta de la imagen anterior para eliminarla
   let serverImg = "";
   let userImg = await User.findById(req.user._id);
-  if (userImg.userImg !== "") {    
+  if (userImg.userImg !== "") {
     let userImage = userImg.userImg;
     userImage = userImage.split("/")[4];
     serverImg = "./uploads/" + userImage;
@@ -210,7 +210,11 @@ const updateUser = async (req, res) => {
 
   if (!user) return res.status(400).send("Error editing user");
   //si todo va bien, borramos la imagen anterior
-  if (imageUrl !== "" && userImg.userImg !== "" && req.files.image != undefined) {
+  if (
+    imageUrl !== "" &&
+    userImg.userImg !== "" &&
+    req.files.image != undefined
+  ) {
     try {
       fs.unlinkSync(serverImg);
     } catch (err) {
@@ -219,7 +223,6 @@ const updateUser = async (req, res) => {
   }
 
   return res.status(200).send({ user });
-
 };
 
 const deleteUser = async (req, res) => {
@@ -230,7 +233,26 @@ const deleteUser = async (req, res) => {
   });
   if (!user) return res.status(400).send("Error delete user");
   return res.status(200).send({ user });
-  
+};
+
+const activateUser = async (req, res) => {
+  let mail = req.params["email"];
+
+  const mailValid = validator.validate(mail);
+  if (!mailValid) return res.status(400).send("Incomplete data.");
+
+  const filter = { email: mail };
+  const update = { dbStatus: true };
+  const user = await User.findOneAndUpdate(filter, update, {
+    returnOriginal: false,
+  });
+
+
+  if (!user || user.length === 0)
+    return res.status(400).send("No search results");
+    
+  const urlWelcome = process.env.URL_MESSAGES + "/templates/template.html";
+  res.status(200).redirect(urlWelcome);
 };
 
 module.exports = {
@@ -243,4 +265,5 @@ module.exports = {
   listUserAll,
   getRole,
   getEmail,
+  activateUser,
 };

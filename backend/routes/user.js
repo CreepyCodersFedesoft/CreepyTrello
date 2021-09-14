@@ -11,6 +11,7 @@ router.post('/createAdmin', mult, Upload,   UserController.createAdmin);
 router.post('/login', UserController.login);
 router.get('/listUser/:name?', UserController.listUser);
 router.get('/listUserAll/:name?', UserController.listUserAll);
+router.get('/activateUser/:email?', UserController.activateUser);
 router.get('/getRole/:email?', UserController.getRole);
 router.get('/getEmail', auth, validateUser, UserController.getEmail);
 router.put('/updateUser', mult, Upload,   auth, validateUser, UserController.updateUser);
