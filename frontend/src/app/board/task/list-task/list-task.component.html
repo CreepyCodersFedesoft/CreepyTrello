@@ -1,137 +1,192 @@
-<body> 
 <div class="container at-5">
   <div class="row">
     <h2 class="text-center">Proceso de las Tareas</h2>
-    </div>
-   <!-- <div class="row">
-      <div class="col-lg-8 offset-lg-2 mb-4">
-        <input type="text" [(ngModel)]= "tarea" (keyup.enter)="agregarTarea()" class="form-control form-control-lg text-center" placeholder="Ingrese tarea">
-  
-      </div>
-    </div>-->
-
-    <div  class="pr-10 pl-10">
-      <button type="button" class="btn btn-primary" (click)="onCreate()">Create Task</button>
-
-            
-    </div>
-    <div cdkDropListGroup multi="true" class="row">
-      <div class="col-lg-4 text-center font-weight-bold ">
-        <h4>Do </h4>
-        <div
-          cdkDropList
-          class="example-list"
-          id="list-todo"
-          [cdkDropListData]="taskData"
-          [cdkDropListConnectedTo]="['list-progress', 'list-done']"
-          (cdkDropListDropped)="drop($event)"
-        > 
-          <div
-            class="example-box"
-            *ngFor="let task of taskData"
-            [cdkDragData]="task"
-            cdkDrag
-          > 
-          
-       
-            {{ task.title }}
-
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button (click)="onCreate()" mat-menu-item>
-                <mat-icon >details</mat-icon>
-                <span>Detalles</span>
-              </button>
-              <button mat-menu-item>
-                <mat-icon>edit</mat-icon>
-                <span>Editar</span>
-              </button>
-              <button (click)="onCreate()" mat-menu-item>
-                <mat-icon>delete</mat-icon>
-                <span>Eliminar</span>
-              </button>
-            </mat-menu>
-            
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 text-center">
-        <h4>In progress</h4>
-        <div
-          cdkDropList
-          class="example-list"
-          id="list-progress"
-          [cdkDropListData]="taskData2"
-          [cdkDropListConnectedTo]="['list-todo', 'list-done']"
-          (cdkDropListDropped)="drop($event)"
-        >
-          <div class="example-box" *ngFor="let task of taskData2" cdkDrag>
-            {{ task.title }}
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button (click)="onCreate()" mat-menu-item>
-                <mat-icon >details</mat-icon>
-                <span>Detalles</span>
-              </button>
-              <button mat-menu-item>
-                <mat-icon>edit</mat-icon>
-                <span>Editar</span>
-              </button>
-              <button (click)="onCreate()" mat-menu-item>
-                <mat-icon>delete</mat-icon>
-                <span>Eliminar</span>
-              </button>
-            </mat-menu>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 text-center">
-        <h4>Done</h4>
-        <div
-          cdkDropList
-          class="example-list"
-          id="list-done"
-          [cdkDropListData]="taskData3"
-          [cdkDropListConnectedTo]="['list-progress', 'list-todo']"
-          (cdkDropListDropped)="drop($event)"
-        >
-          <div
-            class="example-box"
-            *ngFor="let task of taskData3"
-            (cdkDropListDropped)="updateTask(task, 'done')"
-            cdkDrag
-          >
-            {{ task.title }}
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button (click)="onCreate()" mat-menu-item>
-                <mat-icon >details</mat-icon>
-                <span>Detalles</span>
-              </button>
-              <button mat-menu-item>
-                <mat-icon>edit</mat-icon>
-                <span>Editar</span>
-              </button>
-              <button (click)="onCreate()" mat-menu-item>
-                <mat-icon>delete</mat-icon>
-                <span>Eliminar</span>
-              </button>
-            </mat-menu>
-          </div>
-        </div>
-      </div>
-    </div>
-   
   </div>
+  <div class="row">
+    <div class="col-lg-4 text-center font-weight-bold">
+      <h4>To-Do</h4>
+      <div
+        cdkDropList
+        class="example-list"
+        id="list-todo"
+        [cdkDropListData]="taskData"
+        [cdkDropListConnectedTo]="['list-progress']"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div
+          class="example-box row align-items-start"
+          *ngFor="let task of taskData"
+          [cdkDragData]="task"
+          cdkDrag
+        >
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="onCreate()" mat-menu-item>
+              <mat-icon>details</mat-icon>
+              <span>Detalles</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button (click)="deleteTask(task)" mat-menu-item>
+              <mat-icon>delete</mat-icon>
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
+          {{ task.title }}
+          <div class="date">
+            {{ task.date | date }} {{ task.date | date: "shortTime" }}
+          </div>
+          <div class="d-flex justify-content-end">
+            <button mat-icon-button class="mt-1">
+              <mat-icon class="icon">person</mat-icon>
+            </button>
+            <button mat-icon-button class="mt-1">
+              <mat-icon class="icon">priority_high</mat-icon>
+            </button>
+            <button mat-icon-button class="mt-1">
+              <mat-icon class="icon">thumb_up_off_alt</mat-icon>
+            </button>
+            <!-- <span>{{ task.like }}</span>-->
+            <button
+              mat-icon-button
+              disableRipple
+              class="mt-1"
+              (click)="onOpenComment()"
+            >
+              <mat-icon class="icon">chat_bubble_outline</mat-icon>
+            </button>
+            <!-- <span>{{ comments }}</span>-->
+          </div>
+        </div>
+      </div>
+    </div>
 
-<!--<app-create-task *ngIf="false" [springId]="this.springId"></app-create-task>-->
-
-
-</body>
-
+    <div class="col-lg-4 text-center">
+      <h4>In progress</h4>
+      <div
+        cdkDropList
+        class="example-list"
+        id="list-progress"
+        [cdkDropListData]="taskData2"
+        [cdkDropListConnectedTo]="['list-todo', 'list-done']"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div
+          class="example-box row align-items-start"
+          *ngFor="let task of taskData2"
+          cdkDrag
+        >
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="onCreate()" mat-menu-item>
+              <mat-icon>details</mat-icon>
+              <span>Detalles</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button (click)="onCreate()" mat-menu-item>
+              <mat-icon>delete</mat-icon>
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
+          {{ task.title }}
+          <div class="date">
+            {{ task.date | date }} {{ task.date | date: "shortTime" }}
+          </div>
+          <div class="d-flex justify-content-end">
+            <button mat-icon-button class="mt-1">
+              <mat-icon class="icon">person</mat-icon>
+            </button>
+            <button mat-icon-button class="mt-1">
+              <mat-icon class="icon">priority_high</mat-icon>
+            </button>
+            <button mat-icon-button class="mt-1">
+              <mat-icon class="icon">thumb_up_off_alt</mat-icon>
+            </button>
+            <!-- <span>{{ task.like }}</span>-->
+            <button mat-icon-button class="mt-1">
+              <mat-icon class="icon">chat_bubble_outline</mat-icon>
+            </button>
+            <!-- <span>{{ comments }}</span>-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 text-center">
+      <h4>Done</h4>
+      <div
+        cdkDropList
+        class="example-list"
+        id="list-done"
+        [cdkDropListData]="taskData3"
+        [cdkDropListConnectedTo]="['list-progress']"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div
+          class="example-box row align-items-start"
+          *ngFor="let task of taskData3"
+          (cdkDropListDropped)="updateTask(task, 'done')"
+          cdkDrag
+        >
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="onCreate()" mat-menu-item>
+              <mat-icon>details</mat-icon>
+              <span>Detalles</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button (click)="onCreate()" mat-menu-item>
+              <mat-icon>delete</mat-icon>
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
+          {{ task.title }}
+          <div class="date">
+            {{ task.date | date }} {{ task.date | date: "shortTime" }}
+          </div>
+          <div class="d-flex justify-content-end">
+            <button mat-icon-button class="mt-1">
+              <mat-icon class="icon">person</mat-icon>
+            </button>
+            <button mat-icon-button class="mt-1">
+              <mat-icon class="icon">priority_high</mat-icon>
+            </button>
+            <button mat-icon-button class="mt-1">
+              <mat-icon class="icon">thumb_up_off_alt</mat-icon>
+            </button>
+            <!-- <span>{{ item.like }}</span>-->
+            <button mat-icon-button class="mt-1">
+              <mat-icon class="icon">chat_bubble_outline</mat-icon>
+            </button>
+            <!-- <span>{{ item.comments.length }}</span>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
