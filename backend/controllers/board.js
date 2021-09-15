@@ -8,14 +8,15 @@ const createBoard = async (req, res) => {
   if (!req.body.name || !req.body.description)
     return res.status(400).send("Incomplete Data");
 
-   console.log(req.files);
    let boardImgUrl = "";
-   if(req.files !== undefined && req.files.image.type){
+   if(req.files.image){
+     if(req.files.image.type !=null){
     let url = req.protocol + "://" + req.get("host")
     let serverImg = "./uploads/" + moment().unix() + path.extname(req.files.image.path);
     fs.createReadStream(req.files.image.path).pipe(fs.createWriteStream(serverImg));
     boardImgUrl=url + "/uploads/" + moment().unix() + path.extname(req.files.image.path);
     console.log(boardImgUrl);
+     }
    }
    
   const board = new Board({
@@ -94,7 +95,26 @@ const getBoardById = async (req, res) => {
     return res.status(400).send("You do not have any board");
   return res.status(200).send({ board });
 }
+const getUsersOnBoard = async (req, res) => {
+  const board = await Board.findById(req.params._id).populate('userList').populate('userId').exec();
+  if (!board || board.length === 0)
+    return res.status(400).send("You do not have any board");
 
+  let listUsersOnBoard = board.userList;
+  listUsersOnBoard.push(board.userId);
+  let filteredList = [];
+  listUsersOnBoard.forEach(lUOnBoard => {
+    filteredList.push({
+      _id: lUOnBoard._id,
+      name: lUOnBoard.name,
+      email: lUOnBoard.email,
+      userImg: lUOnBoard.userImg,
+      dbStatus: lUOnBoard.dbStatus,
+    })
+  });
+
+  return res.status(200).send({ filteredList });
+}
 const deleteBoard = async (req, res) => {
   const validId = mongoose.Types.ObjectId.isValid(req.params._id);
   if (!validId) return res.status(400).send("Invalid id");
@@ -175,4 +195,5 @@ module.exports = {
   addListBoard,
   dropListBoard,
   getBoardById,
+  getUsersOnBoard,
 };
