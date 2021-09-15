@@ -1,13 +1,14 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const commentSchema = mongoose.Schema({
-  userId: { type: mongoose.Schema.ObjectId, ref: 'user' }, 
-  taskId: { type: mongoose.Schema.ObjectId, ref: 'task' }, 
+  userId: { type: mongoose.Schema.ObjectId, ref: "user" },
+  taskId: { type: mongoose.Schema.ObjectId, ref: "task" },
   text: String,
-  likes: Number,
+  likes: { type: Number, default: 0 },
+  userLikes: [{ type: mongoose.Schema.ObjectId, ref: "user" }],
   date: { type: Date, default: Date.now },
   dbStatus: { type: Boolean, default: true },
 });
 
-const comment = mongoose.model('comment', commentSchema);
+const comment = mongoose.model("comment", commentSchema);
 module.exports = comment;
