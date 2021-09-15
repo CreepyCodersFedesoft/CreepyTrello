@@ -29,8 +29,10 @@ const createTask = async (req, res) => {
 
   //si no tiene un usuario asignado, le asignamos el que creo la tearea
   let assignUser = !req.body.assignedUser ? null : req.body.assignedUser;
-  let priority = !req.body.priority ? 0 : req.body.priority;
-  console.log(priority);
+  let priority = !req.body.priority ? 1 : req.body.priority;
+  
+  if(priority < 1 || priority > 5) 
+    return res.status(400).send('Error: priority must be in a range of 1 to 5');
 
   const task = new Task({
     userId: req.user._id,
@@ -129,6 +131,8 @@ const updateTask = async (req, res) => {
     priority = tempPriority.priority;
   } else {
     priority = req.body.priority;
+    if(priority < 1 || priority > 5) 
+      return res.status(400).send('Error: priority must be in a range of 1 to 5');
   }
 
   const task = await Task.findByIdAndUpdate(req.body._id, {
@@ -187,7 +191,7 @@ const deleteTask = async (req, res) => {
     console.log("Image no found in server");
   }
 
-  
+
   let history = new History({
     taskId: req.params._id,
     userId: req.user._id,
