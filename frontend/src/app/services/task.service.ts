@@ -1,17 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaskService {
   private env: string;
 
+  private _listTasks: BehaviorSubject<any> = new BehaviorSubject([]);
+  public readonly listTasks: Observable<any> = this._listTasks.asObservable();
+
   constructor(private _http: HttpClient) {
     this.env = environment.APP_URL;
-   }
-   createTask(task: any) {
+  }
+
+  updateListTask(springId: any) {    
+    this._http.get<any>(this.env + 'task/listTask/' + springId).subscribe(
+      (res) => {
+        this._listTasks.next(res.task);
+      },
+      (err) => {}
+    );
+  }
+
+  createTask(task: any) {
     return this._http.post<any>(this.env + 'task/createTask', task);
   }
   listTask(springId: any) {

@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
   templateUrl: './list-task.component.html',
   styleUrls: ['./list-task.component.css'],
 })
-export class ListTaskComponent {
+export class ListTaskComponent implements OnInit{
   @Input() springId: any = null;
   @Input() boardId: any = null;
 
@@ -42,26 +42,20 @@ export class ListTaskComponent {
     this.taskData2 = [];
     this.taskData3 = [];
   }
-
-  ngOnChanges(): void {
-    this.chargeTask();
-  }
-  chargeTask() {
-    this._taskService.listTask(this.springId).subscribe(
+  
+  ngOnInit(): void {
+    this._taskService.listTasks.subscribe(
       (res) => {
-        this.taskData = res.task;
-        console.log(res);
-      },
-      (err) => {
-        this.message = err.error;
-        this._utilitiesService.openSnackBarError(this.message);
+        this.taskData = res
       }
     );
-    const nombres = JSON.stringify(this.taskData, ['name']);
-    //console.log("los valores son" + nombres)
   }
 
-  updateTask(task: any, status: string) {
+  ngOnChanges(): void {
+    this._taskService.updateListTask(this.springId); 
+  }
+
+  updateTask(task: any, status: string) {    
     let tempStatus = task.taskStatus;
     task.taskStatus = status;
     this._taskService.updateTask(task).subscribe(
@@ -93,6 +87,7 @@ export class ListTaskComponent {
       }
     );
   }
+
   drop(event: CdkDragDrop<any[]>) {
     if (event.previousContainer === event.container) {
       //Dentro del mismo contenedor
@@ -111,6 +106,7 @@ export class ListTaskComponent {
       );
     }
   }
+
   onCreate() {
     const matDialog = new MatDialogConfig();
     matDialog.disableClose = false;
@@ -126,4 +122,5 @@ export class ListTaskComponent {
   addComment() {
     this.commentInput = 'comentario';
   }
+
 }

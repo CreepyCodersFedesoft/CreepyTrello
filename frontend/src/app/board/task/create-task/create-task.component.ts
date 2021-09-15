@@ -58,7 +58,8 @@ export class CreateTaskComponent implements OnInit {
       
       this._taskService.createTask(data).subscribe(
         (res) => {
-          //this._router.navigate([`springs/${this.data.boardId}`])
+          //this._router.navigate([`springs/${this.data.boardId}`])          
+          this._taskService.updateListTask(this.data.springId);
           this._utilitiesService.openSnackBarSuccesfull('Task Create');
           this.registerData = {};
         },
@@ -69,7 +70,9 @@ export class CreateTaskComponent implements OnInit {
       );
     }
   }
+  
   onClose(): void {
     this._dialogRef.closeAll();
   }
+
 }
