@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-
   getRole(email: string) {
     this._userService.getRole(email).subscribe(
       (res) => {

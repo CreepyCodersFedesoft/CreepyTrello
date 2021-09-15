@@ -7,6 +7,7 @@ import { CreateTaskComponent } from '../../task/create-task/create-task.componen
 import { CreateSpringComponent } from '../create-spring/create-spring.component';
 import swal from 'sweetalert2';
 import { BoardService } from 'src/app/services/board.service';
+import { UpdateSpringComponent } from '../update-spring/update-spring.component';
 
 @Component({
   selector: 'app-list-spring',
@@ -18,6 +19,7 @@ export class ListSpringComponent implements OnInit {
   springData: any;
   boardData: any;
   springId: any;
+  boardId: any;
   message: string;
 
   constructor(
@@ -26,54 +28,61 @@ export class ListSpringComponent implements OnInit {
     private _activeRoute: ActivatedRoute,
     private _matDialog: MatDialog,
     private _utilitiesService: UtilitiesService,
-    private _boardService: BoardService,
+    private _boardService: BoardService
   ) {
     this.springData = {};
     this.boardData = {};
     this.springId = null;
+    this.boardId = null;
     this.message = '';
   }
 
   ngOnInit(): void {
-    //debe llegar el id del board y en base a este listar los springs
-    console.log("this._activeRoute.snapshot.params.boardId",this._activeRoute.snapshot.params.boardId);
-    
-    this._springService
-      .listSpring(this._activeRoute.snapshot.params.boardId)
-      .subscribe(
-        (res) => {
-          console.log(res);
-          if (res.spring.length === 0) {
-            this.message = 'No hay Springs creados en este board';
-            this._utilitiesService.openSnackBarError(this.message);
-          }
-          this.springData = res;
-          this.chargeBoard();
-        },
-        (err) => {}
-      );
+    this.chargeBoard();
+    this._springService.listSprings.subscribe((res) => {
+      this.springData = res;
+    });
   }
 
   ngOnChanges(entryId: string) {
     this.chargeSpring(entryId);
   }
 
-  chargeBoard(){
-    this._boardService.getBoardById(this._activeRoute.snapshot.params.boardId).subscribe(
-      (res) => {
-        this.boardData = res.board;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+  chargeBoard() {
+    this._boardService
+      .getBoardById(this._activeRoute.snapshot.params.boardId)
+      .subscribe(
+        (res) => {
+          this.boardData = res.board;
+          this._springService.updateListSprings(this.boardData._id);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 
   chargeSpring(springId: any) {
     this.springId = springId;
   }
 
-  onCreate(springId: any) {
+  chargeBoardId(boardId: any) {
+    this.boardId = boardId;
+  }
+
+  updateSprint(springId: any, boardId: any) {
+    this._matDialog.open(UpdateSpringComponent, {
+      data: { springId, boardId },
+      autoFocus: true,
+      panelClass: [''],
+      width: '400px',
+      height: '500px',
+    });
+    this.chargeSpring(springId);
+    this.chargeBoardId(boardId);
+  }
+
+  onCreate() {
     const matDialog = new MatDialogConfig();
     matDialog.disableClose = false;
     matDialog.autoFocus = true;
@@ -81,7 +90,7 @@ export class ListSpringComponent implements OnInit {
     let dialog = this._matDialog.open(CreateSpringComponent, matDialog);
     const sub = dialog.componentInstance.onAdd.subscribe((data) => {
       this.saveSprint(data);
-      this.ngOnInit();
+      dialog.close();
     });
     dialog.afterClosed().subscribe(() => {
       sub.unsubscribe();
@@ -89,14 +98,18 @@ export class ListSpringComponent implements OnInit {
   }
 
   saveSprint(registerData: any) {
-    console.log(registerData);
-
-    if (!registerData.title || !registerData.description) {
+    if (
+      !registerData.title ||
+      !registerData.description ||
+      !registerData.starDate ||
+      !registerData.endDate
+    ) {
       this._utilitiesService.openSnackBarError('Datos incompletos');
     } else {
       registerData.boardId = this.boardData._id;
       this._springService.createSpring(registerData).subscribe(
         (res) => {
+          this._springService.updateListSprings(this.boardData._id);
           this._utilitiesService.openSnackBarSuccesfull('Sprint creado');
         },
         (err) => {
@@ -111,7 +124,6 @@ export class ListSpringComponent implements OnInit {
   }
 
   addTask(springId: string, boardId: string) {
-    const matDialog = new MatDialogConfig();
     this._matDialog.open(CreateTaskComponent, {
       data: { springId, boardId },
       autoFocus: true,
@@ -136,7 +148,7 @@ export class ListSpringComponent implements OnInit {
     if (result.isConfirmed) {
       this._springService.deleteSpring(this.springId).subscribe();
       swal.fire('Proceso Exitoso', '¡Sprint eliminado con existo!', 'success');
-      this.ngOnInit();
+      this._springService.updateListSprings(this.boardData._id);
     }
   }
 }

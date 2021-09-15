@@ -46,7 +46,7 @@ import { ListTaskComponent } from './board/task/list-task/list-task.component';
 import { CreateTaskComponent } from './board/task/create-task/create-task.component';
 import { InviteUserComponent } from './board/invite-user/invite-user.component';
 import { CreateCommentsComponent } from './board/comments/create-comments/create-comments.component';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ListCommentsComponent } from './board/comments/list-comments/list-comments.component';
 import { CreateRoleComponent } from './admin/create-role/create-role.component';
 import { ListRoleComponent } from './admin/list-role/list-role.component';
@@ -54,7 +54,9 @@ import { ListUserComponent } from './admin/list-user/list-user.component';
 import { ListSpringComponent } from './board/spring/list-spring/list-spring.component';
 import { CreateSpringComponent } from './board/spring/create-spring/create-spring.component';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { UpdateSpringComponent } from './board/spring/update-spring/update-spring.component';
+import { TaskDetailsComponent } from './board/task/task-details/task-details.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +77,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     ListUserComponent,
     ListSpringComponent,
     CreateSpringComponent,
+    UpdateSpringComponent,
+    TaskDetailsComponent,
 
   ],
   imports: [
@@ -123,4 +127,4 @@ import {MatTooltipModule} from '@angular/material/tooltip';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

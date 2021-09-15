@@ -8,7 +8,7 @@ const sendMail = async (req, res) => {
     to: req.body.email, // Change to your recipient
     from: "dianaeleira@gmail.com", // Change to your verified sender
     subject: "Welcome to Creppy Trello Software",
-    fromname: "Creppy Trello",
+    name: "Creppy Trello",
     html:
       "Hi, " +
       req.body.name +

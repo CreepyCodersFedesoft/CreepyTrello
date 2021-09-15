@@ -1,0 +1,61 @@
+<div class="bgComponent">
+    <div class="form">
+      <mat-card class="card">
+        <mat-card-title>Actualizar Sprint</mat-card-title>
+        <mat-card-content>
+          <div class="container">
+            <mat-form-field>
+              <input
+                [(ngModel)]="registerData.title"
+                matInput
+                placeholder="Titulo"
+                required
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                [(ngModel)]="registerData.description"
+                matInput
+                placeholder="Descripción"
+                required
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                [(ngModel)]="registerData.startDate"
+                matInput
+                [matDatepicker]="picker"
+                placeholder="Fecha inicio"
+                required
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                [(ngModel)]="registerData.endDate"
+                matInput
+                [matDatepicker]="picker1"
+                placeholder="Fecha fin"
+                required
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker1"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button (click)="updateSpring(); onClose()" class="button" mat-raised-button>
+            Actualizar
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  

@@ -118,4 +118,10 @@ const deleteSprint = async (req, res) => {
   return res.status(200).send({message: 'Spring Deleted'});
 };
 
-module.exports = { createSpring, updateSprint, listSpring, deleteSprint };
+const searchSprint = async (req, res) => {
+  const sprint = await Spring.findOne({ _id: req.params["_id"] });
+  if(!sprint || sprint.length === 0) return res.status(400).send("Not find results");
+  return res.status(200).send({ sprint });
+}
+
+module.exports = { createSpring, updateSprint, listSpring, deleteSprint, searchSprint };

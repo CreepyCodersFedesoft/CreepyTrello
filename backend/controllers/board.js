@@ -8,14 +8,15 @@ const createBoard = async (req, res) => {
   if (!req.body.name || !req.body.description)
     return res.status(400).send("Incomplete Data");
 
-   console.log(req.files);
    let boardImgUrl = "";
-   if(req.files !== undefined && req.files.image.type){
+   if(req.files.image){
+     if(req.files.image.type !=null){
     let url = req.protocol + "://" + req.get("host")
     let serverImg = "./uploads/" + moment().unix() + path.extname(req.files.image.path);
     fs.createReadStream(req.files.image.path).pipe(fs.createWriteStream(serverImg));
     boardImgUrl=url + "/uploads/" + moment().unix() + path.extname(req.files.image.path);
     console.log(boardImgUrl);
+     }
    }
    
   const board = new Board({
