@@ -15,6 +15,7 @@ import { ListTaskComponent } from './board/task/list-task/list-task.component';
 import { LoginComponent } from './home/login/login.component';
 import { RegisterComponent } from './home/register/register.component';
 import { UpdateUserComponent } from './home/update-user/update-user.component';
+import { TaskDetailsComponent } from "./board/task/task-details/task-details.component";
 
 
 
@@ -97,6 +98,12 @@ const routes: Routes = [
   {
     path: 'createSpring',
     component: CreateSpringComponent,
+    pathMatch: 'full',
+  },
+
+  {
+    path: 'listTask',
+    component: TaskDetailsComponent,
     pathMatch: 'full',
   },
 ];

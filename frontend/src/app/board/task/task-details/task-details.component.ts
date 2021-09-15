@@ -13,15 +13,14 @@ import {
   MatDialog,
 } from '@angular/material/dialog';
 import { CreateTaskComponent } from '../create-task/create-task.component';
-import { TaskDetailsComponent} from "../task-details/task-details.component";
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-list-task',
-  templateUrl: './list-task.component.html',
-  styleUrls: ['./list-task.component.css'],
+  selector: 'app-task-details',
+  templateUrl: './task-details.component.html',
+  styleUrls: ['./task-details.component.css']
 })
-export class ListTaskComponent {
+export class TaskDetailsComponent  {
   @Input() springId: any = null;
   @Input() boardId: any = null;
 
@@ -128,12 +127,5 @@ export class ListTaskComponent {
     this.commentInput = 'comentario';
   }
 
-  showDetails() {
-    const matDialog = new MatDialogConfig();
-    matDialog.disableClose = false;
-    matDialog.autoFocus = true;
-    matDialog.width = '90%';
-    matDialog.height = '90%';
-    this._matDialog.open(TaskDetailsComponent, matDialog);
-  }
+
 }
