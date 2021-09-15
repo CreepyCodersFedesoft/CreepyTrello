@@ -20,7 +20,9 @@
               required
               >
           </mat-form-field>
-          <input type="file" (change)="uploadImg($event)"/>
+          <label for="upload">Seleccionar IMG</label>
+          <input type="file" id="upload" (change)="uploadImg($event)"/>
+          <div *ngIf="selectedFile.name!=null">{{ selectedFile.name }}</div>
         </div>
       </mat-card-content>
       <mat-card-actions>

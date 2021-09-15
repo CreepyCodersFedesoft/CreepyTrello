@@ -22,7 +22,7 @@ export class RegisterBoardComponent implements OnInit {
     private _utilitiesServices:UtilitiesService
   ) {
     this.registerBoard = {};
-    this.selectedFile = null;
+    this.selectedFile = "";
   }
 
   ngOnInit(): void {
@@ -52,6 +52,6 @@ export class RegisterBoardComponent implements OnInit {
   }
 
   uploadImg(event:any){
-    this.selectedFile = <File> event.target.files[0];
+    this.selectedFile = <File> event.target.files[0]; 
   }
 }
