@@ -1,10 +1,10 @@
-<div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
+<div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center" (keyup.enter)="login()" >
   <mat-card class="box">
     <mat-card-header>
       <mat-card-title>Login User<br /></mat-card-title>
     </mat-card-header>
 
-    <div class="example-form">
+    <div class="example-form" >
 
       <mat-card-content>
         <mat-form-field class="example-full-width">
@@ -26,7 +26,7 @@
             required          
           />
         </mat-form-field>
-
+        
       </mat-card-content>
       <button (click)="login()"  mat-stroked-button  color="accent" class="btn-block">
         Login
