@@ -13,15 +13,14 @@ import {
   MatDialog,
 } from '@angular/material/dialog';
 import { CreateTaskComponent } from '../create-task/create-task.component';
-import { TaskDetailsComponent} from "../task-details/task-details.component";
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-list-task',
-  templateUrl: './list-task.component.html',
-  styleUrls: ['./list-task.component.css'],
+  selector: 'app-task-details',
+  templateUrl: './task-details.component.html',
+  styleUrls: ['./task-details.component.css']
 })
-export class ListTaskComponent implements OnInit{
+export class TaskDetailsComponent  {
   @Input() springId: any = null;
   @Input() boardId: any = null;
 
@@ -43,7 +42,6 @@ export class ListTaskComponent implements OnInit{
     this.taskData2 = [];
     this.taskData3 = [];
   }
-  
   ngOnInit(): void {
     this._taskService.listTasks.subscribe(
       (res) => {

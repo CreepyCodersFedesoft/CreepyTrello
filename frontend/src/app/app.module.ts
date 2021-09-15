@@ -56,6 +56,7 @@ import { CreateSpringComponent } from './board/spring/create-spring/create-sprin
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UpdateSpringComponent } from './board/spring/update-spring/update-spring.component';
+import { TaskDetailsComponent } from './board/task/task-details/task-details.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,8 @@ import { UpdateSpringComponent } from './board/spring/update-spring/update-sprin
     ListSpringComponent,
     CreateSpringComponent,
     UpdateSpringComponent,
+    TaskDetailsComponent,
+
   ],
   imports: [
     BrowserModule,

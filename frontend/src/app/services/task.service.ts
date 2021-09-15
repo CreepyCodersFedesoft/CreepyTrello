@@ -38,4 +38,8 @@ export class TaskService {
   deleteTask(task: any) {
     return this._http.delete<any>(this.env + 'task/deleteTask/' + task._id);
   }
+
+  findTask(_id: string) {
+    return this._http.get<any>(this.env + 'user/findTask/' + _id);
+  }
 }
