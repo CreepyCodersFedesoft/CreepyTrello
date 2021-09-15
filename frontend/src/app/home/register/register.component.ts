@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
       this._userService.createUser(data).subscribe(
         (res) => {
           this._router.navigate(['/login']);
-          this._utilitiesServices.openSnackBarSuccesfull('Successfull user registration.');
+          this._utilitiesServices.openSnackBarSuccesfull('Successfull user registration. Please confirm your email.');
           this.registerData = {};
         },
         (err) => {
