@@ -13,7 +13,7 @@
     </a>
     <button mat-button (click)="addTask(spring._id, boardData._id)"><mat-icon class="text-white text-wrap fs-6">library_add</mat-icon></button>
     <button mat-button (click)="deleteSprint()"><mat-icon class="text-white fs-6">delete_forever</mat-icon></button>
-    <button mat-button><mat-icon class="text-white fs-6">settings</mat-icon></button>
+    <button mat-button><mat-icon (click)="updateSprint(spring._id, boardData._id)" class="text-white fs-6">settings</mat-icon></button>
   </div>
   <a mat-button class="fs-6" (click)="onCreate()">Add Spring <mat-icon>library_add</mat-icon></a>
 </div>
