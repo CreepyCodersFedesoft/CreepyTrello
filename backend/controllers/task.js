@@ -1,4 +1,6 @@
 const Task = require("../models/task");
+const User = require("../models/user");
+const History = require("../models/history");
 const fs = require("fs");
 const path = require("path");
 const moment = require("moment");
@@ -9,7 +11,7 @@ const createTask = async (req, res) => {
     !req.user._id ||
     !req.body.springId ||
     !req.body.title ||
-    !req.body.description
+    !req.body.description 
   )
     return res.status(400).send("Process failed: Incomplete data");
 
@@ -26,7 +28,9 @@ const createTask = async (req, res) => {
   }
 
   //si no tiene un usuario asignado, le asignamos el que creo la tearea
-  let assignUser = !req.body.assignedUser ? req.user._id : req.body.assignedUser;
+  let assignUser = !req.body.assignedUser ? null : req.body.assignedUser;
+  let priority = !req.body.priority ? 0 : req.body.priority;
+  console.log(priority);
 
   const task = new Task({
     userId: req.user._id,
@@ -36,17 +40,40 @@ const createTask = async (req, res) => {
     imgUrl: imageUrl,
     taskStatus: "to-do",
     assignedUser: assignUser,
+    priority: priority,
   });
 
   const result = await task.save();
   if (!result) return res.status(400).send("Error register task");
+
+  let history = new History({
+    taskId: result._id,
+    userId: req.user._id,
+    actionType: "Created Task",
+  });
+
+  let resultHistory = await history.save();
+  if (!resultHistory) console.log("failed to create history task");
+  //console.log(resultHistory);
+
   return res.status(200).send({ result });
 };
 
-const listTask = async (req, res) => {//puede llegar una imagen y un usuario asignado
+const listTask = async (req, res) => {
+  //puede llegar una imagen y un usuario asignado
   const task = await Task.find({ springId: req.params.springId });
   if (!task || task.length == 0)
     return res.status(400).send("This Spring haven't assigned task");
+
+  let history = new History({
+    userId: req.user._id,
+    actionType: "Listed Task",
+  });
+
+  let resultHistory = await history.save();
+  if (!resultHistory) console.log("failed to create history task");
+  //console.log(resultHistory);
+
   return res.status(200).send({ task });
 };
 
@@ -74,26 +101,34 @@ const updateTask = async (req, res) => {
       imageUrl = url + serverImg.slice(2);
     }
   } else {
-    let tempImg = await Task.findById(req.body._id);;
+    let tempImg = await Task.findById(req.body._id);
     imageUrl = tempImg.imgUrl;
   }
 
   //guardamos la ruta de la imagen anterior para eliminarla
   let serverImg = "";
   let taskImg = await Task.findById(req.body._id);
-  if (taskImg.userImg !== "") {    
+  if (taskImg.userImg !== "") {
     let userImage = taskImg.imgUrl;
     userImage = userImage.split("/")[4];
     serverImg = "./uploads/" + userImage;
-  }  
+  }
 
   //si no tiene un usuario asignado, le asignamos el que creo la tearea
   let assignUser;
-  if(!req.body.assignedUser) {
-    let tempUser = await Task.findOne({_id: req.body._id});
+  if (!req.body.assignedUser) {
+    let tempUser = await Task.findOne({ _id: req.body._id });
     assignUser = tempUser.assignedUser;
-  }  else {
-    assignUser = req.body.assignedUser;  
+  } else {
+    assignUser = req.body.assignedUser;
+  }
+
+  let priority;
+  if (!req.body.priority) {
+    let tempPriority = await Task.findOne({ _id: req.body._id });
+    priority = tempPriority.priority;
+  } else {
+    priority = req.body.priority;
   }
 
   const task = await Task.findByIdAndUpdate(req.body._id, {
@@ -103,18 +138,33 @@ const updateTask = async (req, res) => {
     taskStatus: req.body.taskStatus,
     imgUrl: imageUrl,
     assignedUser: assignUser,
+    priority: priority,
   });
 
   if (!task) return res.status(400).send("Task not found");
 
   //si todo va bien, borramos la imagen anterior
-  if (imageUrl !== "" && taskImg.userImg !== "" && req.files.image != undefined) {
+  if (
+    imageUrl !== "" &&
+    taskImg.userImg !== "" &&
+    req.files.image != undefined
+  ) {
     try {
       fs.unlinkSync(serverImg);
     } catch (err) {
       console.log("Image no found in server");
     }
   }
+
+  
+  let history = new History({
+    taskId: req.body._id,
+    userId: req.user._id,
+    actionType: "Updated Task",
+  });
+
+  let resultHistory = await history.save();
+  if(!resultHistory) console.log('failed to create history task');
 
   return res.status(200).send({ task });
 };
@@ -137,9 +187,56 @@ const deleteTask = async (req, res) => {
     console.log("Image no found in server");
   }
 
+  
+  let history = new History({
+    taskId: req.params._id,
+    userId: req.user._id,
+    actionType: "deleted Task",
+  });
+
+  let resultHistory = await history.save();
+  if(!resultHistory) console.log('failed to create history task');
+  //console.log(resultHistory);
+
   return res.status(200).send({ message: "Task deleted" });
 };
 
-const assignUser = async (req, res) => {};
+//por el momento desde el front solo se controlará que el el usuario pertenezca al board
+//esto a través de la funcion getUsersOnBoard que obtendra los usuarios del board actual
+const assignUser = async (req, res) => {
+  if (!req.body.assignedUser || !req.body._id || !req.user._id)
+    return res.status(400).send("Error: empty data");
 
-module.exports = { createTask, listTask, updateTask, deleteTask, assignUser };
+  let user = await User.findById(req.body.assignedUser);
+  if (!user.dbStatus) return res.status(400).send("This user is inactive");
+
+  let result = await Task.findOneAndUpdate(
+    { _id: req.body._id },
+    {
+      assignedUser: req.body.assignedUser,
+    }
+  );
+
+  if (!result) return res.status(400).send("Error to assign task");
+
+  
+  let history = new History({
+    taskId: req.body._id,
+    userId: req.user._id,
+    actionType: "assigned Task",
+  });
+
+  let resultHistory = await history.save();
+  if(!resultHistory) console.log('failed to create history task');
+  //console.log(resultHistory);
+
+  return res.status(200).send("Task assigned successfully");
+};
+
+const listLogTask = async (req, res) => {
+  let history = await History.find({taskId: req.body.taskId});
+  if (!history) return res.status(400).send('No logs for this task');
+  return res.status(200).send({ history })
+}
+
+module.exports = { createTask, listTask, updateTask, deleteTask, assignUser, listLogTask };

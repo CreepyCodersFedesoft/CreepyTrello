@@ -11,6 +11,7 @@ router.post('/createBoard', mult, Upload, auth, validateUser,   BoardController.
 router.get('/listBoard',  auth, validateUser, BoardController.listBoard);
 router.get('/getBoardById/:_id',  auth, validateUser, BoardController.getBoardById);
 router.put('/updateBoard', mult, Upload, auth, validateUser, invitedUser,    BoardController.updateBoard);
+router.get('/getUsersOnBoard/:_id',  auth, validateUser, BoardController.getUsersOnBoard);
 router.put('/addListBoard', auth, validateUser, BoardController.addListBoard);
 router.put('/dropListBoard', auth, validateUser, BoardController.dropListBoard);
 router.delete('/deleteBoard/:_id', auth, validateUser, BoardController.deleteBoard);
