@@ -7,6 +7,7 @@ const taskSchema = mongoose.Schema({
   description: String,
   imgUrl: String,
   taskStatus: String,
+  priority: Number,
   date: { type: Date, default: Date.now },
   assignedUser: { type: mongoose.Schema.ObjectId, ref: 'user' }
 });
