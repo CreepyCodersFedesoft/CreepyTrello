@@ -1,4 +1,4 @@
-<app-create-comments [taskId]="this.taskId"></app-create-comments>
+<app-create-comments [taskId]="this.taskId" (onCreate)="onCreateComment()"></app-create-comments>
 
 <div *ngFor="let comment of commentData" class=" card-comment">
   <div class="row g-0 h-100 m-0">

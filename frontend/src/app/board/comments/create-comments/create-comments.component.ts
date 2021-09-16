@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommentService } from 'src/app/services/comment.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 
@@ -9,6 +9,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 })
 export class CreateCommentsComponent implements OnInit {
   @Input() taskId: any;
+  @Output() onCreate = new EventEmitter();
   text: string;
   constructor(
     private _commentService: CommentService,
@@ -28,6 +29,7 @@ export class CreateCommentsComponent implements OnInit {
     .subscribe(
       (res) => {
         this.text = '';
+        this.onCreate.emit();
         console.log(res);
       },
       (err) => {

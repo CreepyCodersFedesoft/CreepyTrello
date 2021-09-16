@@ -21,6 +21,9 @@ export class ListCommentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.chargeComment();
+  }
+  chargeComment(){
     this._commentService.listComment(this.taskId).subscribe(
       (res) => {
         console.log(res);
@@ -30,6 +33,9 @@ export class ListCommentsComponent implements OnInit {
         this._utilitiesService.openSnackBarError('No se han encontrado comentarios');
       }
     );
+  }
+  onCreateComment(){
+    this.chargeComment();
   }
 
   giveLike(comment: any) {
