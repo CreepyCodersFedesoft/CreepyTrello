@@ -40,7 +40,11 @@ export class ListSpringComponent implements OnInit {
   ngOnInit(): void {
     this.chargeBoard();
     this._springService.listSprings.subscribe((res) => {
-      this.springData = res;
+      let anyArray: any[] = res.spring
+      for (const i in anyArray) {
+        anyArray[i].sprintOptions = false;
+      }
+      this.springData = anyArray;
     });
   }
 
