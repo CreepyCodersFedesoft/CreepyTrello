@@ -28,7 +28,6 @@ export class InviteUserComponent implements OnInit {
     this._boardService.getUsersOnBoard(this.boardId).subscribe(
       (res) => {
         this.usersData = res.filteredList;
-        console.log(this.usersData);
       },
       (err) => {
         this._utilitiesService.openSnackBarError('No se han encontrado usuarios invitados al Board');
@@ -47,7 +46,7 @@ export class InviteUserComponent implements OnInit {
         this._utilitiesService.openSnackBarSuccesfull('¡Tarea asignada con exito!');
       },
       (err) => {
-        this._utilitiesService.openSnackBarError(err.error);
+        this._utilitiesService.openSnackBarError('No has seleccionado un usuario');
       }
     );
   }
