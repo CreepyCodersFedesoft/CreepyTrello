@@ -1,7 +1,12 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { SpringService } from 'src/app/services/spring.service';
-import { Router } from '@angular/router';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-spring',
@@ -10,9 +15,12 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 })
 export class CreateSpringComponent implements OnInit {
   registerData: any;
-  onAdd = new EventEmitter();
+  @Input() boardId: any = null;
 
-  constructor(private _sprintService: SpringService, private _utilitiesService: UtilitiesService) { 
+  constructor(private _sprintService: SpringService, private _utilitiesService: UtilitiesService, public _dialogRef: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: {
+      boardId: string
+    }) { 
     this.registerData = {};
   }
 
@@ -20,6 +28,29 @@ export class CreateSpringComponent implements OnInit {
   }
 
   saveSprint(){
-    this.onAdd.emit(this.registerData);
+    console.log("registerData-> ", this.registerData);
+    if (
+      !this.registerData.title ||
+      !this.registerData.description ||
+      !this.registerData.startDate ||
+      !this.registerData.endDate
+    ) {
+      this._utilitiesService.openSnackBarError('Datos incompletos');
+    } else {
+      this.registerData.boardId = this.data.boardId;
+      this._sprintService.createSpring(this.registerData).subscribe(
+        (res) => {
+          this._sprintService.updateListSprings(this.registerData.boardId);
+          this._utilitiesService.openSnackBarSuccesfull('Sprint creado');
+        },
+        (err) => {
+          this._utilitiesService.openSnackBarError(err.error);
+        }
+      );
+    }
+  }
+  
+  onClose(): void {
+    this._dialogRef.closeAll();
   }
 }
