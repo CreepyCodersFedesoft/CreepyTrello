@@ -1,22 +1,23 @@
-
 <div class="bgContentInput">
-  <input type="text" mat-input 
-  class="bgInput form-control text-center rounded-0 border-0  my-2" 
-  placeholder="Busca Tus Boards"
-  (keyup)="filteredWords()" 
-  [(ngModel)]="textFiltered"
-  autofocus 
-  >
+  <input
+    type="text"
+    mat-input
+    class="bgInput form-control text-center rounded-0 border-0 my-2"
+    placeholder="Busca Tus Boards"
+    (keyup)="filteredWords()"
+    [(ngModel)]="textFiltered"
+    autofocus
+  />
 </div>
 
 <div class="card-wrapper" *ngIf="boardData.length">
   <div *ngFor="let board of filteredBoards">
     <mat-card class="information-card" fxFlexAlign="stretch">
-      <mat-card-header>
+      <mat-card-header >
         <mat-card-title class="title" (click)="enterSprint(board._id)">{{
           board.name
         }}</mat-card-title>
-        <div>
+        <div class="top">
           <button
             mat-icon-button
             [matMenuTriggerFor]="menu"
@@ -24,7 +25,7 @@
           >
             <mat-icon>more_vert</mat-icon>
           </button>
-          <mat-menu #menu="matMenu">
+          <mat-menu class="menu" #menu="matMenu" >
             <button (click)="onCreate()" mat-menu-item>
               <mat-icon>edit</mat-icon>
               <span>Editar</span>

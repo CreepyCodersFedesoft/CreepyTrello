@@ -1,8 +1,5 @@
 <mat-toolbar class="bgHeader">
   <ul>
-    <img src="../../../assets/img/logo/logo.gif" alt="logo CreepyCoders" routerLink="listBoard"/>
-  </ul>
-  <ul>
     <a *ngIf="_userService.loggedIn()" mat-button routerLink="registerBoard"
       >Crear Tablero</a
     >
@@ -11,6 +8,9 @@
     <a *ngIf="_userService.loggedIn()" mat-button routerLink="listBoard"
       >Lista de Tableros</a
     >
+  </ul>
+  <ul>
+    <img class="img" src="../../../assets/img/logo/logo.gif" alt="logo CreepyCoders" routerLink="listBoard"/>
   </ul>
   <span class="headerSpacer"></span>
   <span class="headerSpacer"></span>
@@ -28,17 +28,17 @@
       <span class="mx-2 text-capitalize"> {{ this.userName.split(" ")[0] }}</span>
       <div class="dropdown-content">
         <a>
-          Welcome {{ this.userName.split(" ")[0] }}
+          Bienvenido {{ this.userName.split(" ")[0] }}
         </a>
         <br />
         <a class="dropdown-content-element" mat-button (click)="settings()">
           <mat-icon>settings</mat-icon>
-          Settings
+          Ajustes
         </a>
         <br />
         <a class="dropdown-content-element" mat-button (click)="_userService.logout()">
           <mat-icon>exit_to_app</mat-icon>
-          Logout
+          Cerrar Sesión
         </a>
       </div>
     </a>
