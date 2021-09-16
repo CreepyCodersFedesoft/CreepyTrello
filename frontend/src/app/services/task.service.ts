@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { UtilitiesService } from './utilities.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +10,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class TaskService {
   private env: string;
 
-  private _listTasks: BehaviorSubject<any> = new BehaviorSubject([]);
+  public _listTasks: BehaviorSubject<any> = new BehaviorSubject([]);
   public readonly listTasks: Observable<any> = this._listTasks.asObservable();
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient, private _utilitiesService: UtilitiesService) {
     this.env = environment.APP_URL;
   }
 
@@ -22,6 +23,7 @@ export class TaskService {
         this._listTasks.next(res.task);
       },
       (err) => {
+        //this._utilitiesService.openSnackBarError(err.error.msg);
         this._listTasks.next([]);        
       }
     );

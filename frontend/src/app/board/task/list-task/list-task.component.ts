@@ -48,6 +48,9 @@ export class ListTaskComponent implements OnInit{
     this._taskService.listTasks.subscribe(
       (res) => {
         this.taskData = res
+      },
+      (err) => {
+        this._utilitiesService.openSnackBarError(err.msg);
       }
     );
   }

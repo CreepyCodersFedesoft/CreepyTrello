@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { CommentService } from 'src/app/services/comment.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-create-comments',
@@ -6,10 +8,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-comments.component.css']
 })
 export class CreateCommentsComponent implements OnInit {
-
-  constructor() { }
+  @Input() taskId: any;
+  text: string;
+  constructor(
+    private _commentService: CommentService,
+    private _utilitiesService: UtilitiesService,
+    ) { 
+    this.text = '';
+  }
 
   ngOnInit(): void {
+  }
+
+  sendComment(){
+    this._commentService.createComment({
+      taskId: this.taskId,
+      text: this.text
+    })
+    .subscribe(
+      (res) => {
+        this.text = '';
+        console.log(res);
+      },
+      (err) => {
+        this.text = '';
+        this._utilitiesService.openSnackBarError(err.error);
+      }
+    );
   }
 
 }

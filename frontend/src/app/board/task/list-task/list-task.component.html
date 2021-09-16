@@ -49,7 +49,8 @@
               <mat-icon class="icon">person</mat-icon>
             </button>
             <button mat-icon-button class="mt-1">
-              <mat-icon class="icon">priority_high</mat-icon>
+              <mat-icon class="icon" style="padding-right: 0px !important;">priority_high</mat-icon>
+              <small class="px-0">{{task.priority}}</small>
             </button>
             <button mat-icon-button class="mt-1">
               <mat-icon class="icon">thumb_up_off_alt</mat-icon>
@@ -63,14 +64,12 @@
             >
               <mat-icon class="icon">chat_bubble_outline</mat-icon>
             </button>
+            <hr>
+          </div>
             <!-- <span>{{ comments }}</span>-->
             <div *ngIf="open">
-              <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Leave a comment</mat-label>
-                <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
-              </mat-form-field>
-            </div>
-          </div>
+              <app-list-comments [taskId]="task._id"></app-list-comments>
+            </div>          
         </div>
       </div>
     </div>

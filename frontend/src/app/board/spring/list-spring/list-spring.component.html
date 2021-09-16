@@ -24,10 +24,13 @@ this.show == true
   ? 'margin-left: 250px'
   : 'margin-left: 0;'
 ">
-<div class="overflow-auto">
+<div class="">
+  <!--
+    [style]="boardData.boardImg != '' ? 'background: url('+boardData.boardImg+') no-repeat;background-repeat: no-repeat;background-size: cover;width: 100%;height: 100%;': '' "
+  -->
     <button class="openbtn" (click)="this.show = !this.show">
       <mat-icon>{{this.show == true ? 'keyboard_arrow_left': 'keyboard_arrow_right'}}</mat-icon>
-    </button>  
+    </button> 
     <app-list-task *ngIf="springId != null"  [springId]="this.springId" [boardId]="this.boardData._id"></app-list-task>
     <div  *ngIf="springId == null" >
       <p class="display-5 fw-bold text-center">

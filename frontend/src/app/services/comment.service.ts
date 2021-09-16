@@ -16,10 +16,13 @@ export class CommentService {
     this. env = environment.APP_URL;
   }
 
-  listComment(comment: any) {
-    return this._http.get<any>(this.env + 'comment/listComment', comment);
+  listComment(comment: string) {
+    return this._http.get<any>(this.env + 'comment/listComment/'+ comment);
   }
   createComment(comment: any) {
     return this._http.post<any>(this.env + 'comment/createComment', comment);
+  }
+  giveLike(_id: any) {
+    return this._http.put<any>(this.env + 'comment/giveLike', _id);
   }
 }

@@ -16,7 +16,7 @@ const createComment = async (req, res) => {
 };
 
 const listComment = async (req, res) => {
-  const comment = await Comment.find({ taskId: req.body.taskId })
+  const comment = await Comment.find({ taskId: req.params.taskId }).sort('-date')
     .populate("userId")
     .exec();
   if (!comment || comment.length == 0)
@@ -49,6 +49,7 @@ const deleteComment = async (req, res) => {
 };
 
 const giveLike = async (req, res) => {
+  
   if (!req.body._id || !req.user._id)
     return res.status(400).send("Error: There are empty fields");
 
@@ -61,16 +62,16 @@ const giveLike = async (req, res) => {
       likes: comment.likes - 1,
       $pull: { userLikes: req.user._id },
     });
+    if (!result) return res.status(400).send("Error to drop like");
+    return res.status(200).send({msg :"Unliked!"});
   } else {
     result = await Comment.findByIdAndUpdate(req.body._id, {
       likes: comment.likes + 1,
       $push: { userLikes: req.user._id },
     });
+    if (!result) return res.status(400).send("Error to give like");
+    return res.status(200).send({msg :"Liked!"});
   }
-
-  if (!result) return res.status(400).send("Error to give like");
-
-  return res.status(200).send("Liked!");
 };
 
 module.exports = { createComment, listComment, deleteComment, giveLike };

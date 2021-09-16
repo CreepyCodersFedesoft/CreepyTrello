@@ -65,7 +65,7 @@ const listTask = async (req, res) => {
   //puede llegar una imagen y un usuario asignado
   const task = await Task.find({ springId: req.params.springId });
   if (!task || task.length == 0)
-    return res.status(400).send("This Spring haven't assigned task");
+    return res.status(400).send({msg: "This Spring haven't assigned task"});
 
   let history = new History({
     userId: req.user._id,
