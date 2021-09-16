@@ -23,6 +23,10 @@ export class UserService {
   changeDataUser(message: boolean) {
     this.messageSource.next(message)
   }
+
+  getAllUser(){
+    return this._http.get<any>(this.env + 'user/listUserAll');
+  }
   
   getEmail() {
     return this._http.get<any>(this.env + 'user/getEmail');
