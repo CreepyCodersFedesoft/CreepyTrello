@@ -45,7 +45,11 @@
             {{ task.date | date }} {{ task.date | date: "shortTime" }}
           </div>
           <div class="d-flex justify-content-end">
-            <button mat-icon-button class="mt-1">
+            <button 
+              mat-icon-button 
+              class="mt-1"
+              (click)="task.visibleAssign = !task.visibleAssign"
+            >
               <mat-icon class="icon">person</mat-icon>
             </button>
             <button mat-icon-button class="mt-1">
@@ -55,21 +59,23 @@
             <button mat-icon-button class="mt-1">
               <mat-icon class="icon">thumb_up_off_alt</mat-icon>
             </button>
-            <!-- <span>{{ task.like }}</span>-->
             <button
               mat-icon-button
               disableRipple
               class="mt-1"
-              (click)="onOpenComment()"
+              (click)="task.visibleComments = !task.visibleComments"
             >
               <mat-icon class="icon">chat_bubble_outline</mat-icon>
             </button>
             <hr>
           </div>
-            <!-- <span>{{ comments }}</span>-->
-            <div *ngIf="open">
+            <!-- Aquí va el contenido de los componentes añadidos -->
+            <div *ngIf="task.visibleComments" >
               <app-list-comments [taskId]="task._id"></app-list-comments>
-            </div>          
+            </div>
+            <div *ngIf="task.visibleAssign" >
+              <app-invite-user [taskId]="task._id" [boardId]="boardId"></app-invite-user>
+            </div>  
         </div>
       </div>
     </div>

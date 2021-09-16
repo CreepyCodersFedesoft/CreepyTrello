@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { TaskService } from '../../../services/task.service';
 import { UtilitiesService } from '../../../services/utilities.service';
 import {
@@ -37,7 +37,7 @@ export class ListTaskComponent implements OnInit{
     private _taskService: TaskService,
     private _utilitiesService: UtilitiesService,
     private _matDialog: MatDialog,
-    private _router: Router
+    private _router: Router,
   ) {
     this.taskData = [];
     this.taskData2 = [];
@@ -48,6 +48,10 @@ export class ListTaskComponent implements OnInit{
     this._taskService.listTasks.subscribe(
       (res) => {
         this.taskData = res
+        this.taskData.forEach(tData => {
+          tData.visibleComments = false;
+          tData.visibleAssign = false;
+        });
       },
       (err) => {
         this._utilitiesService.openSnackBarError(err.msg);
@@ -117,10 +121,6 @@ export class ListTaskComponent implements OnInit{
     matDialog.autoFocus = true;
     matDialog.width = '400px';
     this._matDialog.open(CreateTaskComponent, matDialog);
-  }
-
-  onOpenComment() {
-    this.open = !this.open;
   }
 
   addComment() {
