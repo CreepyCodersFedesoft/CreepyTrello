@@ -9,6 +9,7 @@
       >Lista de Tableros</a
     >
   </ul>
+  <span *ngIf="!_userService.loggedIn()" class="headerSpacer"></span>
   <ul>
     <img class="img" src="../../../assets/img/logo/logo.gif" alt="logo CreepyCoders" routerLink="listBoard"/>
   </ul>
@@ -28,7 +29,7 @@
       <span class="mx-2 text-capitalize"> {{ this.userName.split(" ")[0] }}</span>
       <div class="dropdown-content">
         <a>
-          Bienvenido {{ this.userName.split(" ")[0] }}
+          Bienven {{ this.userName.split(" ")[0] }}
         </a>
         <br />
         <a class="dropdown-content-element" mat-button (click)="settings()">
