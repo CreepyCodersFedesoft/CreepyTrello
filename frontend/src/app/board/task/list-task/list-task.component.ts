@@ -115,7 +115,7 @@ export class ListTaskComponent implements OnInit{
     const matDialog = new MatDialogConfig();
     matDialog.disableClose = false;
     matDialog.autoFocus = true;
-    matDialog.width = '50%';
+    matDialog.width = '400px';
     this._matDialog.open(CreateTaskComponent, matDialog);
   }
 

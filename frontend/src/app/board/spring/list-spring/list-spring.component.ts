@@ -86,7 +86,7 @@ export class ListSpringComponent implements OnInit {
     const matDialog = new MatDialogConfig();
     matDialog.disableClose = false;
     matDialog.autoFocus = true;
-    matDialog.width = '50%';
+    matDialog.width = '400px';
     let dialog = this._matDialog.open(CreateSpringComponent, matDialog);
     const sub = dialog.componentInstance.onAdd.subscribe((data) => {
       this.saveSprint(data);
