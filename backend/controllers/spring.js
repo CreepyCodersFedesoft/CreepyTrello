@@ -18,11 +18,11 @@ const createSpring = async (req, res) => {
   if (!existingBoard) return res.status(400).send("Error: Board doesnt exist");
 
   //comprobamos que la fecha de terminacion sea mayor a la fecha de inicio
-  if (Date.parse(req.body.startDate) > Date.parse(req.body.endtDate))
+  if (Date.parse(req.body.startDate) > Date.parse(req.body.endDate))
     return res
       .status(400)
       .send("Error: the start date cannot be greater than the end date");
-
+  
   //creamos el objeto
   let spring = new Spring({
     boardId: req.body.boardId,
@@ -65,6 +65,12 @@ const updateSprint = async (req, res) => {
   });
   if (!arrayBoardId.includes(String(req.body.boardId)))
     return res.status(400).send("You don't have permission to update");
+
+  //comprobamos que la fecha de terminacion sea mayor a la fecha de inicio
+  if (Date.parse(req.body.startDate) > Date.parse(req.body.endDate))
+    return res
+      .status(400)
+      .send("Error: the start date cannot be greater than the end date");
 
   //actualizamos
   let result = await Spring.findByIdAndUpdate(req.body._id, {
@@ -112,4 +118,10 @@ const deleteSprint = async (req, res) => {
   return res.status(200).send({message: 'Spring Deleted'});
 };
 
-module.exports = { createSpring, updateSprint, listSpring, deleteSprint };
+const searchSprint = async (req, res) => {
+  const sprint = await Spring.findOne({ _id: req.params["_id"] });
+  if(!sprint || sprint.length === 0) return res.status(400).send("Not find results");
+  return res.status(200).send({ sprint });
+}
+
+module.exports = { createSpring, updateSprint, listSpring, deleteSprint, searchSprint };

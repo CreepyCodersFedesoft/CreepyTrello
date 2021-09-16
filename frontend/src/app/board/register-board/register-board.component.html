@@ -2,7 +2,7 @@
   <div class="form">
     <mat-card class="card">
       <mat-card-title>Crear Tablero</mat-card-title>
-      <mat-card-content>
+      <mat-card-content> 
         <div class="container">
           <mat-form-field>
             <input
@@ -20,7 +20,16 @@
               required
               >
           </mat-form-field>
-          <input type="file" (change)="uploadImg($event)"/>
+          <img 
+          *ngIf="this.boardImg != ''"
+          class="m-3"
+            width="150px"
+            [src]="this.boardImg"
+            alt=""
+          />
+          <div *ngIf="selectedFile.name!=null">{{ selectedFile.name }}</div>
+          <label for="upload">Seleccionar IMG</label>
+          <input type="file" id="upload" (change)="uploadImg($event)"/>
         </div>
       </mat-card-content>
       <mat-card-actions>

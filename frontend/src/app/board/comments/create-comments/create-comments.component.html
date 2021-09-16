@@ -1,1 +1,12 @@
-<p>create-comments works!</p>
+<mat-form-field class="w-100" appearance="fill">
+  <mat-label>Deja un comentario</mat-label>
+    <textarea 
+      matInput 
+      placeholder="¡Comenta esta tarea!" 
+      [(ngModel)]='text'
+      (keypress)="enterPress($event)"
+    >
+    </textarea>
+  <!--onkeypress="EnviarAlPresionar(event)"-->
+  <button mat-button class="w-100" (click)="sendComment()">Enviar</button>
+</mat-form-field>

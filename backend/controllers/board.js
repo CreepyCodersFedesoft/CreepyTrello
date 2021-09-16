@@ -134,7 +134,7 @@ const deleteBoard = async (req, res) => {
   }
   return res.status(200).send({ message: "Board deleted" });
 };
-const addListBoard = async (req, res) => {
+const addListBoard = async (req, res) => {//añade un usuario invitado al board
   if (!req.body._id || !req.body.newUserId)
     return res.status(400).send("Error: empty data");
 
@@ -160,7 +160,7 @@ const addListBoard = async (req, res) => {
 
   res.status(200).send({ board });
 };
-const dropListBoard = async (req, res) => {
+const dropListBoard = async (req, res) => {//borrar a un usuario invitado del board
   if (!req.body._id || !req.body.newUserId)
     return res.status(400).send("Error: empty data");
 

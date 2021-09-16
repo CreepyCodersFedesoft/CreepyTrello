@@ -1,8 +1,5 @@
 <mat-toolbar class="bgHeader">
   <ul>
-    <img src="../../../assets/img/logo/logo.gif" alt="logo CreepyCoders" routerLink="listBoard"/>
-  </ul>
-  <ul>
     <a *ngIf="_userService.loggedIn()" mat-button routerLink="registerBoard"
       >Crear Tablero</a
     >
@@ -12,13 +9,41 @@
       >Lista de Tableros</a
     >
   </ul>
+
   <ul>
     <a  mat-button routerLink="listBoard"   mat-button routerLink="listRole"
       >Administración de Roles</a
     >
   </ul>  
+
+  <span *ngIf="!_userService.loggedIn()" class="headerSpacer"></span>
+  <ul>
+    <img
+      class="img"
+      src="../../../assets/img/logo/logo.gif"
+      alt="logo CreepyCoders"
+      routerLink="listBoard"
+    />
+  </ul>
+
   <span class="headerSpacer"></span>
   <span class="headerSpacer"></span>
+  <ul>
+    <a
+      *ngIf="_userService.loggedIn() && _userService.isAdmin()"
+      class="dropdown"
+      mat-button
+      >Administración
+      <div class="dropdown-content">
+        <a class="dropdown-content-element" mat-button  routerLink="listRole">
+          <mat-icon>perm_identity</mat-icon>
+          Roles</a> <br>
+        <a class="dropdown-content-element" mat-button routerLink="listUser">
+          <mat-icon>accessibility_new</mat-icon>
+          Usuarios</a>
+      </div>
+    </a>
+  </ul>
   <ul>
     <a *ngIf="!_userService.loggedIn()" mat-button routerLink="register"
       >Sign Up</a
@@ -30,20 +55,24 @@
         class="imgDoesnExist profileConfig"
         alt=""
       />
-      <span class="mx-2 text-capitalize"> {{ this.userName.split(" ")[0] }}</span>
+      <span class="mx-2 text-capitalize">
+        {{ this.userName.split(" ")[0] }}</span
+      >
       <div class="dropdown-content">
-        <a>
-          Welcome {{ this.userName.split(" ")[0] }}
-        </a>
+        <a> Bienvenido {{ this.userName.split(" ")[0] }} </a>
         <br />
         <a class="dropdown-content-element" mat-button (click)="settings()">
           <mat-icon>settings</mat-icon>
-          Settings
+          Ajustes
         </a>
         <br />
-        <a class="dropdown-content-element" mat-button (click)="_userService.logout()">
+        <a
+          class="dropdown-content-element"
+          mat-button
+          (click)="_userService.logout()"
+        >
           <mat-icon>exit_to_app</mat-icon>
-          Logout
+          Cerrar Sesión
         </a>
       </div>
     </a>

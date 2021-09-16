@@ -12,6 +12,7 @@ router.get('/listLogTask', auth, validateUser, TaskController.listLogTask);
 router.put('/updateTask',  mult, Upload, auth, validateUser, TaskController.updateTask);
 router.put('/assignUser',  auth, validateUser, TaskController.assignUser);
 router.delete('/deleteTask/:_id', auth, validateUser, TaskController.deleteTask);
+router.get("/findTask/:_id", auth, validateUser, TaskController.findTask);
 
 
 module.exports = router;

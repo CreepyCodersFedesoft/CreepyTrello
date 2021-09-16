@@ -7,5 +7,6 @@ router.post('/createSpring', auth, validateUser, SpringController.createSpring);
 router.get('/listSpring/:boardId?', auth, validateUser, SpringController.listSpring);
 router.put('/updateSprint', auth, validateUser, SpringController.updateSprint);
 router.delete('/deleteSprint/:_id', auth, validateUser, SpringController.deleteSprint);
+router.get('/searchSprint/:_id', auth, validateUser, SpringController.searchSprint);
 
 module.exports = router;

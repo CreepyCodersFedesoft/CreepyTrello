@@ -5,7 +5,6 @@ import { ListRoleComponent } from './admin/list-role/list-role.component';
 import { ListUserComponent } from './admin/list-user/list-user.component';
 import { CreateCommentsComponent } from './board/comments/create-comments/create-comments.component';
 import { ListCommentsComponent } from './board/comments/list-comments/list-comments.component';
-import { InviteUserComponent } from './board/invite-user/invite-user.component';
 import { ListBoardComponent } from './board/list-board/list-board.component';
 import { RegisterBoardComponent } from './board/register-board/register-board.component';
 import { CreateSpringComponent } from './board/spring/create-spring/create-spring.component';
@@ -15,6 +14,8 @@ import { ListTaskComponent } from './board/task/list-task/list-task.component';
 import { LoginComponent } from './home/login/login.component';
 import { RegisterComponent } from './home/register/register.component';
 import { UpdateUserComponent } from './home/update-user/update-user.component';
+import { TaskDetailsComponent } from "./board/task/task-details/task-details.component";
+import { InviteUserBoardComponent } from './board/invite-user-board/invite-user-board.component';
 
 
 
@@ -45,8 +46,8 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'inviteUser',
-    component: InviteUserComponent,
+    path: 'inviteUserBoard',
+    component: InviteUserBoardComponent,
     pathMatch: 'full',
   },
   {
@@ -97,6 +98,12 @@ const routes: Routes = [
   {
     path: 'createSpring',
     component: CreateSpringComponent,
+    pathMatch: 'full',
+  },
+
+  {
+    path: 'listTask/:_id',
+    component: TaskDetailsComponent,
     pathMatch: 'full',
   },
 ];

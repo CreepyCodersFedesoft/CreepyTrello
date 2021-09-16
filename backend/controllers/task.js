@@ -11,7 +11,7 @@ const createTask = async (req, res) => {
     !req.user._id ||
     !req.body.springId ||
     !req.body.title ||
-    !req.body.description 
+    !req.body.description
   )
     return res.status(400).send("Process failed: Incomplete data");
 
@@ -29,8 +29,10 @@ const createTask = async (req, res) => {
 
   //si no tiene un usuario asignado, le asignamos el que creo la tearea
   let assignUser = !req.body.assignedUser ? null : req.body.assignedUser;
-  let priority = !req.body.priority ? 0 : req.body.priority;
-  console.log(priority);
+  let priority = !req.body.priority ? 1 : req.body.priority;
+
+  if (priority < 1 || priority > 5)
+    return res.status(400).send("Error: priority must be in a range of 1 to 5");
 
   const task = new Task({
     userId: req.user._id,
@@ -63,7 +65,7 @@ const listTask = async (req, res) => {
   //puede llegar una imagen y un usuario asignado
   const task = await Task.find({ springId: req.params.springId });
   if (!task || task.length == 0)
-    return res.status(400).send("This Spring haven't assigned task");
+    return res.status(400).send({msg: "This Spring haven't assigned task"});
 
   let history = new History({
     userId: req.user._id,
@@ -129,6 +131,10 @@ const updateTask = async (req, res) => {
     priority = tempPriority.priority;
   } else {
     priority = req.body.priority;
+    if (priority < 1 || priority > 5)
+      return res
+        .status(400)
+        .send("Error: priority must be in a range of 1 to 5");
   }
 
   const task = await Task.findByIdAndUpdate(req.body._id, {
@@ -156,7 +162,6 @@ const updateTask = async (req, res) => {
     }
   }
 
-  
   let history = new History({
     taskId: req.body._id,
     userId: req.user._id,
@@ -164,7 +169,7 @@ const updateTask = async (req, res) => {
   });
 
   let resultHistory = await history.save();
-  if(!resultHistory) console.log('failed to create history task');
+  if (!resultHistory) console.log("failed to create history task");
 
   return res.status(200).send({ task });
 };
@@ -187,7 +192,6 @@ const deleteTask = async (req, res) => {
     console.log("Image no found in server");
   }
 
-  
   let history = new History({
     taskId: req.params._id,
     userId: req.user._id,
@@ -195,7 +199,7 @@ const deleteTask = async (req, res) => {
   });
 
   let resultHistory = await history.save();
-  if(!resultHistory) console.log('failed to create history task');
+  if (!resultHistory) console.log("failed to create history task");
   //console.log(resultHistory);
 
   return res.status(200).send({ message: "Task deleted" });
@@ -219,7 +223,6 @@ const assignUser = async (req, res) => {
 
   if (!result) return res.status(400).send("Error to assign task");
 
-  
   let history = new History({
     taskId: req.body._id,
     userId: req.user._id,
@@ -227,16 +230,32 @@ const assignUser = async (req, res) => {
   });
 
   let resultHistory = await history.save();
-  if(!resultHistory) console.log('failed to create history task');
+  if (!resultHistory) console.log("failed to create history task");
   //console.log(resultHistory);
 
-  return res.status(200).send("Task assigned successfully");
+  return res.status(200).send({msg: "Task assigned successfully"});
 };
 
 const listLogTask = async (req, res) => {
-  let history = await History.find({taskId: req.body.taskId});
-  if (!history) return res.status(400).send('No logs for this task');
-  return res.status(200).send({ history })
-}
+  let history = await History.find({ taskId: req.body.taskId });
+  if (!history) return res.status(400).send("No logs for this task");
+  return res.status(200).send({ history });
+};
 
-module.exports = { createTask, listTask, updateTask, deleteTask, assignUser, listLogTask };
+const findTask = async (req, res) => {
+  const task = await Task.findOne({ _id: req.params["_id"] })
+    .populate("springId")
+    .exec();
+  if (!task || task.lenght === 0) return res.status(400).send("No search task");
+  return res.status(200).send({ task });
+};
+
+module.exports = {
+  createTask,
+  listTask,
+  updateTask,
+  deleteTask,
+  assignUser,
+  listLogTask,
+  findTask,
+};

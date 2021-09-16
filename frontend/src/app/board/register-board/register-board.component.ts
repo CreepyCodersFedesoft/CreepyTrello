@@ -7,6 +7,7 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register-board',
@@ -16,13 +17,15 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 export class RegisterBoardComponent implements OnInit {
   registerBoard: any;
   selectedFile: any;
+  boardImg:any ='';
   constructor(
     private _boardService: BoardService,
     private _router: Router,
-    private _utilitiesServices:UtilitiesService
+    private _utilitiesServices:UtilitiesService,
+    private _sanitizer: DomSanitizer,
   ) {
     this.registerBoard = {};
-    this.selectedFile = null;
+    this.selectedFile = "";
   }
 
   ngOnInit(): void {
@@ -52,6 +55,7 @@ export class RegisterBoardComponent implements OnInit {
   }
 
   uploadImg(event:any){
-    this.selectedFile = <File> event.target.files[0];
+    this.selectedFile = <File> event.target.files[0]; 
+    this.boardImg = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.selectedFile));
   }
 }

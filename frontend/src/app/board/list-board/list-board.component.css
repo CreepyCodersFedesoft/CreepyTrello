@@ -1,15 +1,20 @@
 .bgContentInput {
   text-align: center;
 }
+
+img{
+  min-height: 120px;
+}
+
 .bgInput {
   display: inline-block;
   justify-content: right;
-  background: #cc8f25;
+  background: #ffca6f;
   width: 500px;
-  color: white;
+  color: black;
 }
 .bgInput::placeholder {
-  color: white;
+  color: black;
   border-radius: 10%;
 }
 .information-card {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { UtilitiesService } from './utilities.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +10,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class TaskService {
   private env: string;
 
-  private _listTasks: BehaviorSubject<any> = new BehaviorSubject([]);
+  public _listTasks: BehaviorSubject<any> = new BehaviorSubject([]);
   public readonly listTasks: Observable<any> = this._listTasks.asObservable();
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient, private _utilitiesService: UtilitiesService) {
     this.env = environment.APP_URL;
   }
 
@@ -22,6 +23,7 @@ export class TaskService {
         this._listTasks.next(res.task);
       },
       (err) => {
+        //this._utilitiesService.openSnackBarError(err.error.msg);
         this._listTasks.next([]);        
       }
     );
@@ -34,8 +36,14 @@ export class TaskService {
   updateTask(task: any) {
     return this._http.put<any>(this.env + 'task/updateTask', task);
   }
-
+  assignUser(task: any) {
+    return this._http.put<any>(this.env + 'task/assignUser', task);
+  }
   deleteTask(task: any) {
     return this._http.delete<any>(this.env + 'task/deleteTask/' + task._id);
+  }
+
+  findTask(_id: string) {
+    return this._http.get<any>(this.env + 'task/findTask/' + _id);
   }
 }

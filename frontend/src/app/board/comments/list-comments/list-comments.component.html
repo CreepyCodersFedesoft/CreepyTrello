@@ -1,1 +1,37 @@
-<p>list-comments works!</p>
+<app-create-comments [taskId]="this.taskId" (onCreate)="onCreateComment()"></app-create-comments>
+
+<div *ngFor="let comment of commentData" class=" card-comment">
+  <div class="row g-0 h-100 m-0">
+    <div class="col-md-2 align-content-start py-1">
+      <img
+        [src]="
+          comment.userId.userImg != ''
+            ? comment.userId.userImg
+            : '../../../../assets/img/userExample.png'
+        "
+        class="userImgStyle img-fluid"
+      />
+      <h5 class="fs-6 fw-bold">{{ comment.userId.name.split(" ")[0] }}</h5>
+    </div>
+    <div class="col px-2 py-0 m-0">
+      <div class="text-start">
+        <p class="fs-6 text-start py-3">{{ comment.text }}</p>
+        <hr class="m-0 date-style">
+        <p class="fs-6 align-content-start align-bottom date-style">
+          <small class="text-muted date-style fst-italic">
+            {{ comment.date | date }}
+            {{ comment.date | date: "shortTime" }}
+          </small>
+          <button 
+            mat-icon-button 
+            class="align-content-end date-style px-3"
+            (click)="giveLike(comment)"
+          >
+            <mat-icon class="icon date-style">thumb_up_off_alt</mat-icon>
+          </button>
+          <small class="fw-bold date-style px-1">{{comment.likes}}</small>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

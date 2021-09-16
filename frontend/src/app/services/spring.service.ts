@@ -30,6 +30,10 @@ export class SpringService {
     );
   }
 
+  searchSpring(springId: any) {
+    return this._http.get<any>(this.env + 'spring/searchSprint/' + springId);
+  }
+
   createSpring(spring: any) {
     return this._http.post<any>(this.env + 'spring/createSpring', spring);
   }

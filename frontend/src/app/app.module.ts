@@ -44,7 +44,6 @@ import { ListBoardComponent } from './board/list-board/list-board.component';
 import { RegisterBoardComponent } from './board/register-board/register-board.component';
 import { ListTaskComponent } from './board/task/list-task/list-task.component';
 import { CreateTaskComponent } from './board/task/create-task/create-task.component';
-import { InviteUserComponent } from './board/invite-user/invite-user.component';
 import { CreateCommentsComponent } from './board/comments/create-comments/create-comments.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ListCommentsComponent } from './board/comments/list-comments/list-comments.component';
@@ -55,6 +54,11 @@ import { ListSpringComponent } from './board/spring/list-spring/list-spring.comp
 import { CreateSpringComponent } from './board/spring/create-spring/create-spring.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { UpdateSpringComponent } from './board/spring/update-spring/update-spring.component';
+import { TaskDetailsComponent } from './board/task/task-details/task-details.component';
+import { InviteUserBoardComponent } from './board/invite-user-board/invite-user-board.component';
+import { AssignTaskComponent } from './board/task/assign-task/assign-task.component';
 
 
 @NgModule({
@@ -68,7 +72,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     RegisterBoardComponent,
     ListTaskComponent,
     CreateTaskComponent,
-    InviteUserComponent,
     CreateCommentsComponent,
     ListCommentsComponent,
     CreateRoleComponent,
@@ -76,6 +79,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ListUserComponent,
     ListSpringComponent,
     CreateSpringComponent,
+    UpdateSpringComponent,
+    TaskDetailsComponent,
+    InviteUserBoardComponent,
+    AssignTaskComponent,
 
   ],
   imports: [
@@ -124,4 +131,4 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

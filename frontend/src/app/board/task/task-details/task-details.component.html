@@ -1,0 +1,32 @@
+<div class="bgComponent">
+  <div class="form">
+<mat-card class="card">
+  <mat-card-header>
+    <div mat-card-avatar >
+      <img [src]="this.profileImage" alt="">
+    </div>
+    <mat-card-title> <input class="text"
+      [(ngModel)]="registerData.title"
+      matInput
+     
+      
+    /></mat-card-title>
+    <mat-card-subtitle>Creada por: </mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <input
+    [(ngModel)]="registerData.description"
+    matInput
+    disabled
+  />
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
+    <button mat-button>DELETE</button>
+    <button mat-button>ACTUALIZAR</button>
+  </mat-card-actions>
+</mat-card>  
+  </div>
+</div>

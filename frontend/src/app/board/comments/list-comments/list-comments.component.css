@@ -1,0 +1,17 @@
+.userImgStyle {
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+}
+
+.date-style{
+  padding: 0%;
+  margin: 0% !important;
+  display: flex;
+  align-items: flex-end;
+}
+
+.card-comment{
+  box-shadow: 1px 1px 3px #a06704;
+  transition: height .4s;
+}

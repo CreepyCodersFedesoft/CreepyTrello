@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { TaskService } from '../../../services/task.service';
 import { UtilitiesService } from '../../../services/utilities.service';
 import {
@@ -13,6 +13,7 @@ import {
   MatDialog,
 } from '@angular/material/dialog';
 import { CreateTaskComponent } from '../create-task/create-task.component';
+import { TaskDetailsComponent} from "../task-details/task-details.component";
 import { Router } from '@angular/router';
 
 @Component({
@@ -36,7 +37,7 @@ export class ListTaskComponent implements OnInit{
     private _taskService: TaskService,
     private _utilitiesService: UtilitiesService,
     private _matDialog: MatDialog,
-    private _router: Router
+    private _router: Router,
   ) {
     this.taskData = [];
     this.taskData2 = [];
@@ -47,6 +48,13 @@ export class ListTaskComponent implements OnInit{
     this._taskService.listTasks.subscribe(
       (res) => {
         this.taskData = res
+        this.taskData.forEach(tData => {
+          tData.visibleComments = false;
+          tData.visibleAssign = false;
+        });
+      },
+      (err) => {
+        this._utilitiesService.openSnackBarError(err.msg);
       }
     );
   }
@@ -111,16 +119,21 @@ export class ListTaskComponent implements OnInit{
     const matDialog = new MatDialogConfig();
     matDialog.disableClose = false;
     matDialog.autoFocus = true;
-    matDialog.width = '50%';
+    matDialog.width = '400px';
     this._matDialog.open(CreateTaskComponent, matDialog);
-  }
-
-  onOpenComment() {
-    this.open = !this.open;
   }
 
   addComment() {
     this.commentInput = 'comentario';
   }
 
+  showDetails() {
+    
+    const matDialog = new MatDialogConfig();
+    matDialog.disableClose = false;
+    matDialog.autoFocus = true;
+    matDialog.width = '90%';
+    matDialog.height = '90%';
+    this._matDialog.open(TaskDetailsComponent, matDialog);
+  }
 }

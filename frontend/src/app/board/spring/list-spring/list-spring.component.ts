@@ -7,6 +7,7 @@ import { CreateTaskComponent } from '../../task/create-task/create-task.componen
 import { CreateSpringComponent } from '../create-spring/create-spring.component';
 import swal from 'sweetalert2';
 import { BoardService } from 'src/app/services/board.service';
+import { UpdateSpringComponent } from '../update-spring/update-spring.component';
 
 @Component({
   selector: 'app-list-spring',
@@ -18,6 +19,7 @@ export class ListSpringComponent implements OnInit {
   springData: any;
   boardData: any;
   springId: any;
+  boardId: any;
   message: string;
 
   constructor(
@@ -26,73 +28,73 @@ export class ListSpringComponent implements OnInit {
     private _activeRoute: ActivatedRoute,
     private _matDialog: MatDialog,
     private _utilitiesService: UtilitiesService,
-    private _boardService: BoardService,
+    private _boardService: BoardService
   ) {
     this.springData = {};
     this.boardData = {};
     this.springId = null;
+    this.boardId = null;
     this.message = '';
   }
 
   ngOnInit(): void {
     this.chargeBoard();
-    this._springService.listSprings.subscribe(
-      (res) => {
-        this.springData = res
+    this._springService.listSprings.subscribe((res) => {
+      let anyArray: any[] = res.spring
+      for (const i in anyArray) {
+        anyArray[i].sprintOptions = false;
       }
-    )
+      this.springData = anyArray;
+    });
   }
 
   ngOnChanges(entryId: string) {
     this.chargeSpring(entryId);
   }
 
-  chargeBoard(){
-    this._boardService.getBoardById(this._activeRoute.snapshot.params.boardId).subscribe(
-      (res) => {
-        this.boardData = res.board;
-        this._springService.updateListSprings(this.boardData._id);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+  chargeBoard() {
+    this._boardService
+      .getBoardById(this._activeRoute.snapshot.params.boardId)
+      .subscribe(
+        (res) => {
+          this.boardData = res.board;
+          this._springService.updateListSprings(this.boardData._id);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 
   chargeSpring(springId: any) {
     this.springId = springId;
   }
 
-  onCreate() {
-    const matDialog = new MatDialogConfig();
-    matDialog.disableClose = false;
-    matDialog.autoFocus = true;
-    matDialog.width = '50%';
-    let dialog = this._matDialog.open(CreateSpringComponent, matDialog);
-    const sub = dialog.componentInstance.onAdd.subscribe((data) => {
-      this.saveSprint(data);
-      dialog.close()
-    });
-    dialog.afterClosed().subscribe(() => {
-      sub.unsubscribe();
-    });
+  chargeBoardId(boardId: any) {
+    this.boardId = boardId;
   }
 
-  saveSprint(registerData: any) {
-    if (!registerData.title || !registerData.description) {
-      this._utilitiesService.openSnackBarError('Datos incompletos');
-    } else {
-      registerData.boardId = this.boardData._id;
-      this._springService.createSpring(registerData).subscribe(
-        (res) => {
-          this._springService.updateListSprings(this.boardData._id);
-          this._utilitiesService.openSnackBarSuccesfull('Sprint creado');
-        },
-        (err) => {
-          this._utilitiesService.openSnackBarError(err.error);
-        }
-      );
-    }
+  updateSprint(springId: any, boardId: any) {
+    this._matDialog.open(UpdateSpringComponent, {
+      data: { springId, boardId },
+      autoFocus: true,
+      panelClass: [''],
+      width: '400px',
+      height: '500px',
+    });
+    this.chargeSpring(springId);
+    this.chargeBoardId(boardId);
+  }
+
+  saveSprint(boardId: any) {
+    this._matDialog.open(CreateSpringComponent, {
+      data: { boardId },
+      autoFocus: true,
+      panelClass: [''],
+      width: '400px',
+      height: '500px',
+    });
+    this.chargeBoardId(boardId);
   }
 
   change() {
