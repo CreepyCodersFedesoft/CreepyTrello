@@ -1,6 +1,11 @@
 .bgContentInput {
   text-align: center;
 }
+
+img{
+  min-height: 120px;
+}
+
 .bgInput {
   display: inline-block;
   justify-content: right;
