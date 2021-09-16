@@ -98,10 +98,12 @@ export class ListSpringComponent implements OnInit {
   }
 
   saveSprint(registerData: any) {
+    console.log("registerData-> ",registerData);
+    
     if (
       !registerData.title ||
       !registerData.description ||
-      !registerData.starDate ||
+      !registerData.startDate ||
       !registerData.endDate
     ) {
       this._utilitiesService.openSnackBarError('Datos incompletos');
