@@ -36,7 +36,9 @@ export class TaskService {
   updateTask(task: any) {
     return this._http.put<any>(this.env + 'task/updateTask', task);
   }
-
+  assignUser(task: any) {
+    return this._http.put<any>(this.env + 'task/assignUser', task);
+  }
   deleteTask(task: any) {
     return this._http.delete<any>(this.env + 'task/deleteTask/' + task._id);
   }

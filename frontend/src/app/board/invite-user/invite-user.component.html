@@ -1,1 +1,9 @@
-<p>invite-user works!</p>
+<mat-form-field appearance="fill">
+  <mat-label>Asignar Usuario</mat-label>
+  <mat-select [(ngModel)]="seletedUser.assignedUser">
+    <mat-option *ngFor="let user of usersData" [value]="user._id">
+      {{user.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<button mat-button class="w-100" (click)="assignTask()">Enviar</button>
