@@ -27,8 +27,8 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button (click)="showDetails()" mat-menu-item>
-              <mat-icon>details</mat-icon>
+            <button [routerLink]="['/listTask/', task._id]"  mat-menu-item>
+              <mat-icon >details</mat-icon>
               <span>Detalles</span>
             </button>
             <button mat-menu-item>
@@ -67,7 +67,10 @@
             <div *ngIf="open">
               <mat-form-field class="example-full-width" appearance="fill">
                 <mat-label>Leave a comment</mat-label>
-                <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+                <textarea
+                  matInput
+                  placeholder="Ex. It makes me feel..."
+                ></textarea>
               </mat-form-field>
             </div>
           </div>
@@ -193,77 +196,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<div class="bgComponent">
-  <div class="accordion_display">
-    <div class="accordion_size">
-      <mat-accordion multi="true" *ngIf="taskData.length">
-        <mat-expansion-panel *ngFor="let task of taskData" hideToggle="false">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <span>{{ task.title }}</span>
-              <span class="spacer"></span>
-              <button
-                class="btnDone"
-                *ngIf="task.taskStatus == 'done'"
-                mat-raised-button
-              >
-                {{ task.taskStatus }}
-              </button>
-              <button
-                class="btnInProgress"
-                *ngIf="task.taskStatus == 'in-progress'"
-                mat-raised-button
-              >
-                {{ task.taskStatus }}
-              </button>
-              <button
-                class="btnToDo"
-                *ngIf="task.taskStatus == 'to-do'"
-                mat-raised-button
-              >
-                {{ task.taskStatus }}
-              </button>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <mat-panel-description>
-            {{ task.description }}
-          </mat-panel-description>
-          <mat-panel-description>
-            <img class="card-img-top image_center" src="{{ task.imageUrl }}" />
-          </mat-panel-description>
-          <mat-action-row>
-            <button
-              class="btnSelectTodo"
-              mat-button
-              (click)="updateTask(task, 'to-do')"
-            >
-              to-do
-            </button>
-            <button
-              class="btnSelectInProgress"
-              mat-button
-              (click)="updateTask(task, 'in-progress')"
-            >
-              In-progress
-            </button>
-            <button
-              class="btnSelectDone"
-              mat-button
-              (click)="updateTask(task, 'done')"
-            >
-              done
-            </button>
-            <span class="spacer"></span>
-            <mat-icon color="primary" (click)="deleteTask(task)"
-              >delete</mat-icon
-            >
-          </mat-action-row>
-        </mat-expansion-panel>
-      </mat-accordion>
     </div>
   </div>
 </div>

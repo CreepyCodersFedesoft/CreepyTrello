@@ -1,19 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TaskService } from '../../../services/task.service';
+import { UserService } from 'src/app/services/user.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UtilitiesService } from '../../../services/utilities.service';
 import {
-  CdkDragDrop,
-  CdkDragEnd,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
-import {
-  MatDialogModule,
-  MatDialogConfig,
   MatDialog,
+  MatDialogConfig,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-import { CreateTaskComponent } from '../create-task/create-task.component';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-details',
@@ -22,112 +17,61 @@ import { Router } from '@angular/router';
 })
 export class TaskDetailsComponent  {
   @Input() springId: any = null;
-  @Input() boardId: any = null;
-
-  taskData: any[];
-  taskData1: string[] = [];
-  taskData2: any[] = [];
-  taskData3: any[] = [];
+  registerData: any;
+  selectedFile: any;
   message: string = '';
-  commentInput = '';
-  open = false;
+  _id: string;
+  profileImage: string = '';
+  userName: string = 'My User';
 
   constructor(
     private _taskService: TaskService,
     private _utilitiesService: UtilitiesService,
     private _matDialog: MatDialog,
-    private _router: Router
+    private _router: Router,
+    private _Arouter: ActivatedRoute,
+    public _userService: UserService,
   ) {
-    this.taskData = [];
-    this.taskData2 = [];
-    this.taskData3 = [];
+    this.registerData = {}
+    this._id = '';
   }
   ngOnInit(): void {
-    this._taskService.listTasks.subscribe(
-      (res) => {
-        this.taskData = res
-      }
-    );
-  }
-
-  ngOnChanges(): void {
-    this._taskService.updateListTask(this.springId); 
-  }
-
-  updateTask(task: any, status: string) {    
-    let tempStatus = task.taskStatus;
-    task.taskStatus = status;
-    this._taskService.updateTask(task).subscribe(
-      (res) => {
-        task.status = status;
+this._Arouter.params.subscribe(
+  (params) => {
+    this._id = params['_id'];
+    this._taskService.findTask(this._id).subscribe(
+      (res)=>{
+        this.registerData = res.task
+        console.log(this.registerData);
+        
       },
-      (err) => {
-        task.status = tempStatus;
+      (err)=>{    
         this.message = err.error;
         this._utilitiesService.openSnackBarError(this.message);
       }
-    );
+    )
+  }
+)
   }
 
-  deleteTask(task: any) {
-    this._taskService.deleteTask(task).subscribe(
-      (res) => {
-        let index = this.taskData.indexOf(task);
-        if (index > -1) {
-          this.taskData.splice(index, 1);
-          this.message = res.message;
+  updateTask(){
 
-          console.log('la tas tiene' + task);
-        }
-      },
-      (err) => {
-        this.message = err.error;
-        this._utilitiesService.openSnackBarError(this.message);
-      }
-    );
   }
-
-  drop(event: CdkDragDrop<any[]>) {
-    if (event.previousContainer === event.container) {
-      //Dentro del mismo contenedor
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      //Fuera del contenedor
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
+  chargeData() {
+    if (this._userService.loggedIn()) {
+      this._userService.getEmail().subscribe(
+        (res) => {
+          //console.log(res);
+          this.profileImage = res.userImg;
+          this.userName = res.name;
+        },
+        (err) => {}
       );
     }
   }
 
-  onCreate() {
-    const matDialog = new MatDialogConfig();
-    matDialog.disableClose = false;
-    matDialog.autoFocus = true;
-    matDialog.width = '50%';
-    this._matDialog.open(CreateTaskComponent, matDialog);
-  }
-
-  onOpenComment() {
-    this.open = !this.open;
-  }
-
-  addComment() {
-    this.commentInput = 'comentario';
-  }
-
-  showDetails() {
-    const matDialog = new MatDialogConfig();
-    matDialog.disableClose = false;
-    matDialog.autoFocus = true;
-    matDialog.width = '90%';
-    matDialog.height = '90%';
-    this._matDialog.open(TaskDetailsComponent, matDialog);
+  enterSprint(id: any):void {
+    console.log("viendo que sale "+id);
+    this._router.navigate([`task/${id}`]);
   }
 }

@@ -40,6 +40,6 @@ export class TaskService {
   }
 
   findTask(_id: string) {
-    return this._http.get<any>(this.env + 'user/findTask/' + _id);
+    return this._http.get<any>(this.env + 'task/findTask/' + _id);
   }
 }

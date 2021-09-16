@@ -102,7 +102,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'listTask',
+    path: 'listTask/:_id',
     component: TaskDetailsComponent,
     pathMatch: 'full',
   },
