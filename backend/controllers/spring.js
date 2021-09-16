@@ -33,14 +33,14 @@ const createSpring = async (req, res) => {
   });
 
   let result = await spring.save();
-  if (!result) return res.status(400).send("Error: error to register spring");
+  if (!result) return res.status(400).send("Error: error to register sprint.");
   return res.status(200).send({ result });
 };
 const listSpring = async (req, res) => {
   let spring = await Spring.find({ boardId: req.params["boardId"] })
     .populate("boardId")
     .exec();
-  if (!spring) return res.status(400).send("No spring for this board");
+  if (!spring) return res.status(400).send("No sprint for this board");
   return res.status(200).send({ spring });
 };
 const updateSprint = async (req, res) => {
@@ -64,7 +64,7 @@ const updateSprint = async (req, res) => {
     arrayBoardId.push(String(boardId._id));
   });
   if (!arrayBoardId.includes(String(req.body.boardId)))
-    return res.status(400).send("You no have permission to update");
+    return res.status(400).send("You don't have permission to update");
 
   //actualizamos
   let result = await Spring.findByIdAndUpdate(req.body._id, {
@@ -74,13 +74,13 @@ const updateSprint = async (req, res) => {
     endDate: req.body.endDate,
     springStatus: req.body.springStatus,
   });
-  if (!result) return res.status(400).send("Error to update spring");
+  if (!result) return res.status(400).send("Error to update sprint");
 
   return res.status(201).send({ result });
 }; //actualizar fechas, titulo, descripcion y estado
 
 const deleteSprint = async (req, res) => {
-  if (!req.params._id) return res.status(400).send("Error: no sprint Id");
+  if (!req.params._id) return res.status(400).send("Error: No sprint Id");
 
   //guardamos las url de las images a borrar
   let task = await Task.find({ springId: req.params._id });
@@ -107,7 +107,7 @@ const deleteSprint = async (req, res) => {
 
   //finalmente eliminamos el spring
   let result = await Spring.findByIdAndDelete(req.params._id);
-  if(!result) return res.status(400).send('Error to delete spring');
+  if(!result) return res.status(400).send('Error to delete sprint');
   
   return res.status(200).send({message: 'Spring Deleted'});
 };

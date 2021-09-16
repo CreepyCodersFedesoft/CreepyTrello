@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (!this.loginData.email || !this.loginData.password) {
-      this._utilitiesServices.openSnackBarError('Failed process: Imcomplete data');
+      this._utilitiesServices.openSnackBarError('Failed process: Incomplete data.');
       this.loginData = {};
     } else {
       this._userService.login(this.loginData).subscribe(

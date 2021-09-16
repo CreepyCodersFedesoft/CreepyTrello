@@ -1,1 +1,35 @@
-<p>create-role works!</p>
+<div
+  class="main-wrapper"
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  (keyup.enter)="login()"
+>
+  <mat-card class="box">
+    <mat-card-header>
+      <mat-card-title>Role Management<br /><br /><br /></mat-card-title>
+    </mat-card-header>
+
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> </mat-panel-title>
+          <mat-panel-description> Currently I am </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>I'm visible because I am open</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+
+
+    <div class="example-form">
+      <button
+        (click)="login()"
+        mat-stroked-button
+        color="accent"
+        class="btn-block"
+      >
+        Login
+      </button>
+    </div>
+  </mat-card>
+</div>

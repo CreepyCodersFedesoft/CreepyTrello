@@ -1,4 +1,6 @@
 const Role = require("../models/role");
+const mongoose = require("mongoose");
+
 
 const createRole = async (req, res) => {
   if (!req.body.name || !req.body.description)
@@ -19,23 +21,36 @@ const createRole = async (req, res) => {
 };
 
 const listRole = async (req, res) => {
-    const role = await Role.find();
-    if (!role || role.length === 0)
-      return res.status(400).send("Empty role list");
-    return res.status(200).send({ role });    
-};
-const updateRole = async (req, res) => {
-    const validId = mongoose.Types.ObjectId.isValid(req.body._id);
-    if (!validId) return res.status(400).send("Invalid id");
-  
-    if (!req.body._id || !req.body.description)
-      return res.status(400).send("Incomplete data");
-  
-    const role = await Role.findByIdAndUpdate(req.body._id, {
-      description: req.body.description,
-    });
-    if (!role) return res.status(400).send("Error editing role");
-    return res.status(200).send({ role });    
+  const role = await Role.find();
+  if (!role || role.length === 0)
+    return res.status(400).send("Empty role list");
+  return res.status(200).send({ role });
 };
 
-module.exports = { createRole, listRole, updateRole };
+
+const updateRole = async (req, res) => {
+  const validId = mongoose.Types.ObjectId.isValid(req.body._id);
+  if (!validId) return res.status(400).send("Invalid id");
+
+  if (!req.body._id || !req.body.description)
+    return res.status(400).send("Incomplete data");
+
+  const role = await Role.findByIdAndUpdate(req.body._id, {
+    description: req.body.description,
+  });
+  if (!role) return res.status(400).send("Error editing role");
+  return res.status(200).send({ role });
+};
+
+const getDescription = async (req, res) => {
+  if (!req.params.role) return res.status(400).send("Incomplete data.");
+
+  const role = await Role.findOne({ _id: req.params.role });
+
+  if (!role || role.length === 0)
+    return res.status(400).send("No search results.");
+
+  return res.status(200).send(role);
+};
+
+module.exports = { createRole, listRole, updateRole, getDescription };

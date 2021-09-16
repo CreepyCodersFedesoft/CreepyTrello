@@ -7,26 +7,24 @@ const sendMail = async (req, res) => {
   const msg = {
     to: req.body.email, // Change to your recipient
     from: "dianaeleira@gmail.com", // Change to your verified sender
-    subject: "Welcome to Creppy Trello Software",
+    subject: "Bienvenido a Creppy Trello Software",
     name: "Creppy Trello",
     html:
       "Hi, " +
       req.body.name +
-      "!<br />Welcome to Creppy Trello Software." +
-      "Please activate your email by clicking <strong><a href='" +
+      "!<br />Bienvenido a Creppy Trello Software." +
+      "Por favor, active su correo haciendo clic <strong><a href='" +
       urlMail +
-      "'>here</a></strong>",
+      "'>aquí</a></strong>",
   };
 
   sgMail
     .send(msg)
     .then((response) => {
-      //return res.status(200).send({ message: response[0].statusCode });
       return "ok";
     })
     .catch((error) => {
       return "error";
-      //return res.status(response[0].statusCode).send({ message: response[0].headers });
     });
 };
 module.exports = { sendMail };
