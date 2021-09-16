@@ -4,13 +4,14 @@ import { TaskService } from 'src/app/services/task.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
-  selector: 'app-invite-user',
-  templateUrl: './invite-user.component.html',
-  styleUrls: ['./invite-user.component.css']
+  selector: 'app-assign-task',
+  templateUrl: './assign-task.component.html',
+  styleUrls: ['./assign-task.component.css']
 })
-export class InviteUserComponent implements OnInit {
+export class AssignTaskComponent implements OnInit {
   @Input() taskId: string = "";
   @Input() boardId: string = "";
+  @Input() assignedUser: string = '';
   seletedUser: any;
 
   usersData: any[];
@@ -28,6 +29,9 @@ export class InviteUserComponent implements OnInit {
     this._boardService.getUsersOnBoard(this.boardId).subscribe(
       (res) => {
         this.usersData = res.filteredList;
+        console.log('assignedUser ->' + this.assignedUser);
+        
+        //this.seletedUser = this.assignedUser;
       },
       (err) => {
         this._utilitiesService.openSnackBarError('No se han encontrado usuarios invitados al Board');
@@ -37,6 +41,8 @@ export class InviteUserComponent implements OnInit {
 
 
   assignTask() {
+    console.log('assignedUser ->' + this.assignedUser);
+    
     this.seletedUser = {
       assignedUser: this.seletedUser.assignedUser,
       _id: this.taskId,
@@ -50,4 +56,5 @@ export class InviteUserComponent implements OnInit {
       }
     );
   }
+
 }

@@ -74,7 +74,8 @@
               <app-list-comments [taskId]="task._id"></app-list-comments>
             </div>
             <div *ngIf="task.visibleAssign" >
-              <app-invite-user [taskId]="task._id" [boardId]="boardId"></app-invite-user>
+              <app-assign-task [taskId]="task._id" [assignedUser]="task.assignedUser" [boardId]="boardId">
+              </app-assign-task>
             </div>  
         </div>
       </div>
