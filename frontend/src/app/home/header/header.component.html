@@ -9,6 +9,13 @@
       >Lista de Tableros</a
     >
   </ul>
+
+  <ul>
+    <a  mat-button routerLink="listBoard"   mat-button routerLink="listRole"
+      >Administración de Roles</a
+    >
+  </ul>  
+
   <span *ngIf="!_userService.loggedIn()" class="headerSpacer"></span>
   <ul>
     <img
@@ -18,6 +25,7 @@
       routerLink="listBoard"
     />
   </ul>
+
   <span class="headerSpacer"></span>
   <span class="headerSpacer"></span>
   <ul>

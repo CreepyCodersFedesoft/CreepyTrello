@@ -19,6 +19,15 @@ export class RoleService {
   }
 
   registerRole(role: any) {
-    return this._http.post<any>(this.env + 'role/registerRole/', role);
+    return this._http.post<any>(this.env + 'role/createRole/', role);
   }
+
+  updateRole(role: any) {
+    return this._http.post<any>(this.env + 'role/updateRole/', role);
+  }  
+
+  getDescription(role: string) {
+    return this._http.get<any>(this.env + 'role/getDescription/' + role);
+  } 
+
 }
