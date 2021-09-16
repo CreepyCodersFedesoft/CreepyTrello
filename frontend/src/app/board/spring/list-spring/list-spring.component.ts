@@ -82,43 +82,15 @@ export class ListSpringComponent implements OnInit {
     this.chargeBoardId(boardId);
   }
 
-  onCreate() {
-    const matDialog = new MatDialogConfig();
-    matDialog.disableClose = false;
-    matDialog.autoFocus = true;
-    matDialog.width = '400px';
-    let dialog = this._matDialog.open(CreateSpringComponent, matDialog);
-    const sub = dialog.componentInstance.onAdd.subscribe((data) => {
-      this.saveSprint(data);
-      dialog.close();
+  saveSprint(boardId: any) {
+    this._matDialog.open(CreateSpringComponent, {
+      data: { boardId },
+      autoFocus: true,
+      panelClass: [''],
+      width: '400px',
+      height: '500px',
     });
-    dialog.afterClosed().subscribe(() => {
-      sub.unsubscribe();
-    });
-  }
-
-  saveSprint(registerData: any) {
-    console.log("registerData-> ",registerData);
-    
-    if (
-      !registerData.title ||
-      !registerData.description ||
-      !registerData.startDate ||
-      !registerData.endDate
-    ) {
-      this._utilitiesService.openSnackBarError('Datos incompletos');
-    } else {
-      registerData.boardId = this.boardData._id;
-      this._springService.createSpring(registerData).subscribe(
-        (res) => {
-          this._springService.updateListSprings(this.boardData._id);
-          this._utilitiesService.openSnackBarSuccesfull('Sprint creado');
-        },
-        (err) => {
-          this._utilitiesService.openSnackBarError(err.error);
-        }
-      );
-    }
+    this.chargeBoardId(boardId);
   }
 
   change() {
