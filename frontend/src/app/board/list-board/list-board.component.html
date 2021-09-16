@@ -40,7 +40,7 @@
       <img
         mat-card-image
         (click)="enterSprint(board._id)"
-        src="{{ board.boardImg }}"
+        [src]="board.boardImg != '' ? board.boardImg : '../../../../../assets/img/userBoardExample.jpg'"
       />
       <mat-card-content>
         <p>{{ board.description }}</p>
