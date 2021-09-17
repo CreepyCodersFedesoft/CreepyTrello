@@ -12,7 +12,7 @@ router.post('/createAdmin', mult, Upload, auth, validateUser, admin,   UserContr
 router.post('/login', UserController.login);
 router.get('/listUser/:name?', auth, validateUser, UserController.listUser);
 router.get('/listUserAll/:name?', auth, validateUser, UserController.listUserAll);
-router.get('/activateUser/:email?', auth, validateUser, UserController.activateUser);
+router.get('/activateUser/:email?',  UserController.activateUser);
 router.get('/getRole/:email?', auth, validateUser, UserController.getRole);
 router.get('/getEmail', auth, validateUser, UserController.getEmail);
 router.put('/updateUser', mult, Upload, auth, validateUser, UserController.updateUser);//actualiza el propio usuario y no todos, por ello no va con admin
