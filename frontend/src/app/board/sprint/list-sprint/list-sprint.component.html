@@ -7,12 +7,11 @@
     <p class="text-wrap">{{ boardData.name }}</p>
   </a>
   <div *ngFor="let sprint of sprintData; let i = index">
-    <a 
-    (click)="chargeSprint(sprint._id); sprint.sprintOptions = !sprint.sprintOptions"
-    class="text-center"
-    class="p-2 fs-5 text-wrap" mat-button
-    >
-      {{ sprint.title }}
+    <a
+      (click)="chargeSprint(sprint._id)"
+      class="text-center"
+      class="p-2 fs-5 text-wrap" mat-button>
+      <b>{{ sprint.title }}</b>
     </a>
     <div *ngIf="sprint.sprintOptions" class="text-center">
       <button mat-button (click)="addTask(sprint._id, boardData._id)"><mat-icon class="text-white text-wrap fs-6">library_add</mat-icon></button>

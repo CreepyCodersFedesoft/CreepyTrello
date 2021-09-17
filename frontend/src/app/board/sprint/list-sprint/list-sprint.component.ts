@@ -68,6 +68,13 @@ export class ListSprintComponent implements OnInit {
 
   chargeSprint(sprintId: any) {
     this.sprintId = sprintId;
+    for(let sprint of this.sprintData){
+      if(sprint._id == this.sprintId){
+        sprint.sprintOptions = !sprint.sprintOptions;
+      }else{
+        sprint.sprintOptions = false;
+      }
+    }
   }
 
   chargeBoardId(boardId: any) {
