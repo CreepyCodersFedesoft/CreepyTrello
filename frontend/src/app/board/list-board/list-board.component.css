@@ -23,6 +23,7 @@ img{
   max-height: 275px;
   border-radius: 10%;
   border: 2px solid #ffca6f;
+  cursor: pointer;
 }
 
 .title{
