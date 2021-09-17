@@ -35,6 +35,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 import { HeaderComponent } from './home/header/header.component';
 import { RegisterComponent } from './home/register/register.component';
@@ -109,6 +110,7 @@ import { TaskDetailsComponent } from './board/task/task-details/task-details.com
     MatNativeDateModule,
     MatTabsModule,
     MatTooltipModule,
+    MatGridListModule,
   ],
   providers: [
     UserService,

@@ -3,6 +3,7 @@ import { TaskService } from '../../../services/task.service';
 import { UserService } from 'src/app/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilitiesService } from '../../../services/utilities.service';
+
 import {
   MatDialog,
   MatDialogConfig,
@@ -16,13 +17,12 @@ import {
   styleUrls: ['./task-details.component.css']
 })
 export class TaskDetailsComponent  {
+  
   @Input() springId: any = null;
   registerData: any;
-  selectedFile: any;
   message: string = '';
   _id: string;
-  profileImage: string = '';
-  userName: string = 'My User';
+ 
 
   constructor(
     private _taskService: TaskService,
@@ -31,10 +31,12 @@ export class TaskDetailsComponent  {
     private _router: Router,
     private _Arouter: ActivatedRoute,
     public _userService: UserService,
+   
   ) {
     this.registerData = {}
     this._id = '';
   }
+
   ngOnInit(): void {
 this._Arouter.params.subscribe(
   (params) => {
@@ -57,21 +59,5 @@ this._Arouter.params.subscribe(
   updateTask(){
 
   }
-  chargeData() {
-    if (this._userService.loggedIn()) {
-      this._userService.getEmail().subscribe(
-        (res) => {
-          //console.log(res);
-          this.profileImage = res.userImg;
-          this.userName = res.name;
-        },
-        (err) => {}
-      );
-    }
-  }
-
-  enterSprint(id: any):void {
-    console.log("viendo que sale "+id);
-    this._router.navigate([`task/${id}`]);
-  }
+ 
 }
