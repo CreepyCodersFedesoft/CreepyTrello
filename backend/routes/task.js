@@ -7,7 +7,7 @@ const auth = require('../middleware/auth');
 const Upload = require("../middleware/upload");
 
 router.post('/createTask', mult, Upload, auth, validateUser, TaskController.createTask);
-router.get('/listTask/:springId', auth, validateUser, TaskController.listTask);
+router.get('/listTask/:sprintId', auth, validateUser, TaskController.listTask);
 router.get('/listLogTask', auth, validateUser, TaskController.listLogTask);
 router.put('/updateTask',  mult, Upload, auth, validateUser, TaskController.updateTask);
 router.put('/assignUser',  auth, validateUser, TaskController.assignUser);

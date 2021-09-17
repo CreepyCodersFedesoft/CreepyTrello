@@ -6,7 +6,7 @@ require("dotenv").config();
 const Role = require('./routes/role');
 const User = require('./routes/user');
 const Board = require('./routes/board');
-const Spring = require('./routes/spring');
+const Sprint = require('./routes/sprint');
 const Task = require('./routes/task');
 const Comment = require('./routes/comment');
 const SendMail = require('./routes/sendgrid');
@@ -24,7 +24,7 @@ app.use("/api/comment", Comment);
 app.use("/api/sendMail", SendMail);
 
 app.use('/templates', express.static('templates'));
-app.use("/api/spring", Spring);
+app.use("/api/sprint", Sprint);
 
 
 app.listen(

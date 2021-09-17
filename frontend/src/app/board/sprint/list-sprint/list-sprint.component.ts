@@ -2,54 +2,54 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UtilitiesService } from 'src/app/services/utilities.service';
-import { SpringService } from '../../../services/spring.service';
+import { SprintService } from '../../../services/sprint.service';
 import { CreateTaskComponent } from '../../task/create-task/create-task.component';
-import { CreateSpringComponent } from '../create-spring/create-spring.component';
+import { CreateSprintComponent } from '../create-sprint/create-sprint.component';
 import swal from 'sweetalert2';
 import { BoardService } from 'src/app/services/board.service';
-import { UpdateSpringComponent } from '../update-spring/update-spring.component';
+import { UpdateSprintComponent } from '../update-sprint/update-sprint.component';
 
 @Component({
-  selector: 'app-list-spring',
-  templateUrl: './list-spring.component.html',
-  styleUrls: ['./list-spring.component.css'],
+  selector: 'app-list-sprint',
+  templateUrl: './list-sprint.component.html',
+  styleUrls: ['./list-sprint.component.css'],
 })
-export class ListSpringComponent implements OnInit {
+export class ListSprintComponent implements OnInit {
   show: boolean = true;
-  springData: any;
+  sprintData: any;
   boardData: any;
-  springId: any;
+  sprintId: any;
   boardId: any;
   message: string;
 
   constructor(
-    private _springService: SpringService,
+    private _sprintService: SprintService,
     private _router: Router,
     private _activeRoute: ActivatedRoute,
     private _matDialog: MatDialog,
     private _utilitiesService: UtilitiesService,
     private _boardService: BoardService
   ) {
-    this.springData = {};
+    this.sprintData = {};
     this.boardData = {};
-    this.springId = null;
+    this.sprintId = null;
     this.boardId = null;
     this.message = '';
   }
 
   ngOnInit(): void {
     this.chargeBoard();
-    this._springService.listSprings.subscribe((res) => {
-      let anyArray: any[] = res.spring
+    this._sprintService.listSprints.subscribe((res) => {
+      let anyArray: any[] = res.sprint
       for (const i in anyArray) {
         anyArray[i].sprintOptions = false;
       }
-      this.springData = anyArray;
+      this.sprintData = anyArray;
     });
   }
 
   ngOnChanges(entryId: string) {
-    this.chargeSpring(entryId);
+    this.chargeSprint(entryId);
   }
 
   chargeBoard() {
@@ -58,7 +58,7 @@ export class ListSpringComponent implements OnInit {
       .subscribe(
         (res) => {
           this.boardData = res.board;
-          this._springService.updateListSprings(this.boardData._id);
+          this._sprintService.updateListSprints(this.boardData._id);
         },
         (err) => {
           console.log(err);
@@ -66,28 +66,28 @@ export class ListSpringComponent implements OnInit {
       );
   }
 
-  chargeSpring(springId: any) {
-    this.springId = springId;
+  chargeSprint(sprintId: any) {
+    this.sprintId = sprintId;
   }
 
   chargeBoardId(boardId: any) {
     this.boardId = boardId;
   }
 
-  updateSprint(springId: any, boardId: any) {
-    this._matDialog.open(UpdateSpringComponent, {
-      data: { springId, boardId },
+  updateSprint(sprintId: any, boardId: any) {
+    this._matDialog.open(UpdateSprintComponent, {
+      data: { sprintId, boardId },
       autoFocus: true,
       panelClass: [''],
       width: '400px',
       height: '500px',
     });
-    this.chargeSpring(springId);
+    this.chargeSprint(sprintId);
     this.chargeBoardId(boardId);
   }
 
   saveSprint(boardId: any) {
-    this._matDialog.open(CreateSpringComponent, {
+    this._matDialog.open(CreateSprintComponent, {
       data: { boardId },
       autoFocus: true,
       panelClass: [''],
@@ -101,15 +101,15 @@ export class ListSpringComponent implements OnInit {
     this.show = !this.show;
   }
 
-  addTask(springId: string, boardId: string) {
+  addTask(sprintId: string, boardId: string) {
     this._matDialog.open(CreateTaskComponent, {
-      data: { springId, boardId },
+      data: { sprintId, boardId },
       autoFocus: true,
       panelClass: [''],
       width: '400px',
       height: '400px',
     });
-    this.chargeSpring(springId);
+    this.chargeSprint(sprintId);
   }
 
   async deleteSprint() {
@@ -124,9 +124,9 @@ export class ListSpringComponent implements OnInit {
     });
 
     if (result.isConfirmed) {
-      this._springService.deleteSpring(this.springId).subscribe();
+      this._sprintService.deleteSprint(this.sprintId).subscribe();
       swal.fire('Proceso Exitoso', '¡Sprint eliminado con existo!', 'success');
-      this._springService.updateListSprings(this.boardData._id);
+      this._sprintService.updateListSprints(this.boardData._id);
     }
   }
 }

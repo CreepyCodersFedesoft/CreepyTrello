@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { SpringService } from 'src/app/services/spring.service';
+import { SprintService } from 'src/app/services/sprint.service';
 import { UtilitiesService } from '../../../services/utilities.service';
 import {
   MatDialog,
@@ -9,27 +9,27 @@ import {
 } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-update-spring',
-  templateUrl: './update-spring.component.html',
-  styleUrls: ['./update-spring.component.css']
+  selector: 'app-update-sprint',
+  templateUrl: './update-sprint.component.html',
+  styleUrls: ['./update-sprint.component.css']
 })
-export class UpdateSpringComponent implements OnInit {
-  @Input() springId: any = null;
+export class UpdateSprintComponent implements OnInit {
+  @Input() sprintId: any = null;
   @Input() boardId: any = null;
   registerData: any;
 
-  constructor(private _springService: SpringService, 
+  constructor(private _sprintService: SprintService, 
     private _utilitiesService: UtilitiesService,
     public _dialogRef: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: {
-      springId: string,
+      sprintId: string,
       boardId: string
     }) {
     this.registerData = {};
   }
 
   ngOnInit(): void {
-    this._springService.searchSpring(this.data.springId).subscribe(
+    this._sprintService.searchSprint(this.data.sprintId).subscribe(
       (res) => {
         this.registerData = res.sprint;
       },
@@ -39,15 +39,15 @@ export class UpdateSpringComponent implements OnInit {
     );
   }
 
-  updateSpring(){
+  updateSprint(){
     if (!this.registerData.title || !this.registerData.description) {
       this._utilitiesService.openSnackBarError('Datos incompletos');
     } else {
       this.registerData.boardId = this.data.boardId;
-      this.registerData._id = this.data.springId;
-      this._springService.updateSpring(this.registerData).subscribe(
+      this.registerData._id = this.data.sprintId;
+      this._sprintService.updateSprint(this.registerData).subscribe(
         (res) => {
-          this._springService.updateListSprings(this.registerData.boardId);
+          this._sprintService.updateListSprints(this.registerData.boardId);
           this._utilitiesService.openSnackBarSuccesfull('Sprint actualizado');
         },
         (err) => {
