@@ -1,0 +1,48 @@
+<div class="bgContent">
+    <div class="container">
+      
+      <mat-card class="text-center">
+        <mat-card-title class="userConfig">Actualizar Perfil</mat-card-title>
+        <div>
+          <img id="profileImg" [src]="this.updateData.userImg" class="profileImg w-50">
+        </div>
+        
+      </mat-card>
+      <div class="input-group mb-3">
+        <input class="form-control" type="file" (change)="uploadImg($event)" />
+      </div>
+      <mat-card-content>
+        <mat-form-field>
+          <input
+            [(ngModel)]="updateData.name"
+            matInput
+            placeholder="Nombre"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            [(ngModel)]="updateData.email"
+            matInput
+            placeholder="Email"
+            required
+            disabled
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            [(ngModel)]="updateData.password"
+            matInput
+            placeholder="Nueva Contraseña"
+            type="password"                    
+            required
+          />
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions class="text-center">
+        <button mat-button class="button" mat-raised-button mat-dialog-close (click)="updateUser()">Actualizar</button>
+        <button mat-button class="button" mat-raised-button mat-dialog-close>Cancelar</button>
+      </mat-card-actions>
+    </div>
+  </div>
+  

@@ -4,6 +4,8 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { UpdateUserAdminComponent } from '../update-user-admin/update-user-admin.component';
 
 @Component({
   selector: 'app-list-user',
@@ -19,11 +21,13 @@ export class ListUserComponent implements OnInit {
   sort: MatSort = new MatSort();
   userData: any;
   data: any;
+  userId: any;
 
-  constructor(private _userService: UserService, private _utilitiesService: UtilitiesService) { 
+  constructor(private _userService: UserService, private _utilitiesService: UtilitiesService, private _matDialog: MatDialog) { 
     this.userData = {};
     this.data = {};
     this.dataSource = new MatTableDataSource(this.userData);
+    this.userId = null;
   }
 
   ngOnInit(): void {
@@ -67,8 +71,17 @@ export class ListUserComponent implements OnInit {
     );
   }
 
-  updateUser(id: any){
-    console.log('update:', id);
-    
+  updateUser(userId: any){
+    this._matDialog.open(UpdateUserAdminComponent, {
+      data: { userId },
+      autoFocus: true,
+      panelClass: [''],
+      width: '50%',
+    });
+    this.chargeData(userId);
+  }
+
+  chargeData(userId: any){
+    this.userId = userId;
   }
 }
