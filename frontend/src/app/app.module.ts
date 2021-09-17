@@ -59,6 +59,7 @@ import { UpdateSprintComponent } from './board/sprint/update-sprint/update-sprin
 import { TaskDetailsComponent } from './board/task/task-details/task-details.component';
 import { InviteUserBoardComponent } from './board/invite-user-board/invite-user-board.component';
 import { AssignTaskComponent } from './board/task/assign-task/assign-task.component';
+import { UpdateUserAdminComponent } from './admin/update-user-admin/update-user-admin.component';
 
 
 @NgModule({
@@ -83,6 +84,7 @@ import { AssignTaskComponent } from './board/task/assign-task/assign-task.compon
     TaskDetailsComponent,
     InviteUserBoardComponent,
     AssignTaskComponent,
+    UpdateUserAdminComponent,
 
   ],
   imports: [

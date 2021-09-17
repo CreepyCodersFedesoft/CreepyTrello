@@ -134,9 +134,7 @@ const listUser = async (req, res) => {
 };
 
 const listUserAll = async (req, res) => {
-  const users = await User.find({ dbStatus: true })
-    .populate("roleId")
-    .exec();
+  const users = await User.find({ dbStatus: true }).populate("roleId").exec();
   if (!users || users.length === 0)
     return res.status(400).send("No search results");
   return res.status(200).send({ users });
@@ -163,9 +161,66 @@ const getEmail = async (req, res) => {
 //de seguridad no puede usarla un usuario para actualizar sus propios datos, para ello será necesario
 //registrar posteriormente otra funcion
 const updateUser = async (req, res) => {
-  console.log(req.files.image);
-  console.log(req.body);
   if (!req.user._id || !req.body.name || !req.body.email)
+    return res.status(400).send("Error: Empty fields");
+
+  let pass = "";
+  let imageUrl = "";
+
+
+  if (req.body.password) {
+    pass = await bcrypt.hash(req.body.password, 10);
+  } else {
+    const userFind = await User.findOne({ email: req.body.email });
+    pass = userFind.password;
+  }
+
+  if (req.files.image) {
+    if (req.files.image.type != null) {
+      const url = req.protocol + "://" + req.get("host") + "/";
+      const serverImg =
+        "./uploads/" + moment().unix() + path.extname(req.files.image.path);
+      fs.createReadStream(req.files.image.path).pipe(
+        fs.createWriteStream(serverImg)
+      );
+      imageUrl = url + serverImg.slice(2);
+    }
+  } else {
+    imageUrl = req.body.userImg;
+  }
+  //guardamos la ruta de la imagen anterior para eliminarla
+  let serverImg = "";
+  let userImg = await User.findById(req.user._id);
+  if (userImg.userImg !== "") {
+    let userImage = userImg.userImg;
+    userImage = userImage.split("/")[4];
+    serverImg = "./uploads/" + userImage;
+  }
+  const user = await User.findByIdAndUpdate(req.user._id, {
+    name: req.body.name,
+    email: req.body.email,
+    password: pass,
+    userImg: imageUrl,
+  });
+  if (!user) return res.status(400).send("Error editing user");
+  //si todo va bien, borramos la imagen anterior
+  if (
+    imageUrl !== "" &&
+    userImg.userImg !== "" &&
+    req.files.image != undefined
+  ) {
+    try {
+      fs.unlinkSync(serverImg);
+    } catch (err) {
+      console.log("Image no found in server");
+    }
+  }
+  
+  return res.status(200).send({ user });
+};
+
+const uptdateUserByAdmin = async (req, res) => {
+  if (!req.body._id || !req.body.name || !req.body.email)
     return res.status(400).send("Error: Empty fields");
 
   let pass = "";
@@ -194,14 +249,14 @@ const updateUser = async (req, res) => {
 
   //guardamos la ruta de la imagen anterior para eliminarla
   let serverImg = "";
-  let userImg = await User.findById(req.user._id);
+  let userImg = await User.findById(req.body._id);
   if (userImg.userImg !== "") {
     let userImage = userImg.userImg;
     userImage = userImage.split("/")[4];
     serverImg = "./uploads/" + userImage;
   }
 
-  const user = await User.findByIdAndUpdate(req.user._id, {
+  const user = await User.findByIdAndUpdate(req.body._id, {
     name: req.body.name,
     email: req.body.email,
     password: pass,
@@ -223,16 +278,23 @@ const updateUser = async (req, res) => {
   }
 
   return res.status(200).send({ user });
-};
+}
 
 const deleteUser = async (req, res) => {
-  console.log(req.body);
   if (!req.body._id) return res.status(400).send("Incomplete data");
 
   const user = await User.findByIdAndUpdate(req.body._id, {
     dbStatus: false,
   });
   if (!user) return res.status(400).send("Error delete user");
+  return res.status(200).send({ user });
+};
+
+const getUserById = async (req, res) => {
+  if (!req.params["_id"]) return res.status(400).send("Incomplete data");
+
+  const user = await User.findById(req.params["_id"]);
+  if (!user || user.length == 0) return res.status(400).send("No find user");
   return res.status(200).send({ user });
 };
 
@@ -248,10 +310,9 @@ const activateUser = async (req, res) => {
     returnOriginal: false,
   });
 
-
   if (!user || user.length === 0)
     return res.status(400).send("No search results");
-    
+
   const urlWelcome = process.env.URL_MESSAGES + "/templates/template.html";
   res.status(200).redirect(urlWelcome);
 };
@@ -267,4 +328,6 @@ module.exports = {
   getRole,
   getEmail,
   activateUser,
+  getUserById,
+  uptdateUserByAdmin
 };
