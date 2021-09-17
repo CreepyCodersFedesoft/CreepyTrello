@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 const createTask = async (req, res) => {
   if (
     !req.user._id ||
-    !req.body.springId ||
+    !req.body.sprintId ||
     !req.body.title ||
     !req.body.description
   )
@@ -36,7 +36,7 @@ const createTask = async (req, res) => {
 
   const task = new Task({
     userId: req.user._id,
-    springId: req.body.springId,
+    sprintId: req.body.sprintId,
     title: req.body.title,
     description: req.body.description,
     imgUrl: imageUrl,
@@ -63,9 +63,9 @@ const createTask = async (req, res) => {
 
 const listTask = async (req, res) => {
   //puede llegar una imagen y un usuario asignado
-  const task = await Task.find({ springId: req.params.springId });
+  const task = await Task.find({ sprintId: req.params.sprintId });
   if (!task || task.length == 0)
-    return res.status(400).send({msg: "This Spring haven't assigned task"});
+    return res.status(400).send({msg: "This Sprint haven't assigned task"});
 
   let history = new History({
     userId: req.user._id,
@@ -244,7 +244,7 @@ const listLogTask = async (req, res) => {
 
 const findTask = async (req, res) => {
   const task = await Task.findOne({ _id: req.params["_id"] })
-    .populate("springId")
+    .populate("sprintId")
     .exec();
   if (!task || task.lenght === 0) return res.status(400).send("No search task");
   return res.status(200).send({ task });

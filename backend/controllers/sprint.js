@@ -1,9 +1,9 @@
-const Spring = require("../models/spring");
+const Sprint = require("../models/sprint");
 const Board = require("../models/board");
 const fs = require('fs');
 const Task = require("../models/task");
 
-const createSpring = async (req, res) => {
+const createSprint = async (req, res) => {
   if (
     !req.body.boardId ||
     !req.body.title ||
@@ -24,7 +24,7 @@ const createSpring = async (req, res) => {
       .send("Error: the start date cannot be greater than the end date");
   
   //creamos el objeto
-  let spring = new Spring({
+  let sprint = new Sprint({
     boardId: req.body.boardId,
     title: req.body.title,
     description: req.body.description,
@@ -32,16 +32,16 @@ const createSpring = async (req, res) => {
     endDate: req.body.endDate,
   });
 
-  let result = await spring.save();
-  if (!result) return res.status(400).send("Error: error to register spring");
+  let result = await sprint.save();
+  if (!result) return res.status(400).send("Error: error to register sprint");
   return res.status(200).send({ result });
 };
-const listSpring = async (req, res) => {
-  let spring = await Spring.find({ boardId: req.params["boardId"] })
+const listSprint = async (req, res) => {
+  let sprint = await Sprint.find({ boardId: req.params["boardId"] })
     .populate("boardId")
     .exec();
-  if (!spring) return res.status(400).send("No spring for this board");
-  return res.status(200).send({ spring });
+  if (!sprint) return res.status(400).send("No sprint for this board");
+  return res.status(200).send({ sprint });
 };
 const updateSprint = async (req, res) => {
   if (
@@ -51,7 +51,7 @@ const updateSprint = async (req, res) => {
     !req.body.description ||
     !req.body.startDate ||
     !req.body.endDate ||
-    req.body.springStatus == undefined
+    req.body.sprintStatus == undefined
   )
     return res.status(400).send("Error: Empty Data");
 
@@ -73,14 +73,14 @@ const updateSprint = async (req, res) => {
       .send("Error: the start date cannot be greater than the end date");
 
   //actualizamos
-  let result = await Spring.findByIdAndUpdate(req.body._id, {
+  let result = await Sprint.findByIdAndUpdate(req.body._id, {
     title: req.body.title,
     description: req.body.description,
     startDate: req.body.startDate,
     endDate: req.body.endDate,
-    springStatus: req.body.springStatus,
+    sprintStatus: req.body.sprintStatus,
   });
-  if (!result) return res.status(400).send("Error to update spring");
+  if (!result) return res.status(400).send("Error to update sprint");
 
   return res.status(201).send({ result });
 }; //actualizar fechas, titulo, descripcion y estado
@@ -89,13 +89,13 @@ const deleteSprint = async (req, res) => {
   if (!req.params._id) return res.status(400).send("Error: no sprint Id");
 
   //guardamos las url de las images a borrar
-  let task = await Task.find({ springId: req.params._id });
+  let task = await Task.find({ sprintId: req.params._id });
   let taskUrls = [];
   task.forEach((taskUrl) => {
     taskUrls.push(taskUrl.imgUrl);
   });
   //eliminamos las tareas asociadas al sprint
-  let TaskFoundToDeleted = await Task.deleteMany({springId: req.params._id});
+  let TaskFoundToDeleted = await Task.deleteMany({sprintId: req.params._id});
   if(!TaskFoundToDeleted) return res.status(400).send('Error to delete associated tasks');
 
   //si elimino correctamente las tareas, ahora eliminamos las imagenes de dichas tareas
@@ -111,17 +111,17 @@ const deleteSprint = async (req, res) => {
     }
   });
 
-  //finalmente eliminamos el spring
-  let result = await Spring.findByIdAndDelete(req.params._id);
-  if(!result) return res.status(400).send('Error to delete spring');
+  //finalmente eliminamos el sprint
+  let result = await Sprint.findByIdAndDelete(req.params._id);
+  if(!result) return res.status(400).send('Error to delete sprint');
   
-  return res.status(200).send({message: 'Spring Deleted'});
+  return res.status(200).send({message: 'Sprint Deleted'});
 };
 
 const searchSprint = async (req, res) => {
-  const sprint = await Spring.findOne({ _id: req.params["_id"] });
+  const sprint = await Sprint.findOne({ _id: req.params["_id"] });
   if(!sprint || sprint.length === 0) return res.status(400).send("Not find results");
   return res.status(200).send({ sprint });
 }
 
-module.exports = { createSpring, updateSprint, listSpring, deleteSprint, searchSprint };
+module.exports = { createSprint, updateSprint, listSprint, deleteSprint, searchSprint };
