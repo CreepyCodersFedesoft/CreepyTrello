@@ -8,13 +8,7 @@
     <a *ngIf="_userService.loggedIn()" mat-button routerLink="listBoard"
       >Lista de Tableros</a
     >
-  </ul>
-
-  <ul>
-    <a  mat-button routerLink="listBoard"   mat-button routerLink="listRole"
-      >Administración de Roles</a
-    >
-  </ul>  
+  </ul> 
 
   <span *ngIf="!_userService.loggedIn()" class="headerSpacer"></span>
   <ul>
