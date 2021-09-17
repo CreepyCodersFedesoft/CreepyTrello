@@ -14,9 +14,23 @@
       <b>{{ sprint.title }}</b>
     </a>
     <div *ngIf="sprint.sprintOptions" class="text-center">
-      <button mat-button (click)="addTask(sprint._id, boardData._id)"><mat-icon class="text-white text-wrap fs-6">library_add</mat-icon></button>
-      <button mat-button (click)="deleteSprint()"><mat-icon class="text-white fs-6">delete_forever</mat-icon></button>
-      <button mat-button (click)="updateSprint(sprint._id, boardData._id)"><mat-icon class="text-white fs-6">settings</mat-icon></button>
+      <button 
+        mat-button 
+        matTooltip="Nueva Task" 
+        (click)="addTask(sprint._id, boardData._id)">
+        <mat-icon class="text-white text-wrap fs-6">library_add</mat-icon>
+      </button>
+      <button 
+        mat-button 
+        matTooltip="Borrar Sprint" 
+        (click)="deleteSprint()">
+        <mat-icon class="text-white fs-6">delete_forever</mat-icon></button>
+      <button 
+        mat-button 
+        matTooltip="Actualizar Sprint" 
+        (click)="updateSprint(sprint._id, boardData._id)">
+        <mat-icon class="text-white fs-6">settings</mat-icon>
+      </button>
     </div>
   </div>
   <a mat-button class="fs-6" (click)="saveSprint(boardData._id)">Add Sprint <mat-icon>library_add</mat-icon></a>
