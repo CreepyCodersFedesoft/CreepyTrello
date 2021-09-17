@@ -134,7 +134,7 @@ const listUser = async (req, res) => {
 };
 
 const listUserAll = async (req, res) => {
-  const users = await User.find({ name: new RegExp(req.params["name"], "i") })
+  const users = await User.find({ dbStatus: true })
     .populate("roleId")
     .exec();
   if (!users || users.length === 0)
@@ -226,6 +226,7 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
+  console.log(req.body);
   if (!req.body._id) return res.status(400).send("Incomplete data");
 
   const user = await User.findByIdAndUpdate(req.body._id, {

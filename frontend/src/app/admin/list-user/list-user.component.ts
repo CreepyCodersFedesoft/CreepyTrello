@@ -11,16 +11,18 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./list-user.component.css']
 })
 export class ListUserComponent implements OnInit {
-  displayedColumns: string[] = ['Foto', 'Nombre', 'Email', 'Role'];
+  displayedColumns: string[] = ['Foto', 'Nombre', 'Email', 'Role', 'Acciones'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   sort: MatSort = new MatSort();
   userData: any;
+  data: any;
 
   constructor(private _userService: UserService, private _utilitiesService: UtilitiesService) { 
     this.userData = {};
+    this.data = {};
     this.dataSource = new MatTableDataSource(this.userData);
   }
 
@@ -28,7 +30,6 @@ export class ListUserComponent implements OnInit {
     this._userService.getAllUser().subscribe(
       (res) => {
         this.userData = res.users;
-        console.log(res.users);
         this.dataSource = new MatTableDataSource(this.userData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -46,5 +47,28 @@ export class ListUserComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  deleteUser(user: any){
+    this._userService.deleteUser(user).subscribe(
+      (res) => {
+        let index = this.userData.indexOf(user);
+        if (index > -1) {
+          console.log('1: ', this.userData);
+          this.userData.splice(index, 1);
+          console.log('2: ', this.userData);
+          this.dataSource = new MatTableDataSource(this.userData);
+          this._utilitiesService.openSnackBarSuccesfull('Usuario eliminado');
+        }
+      },
+      (err) => {
+        this._utilitiesService.openSnackBarError(err.error);
+      }
+    );
+  }
+
+  updateUser(id: any){
+    console.log('update:', id);
+    
   }
 }
