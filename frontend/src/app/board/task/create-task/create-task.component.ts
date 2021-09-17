@@ -15,7 +15,7 @@ import {
   styleUrls: ['./create-task.component.css'],
 })
 export class CreateTaskComponent implements OnInit {
-  @Input() springId: any = null;
+  @Input() sprintId: any = null;
   registerData: any;
   selectedFile: any;
   message: string = '';
@@ -26,7 +26,7 @@ export class CreateTaskComponent implements OnInit {
     private _utilitiesService: UtilitiesService,
     public _dialogRef: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: {
-      springId: string,
+      sprintId: string,
       boardId: string
     },
   ) {
@@ -52,14 +52,14 @@ export class CreateTaskComponent implements OnInit {
       }
       data.append('title', this.registerData.title);
       data.append('description', this.registerData.description);
-      data.append('springId', this.data.springId);
+      data.append('sprintId', this.data.sprintId);
     
       this._utilitiesService.openSnackBarSuccesfull('creando tarea con inf'+ data);
       
       this._taskService.createTask(data).subscribe(
         (res) => {
-          //this._router.navigate([`springs/${this.data.boardId}`])          
-          this._taskService.updateListTask(this.data.springId);
+          //this._router.navigate([`sprints/${this.data.boardId}`])          
+          this._taskService.updateListTask(this.data.sprintId);
           this._utilitiesService.openSnackBarSuccesfull('Task Create');
           this.registerData = {};
         },

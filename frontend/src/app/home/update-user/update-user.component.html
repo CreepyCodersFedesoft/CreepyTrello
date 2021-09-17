@@ -2,7 +2,7 @@
   <div class="container">
     
     <mat-card class="text-center">
-      <mat-card-title class="userConfig">Profile Settings</mat-card-title>
+      <mat-card-title class="userConfig">Actualizar Perfil</mat-card-title>
       <div>
         <img id="profileImg" [src]="this.updateData.userImg" class="profileImg w-50">
       </div>
@@ -16,7 +16,7 @@
         <input
           [(ngModel)]="updateData.name"
           matInput
-          placeholder="User name"
+          placeholder="Nombre"
           required
         />
       </mat-form-field>
@@ -33,15 +33,15 @@
         <input
           [(ngModel)]="updateData.password"
           matInput
-          placeholder="New Password"
+          placeholder="Nueva Contraseña"
           type="password"                    
           required
         />
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions class="text-center">
-      <button mat-button class="button" mat-raised-button mat-dialog-close (click)="UpdateUser()">Update!</button>
-      <button mat-button class="button" mat-raised-button mat-dialog-close>Cancel</button>
+      <button mat-button class="button" mat-raised-button mat-dialog-close (click)="UpdateUser()">Actualizar</button>
+      <button mat-button class="button" mat-raised-button mat-dialog-close>Cancelar</button>
     </mat-card-actions>
   </div>
 </div>

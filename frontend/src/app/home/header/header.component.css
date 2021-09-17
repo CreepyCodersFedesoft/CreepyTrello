@@ -12,14 +12,14 @@
 }
 .dropdown-content {
   box-sizing: border-box;
-  display: none;
   position: absolute;
+  display: none;
   background-color: #FFCA6F;
   min-width: 100%;
   padding: 0 0;
   margin: 0% 0% 0% 0%;
-  text-align: center;
   z-index: 1;
+  left: 0;
 }
 
 .dropdown-content-element:hover {
@@ -41,6 +41,7 @@
 a {
   text-decoration: none;
   color: #000000;
+  background-color: #ffca6f;
 }
 
 ul {
@@ -58,4 +59,8 @@ mat-form-field {
   font-size: 15px;
   width: 300px;
   padding: 6px;
+}
+
+.img {
+  margin-left: 200px;
 }

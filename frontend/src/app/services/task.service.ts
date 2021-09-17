@@ -17,8 +17,8 @@ export class TaskService {
     this.env = environment.APP_URL;
   }
 
-  updateListTask(springId: any) {    
-    this._http.get<any>(this.env + 'task/listTask/' + springId).subscribe(
+  updateListTask(sprintId: any) {    
+    this._http.get<any>(this.env + 'task/listTask/' + sprintId).subscribe(
       (res) => {
         this._listTasks.next(res.task);
       },
@@ -36,7 +36,9 @@ export class TaskService {
   updateTask(task: any) {
     return this._http.put<any>(this.env + 'task/updateTask', task);
   }
-
+  assignUser(task: any) {
+    return this._http.put<any>(this.env + 'task/assignUser', task);
+  }
   deleteTask(task: any) {
     return this._http.delete<any>(this.env + 'task/deleteTask/' + task._id);
   }

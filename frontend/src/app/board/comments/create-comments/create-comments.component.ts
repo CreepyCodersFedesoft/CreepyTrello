@@ -39,4 +39,10 @@ export class CreateCommentsComponent implements OnInit {
     );
   }
 
+
+  enterPress(event: KeyboardEvent){
+    if(event.code === 'Enter'){
+      this.sendComment(); 
+    }
+  }
 }

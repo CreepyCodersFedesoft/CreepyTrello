@@ -21,6 +21,9 @@ export class BoardService {
   getBoardById(boardId: any){
     return this._http.get<any>(this.env + 'board/getBoardById/'+boardId);
   }
+  getUsersOnBoard(boardId: any){
+    return this._http.get<any>(this.env + 'board/getUsersOnBoard/'+boardId);
+  }
   deleteBoard(board: any){
     return this._http.delete<any>(this.env + 'board/deleteBoard/' + board._id);
   }

@@ -17,8 +17,7 @@ import {
   styleUrls: ['./task-details.component.css']
 })
 export class TaskDetailsComponent  {
-  
-  @Input() springId: any = null;
+  @Input() sprintId: any = null;
   registerData: any;
   message: string = '';
   _id: string;
