@@ -1,5 +1,6 @@
 const Sprint = require("../models/sprint");
 const Board = require("../models/board");
+const Comment = require('../models/comment');
 const fs = require('fs');
 const Task = require("../models/task");
 
@@ -38,6 +39,7 @@ const createSprint = async (req, res) => {
 };
 const listSprint = async (req, res) => {
   let sprint = await Sprint.find({ boardId: req.params["boardId"] })
+    .sort('startDate')
     .populate("boardId")
     .exec();
   if (!sprint) return res.status(400).send("No sprint for this board");
@@ -83,17 +85,27 @@ const updateSprint = async (req, res) => {
   if (!result) return res.status(400).send("Error to update sprint");
 
   return res.status(201).send({ result });
-}; //actualizar fechas, titulo, descripcion y estado
+};
 
 const deleteSprint = async (req, res) => {
   if (!req.params._id) return res.status(400).send("Error: No sprint Id");
 
-  //guardamos las url de las images a borrar
+  //guardamos las urls y id de las tareas de las images a borrar
   let task = await Task.find({ sprintId: req.params._id });
   let taskUrls = [];
-  task.forEach((taskUrl) => {
-    taskUrls.push(taskUrl.imgUrl);
+  let taskIds = [];
+  task.forEach((taskOne) => {
+    taskUrls.push(taskOne.imgUrl);
+    taskIds.push(taskOne._id);
   });
+
+  //eliminamos los comentarios asociados a esas tareas
+  let CommentFoundToDeleted;
+  for (const taskID in taskIds) {
+    CommentFoundToDeleted = await Comment.deleteMany({taskId: taskIds[taskID]});
+    if(!CommentFoundToDeleted) return res.status(400).send('Error to delete associated Comments');
+  }
+
   //eliminamos las tareas asociadas al sprint
   let TaskFoundToDeleted = await Task.deleteMany({sprintId: req.params._id});
   if(!TaskFoundToDeleted) return res.status(400).send('Error to delete associated tasks');

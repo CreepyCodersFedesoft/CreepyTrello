@@ -2,7 +2,7 @@ const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const sendMail = async (req, res) => {
-  const urlMail = process.env.URL_MESSAGES + "/api/user/activateUser/" + req.body.email;
+  const urlMail = req.protocol + "://" + req.get("host") + "/api/user/activateUser/" + req.body.email;
 
   const msg = {
     to: req.body.email, // Change to your recipient

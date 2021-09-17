@@ -15,7 +15,7 @@
         <ng-container matColumnDef="Foto">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Foto</th>
           <td mat-cell *matCellDef="let row">
-            <img src="{{ row.userImg }}" alt="Foto perfil" />
+            <img src="{{ row.userImg != '' ? row.userImg : '../../../../../assets/img/userExample.png' }}" alt="Foto perfil" />
           </td>
         </ng-container>
 

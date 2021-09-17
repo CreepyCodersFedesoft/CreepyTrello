@@ -7,7 +7,7 @@ const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 const router = require('express').Router();
 
-router.post('/createUser', mult, Upload,   UserController.createUser);
+router.post('/createUser', mult, Upload, UserController.createUser);
 router.post('/createAdmin', mult, Upload, auth, validateUser, admin,   UserController.createAdmin);
 router.post('/login', UserController.login);
 router.get('/listUser/:name?', auth, validateUser, UserController.listUser);
