@@ -64,4 +64,7 @@ export class UserService {
     localStorage.removeItem('role');
     this._router.navigate(['/login']);
   }
+  deleteUser(user: any){
+    return this._http.put<any>(this.env + 'user/deleteUser', user);
+  }
 }
