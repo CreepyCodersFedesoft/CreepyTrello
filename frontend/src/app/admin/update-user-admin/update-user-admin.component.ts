@@ -72,6 +72,7 @@ export class UpdateUserAdminComponent implements OnInit {
       this._userService.updateUserAdmin(data).subscribe(
         (res) => {          
           this._utilitiesService.openSnackBarSuccesfull("Usuario Actualizado correctamente");
+          this._userService.changeDataUser(true);
           this._userService.updateListTask();
         },
         (err) => {
