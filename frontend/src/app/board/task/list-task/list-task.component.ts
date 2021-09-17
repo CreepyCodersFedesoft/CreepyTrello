@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-task.component.css'],
 })
 export class ListTaskComponent implements OnInit{
-  @Input() springId: any = null;
+  @Input() sprintId: any = null;
   @Input() boardId: any = null;
 
   taskData: any[];
@@ -60,7 +60,7 @@ export class ListTaskComponent implements OnInit{
   }
 
   ngOnChanges(): void {
-    this._taskService.updateListTask(this.springId); 
+    this._taskService.updateListTask(this.sprintId); 
   }
 
   updateTask(task: any, status: string) {    

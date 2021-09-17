@@ -43,7 +43,7 @@ export class ListBoardComponent implements OnInit {
 
   enterSprint(id: any):void {
     console.log(id);
-    this._router.navigate([`springs/${id}`]);
+    this._router.navigate([`sprints/${id}`]);
   }
 
   deleteBoard(board: any) {

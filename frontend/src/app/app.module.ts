@@ -50,11 +50,11 @@ import { ListCommentsComponent } from './board/comments/list-comments/list-comme
 import { CreateRoleComponent } from './admin/create-role/create-role.component';
 import { ListRoleComponent } from './admin/list-role/list-role.component';
 import { ListUserComponent } from './admin/list-user/list-user.component';
-import { ListSpringComponent } from './board/spring/list-spring/list-spring.component';
-import { CreateSpringComponent } from './board/spring/create-spring/create-spring.component';
+import { ListSprintComponent } from './board/sprint/list-sprint/list-sprint.component';
+import { CreateSprintComponent } from './board/sprint/create-sprint/create-sprint.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { UpdateSpringComponent } from './board/spring/update-spring/update-spring.component';
+import { UpdateSprintComponent } from './board/sprint/update-sprint/update-sprint.component';
 import { TaskDetailsComponent } from './board/task/task-details/task-details.component';
 import { InviteUserBoardComponent } from './board/invite-user-board/invite-user-board.component';
 import { AssignTaskComponent } from './board/task/assign-task/assign-task.component';
@@ -75,9 +75,9 @@ import { AssignTaskComponent } from './board/task/assign-task/assign-task.compon
     CreateRoleComponent,
     ListRoleComponent,
     ListUserComponent,
-    ListSpringComponent,
-    CreateSpringComponent,
-    UpdateSpringComponent,
+    ListSprintComponent,
+    CreateSprintComponent,
+    UpdateSprintComponent,
     TaskDetailsComponent,
     InviteUserBoardComponent,
     AssignTaskComponent,

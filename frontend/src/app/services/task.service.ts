@@ -17,8 +17,8 @@ export class TaskService {
     this.env = environment.APP_URL;
   }
 
-  updateListTask(springId: any) {    
-    this._http.get<any>(this.env + 'task/listTask/' + springId).subscribe(
+  updateListTask(sprintId: any) {    
+    this._http.get<any>(this.env + 'task/listTask/' + sprintId).subscribe(
       (res) => {
         this._listTasks.next(res.task);
       },
