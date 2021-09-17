@@ -1,32 +1,220 @@
-<div class="bgComponent">
-  <div class="form">
-<mat-card class="card">
-  <mat-card-header>
-    <div mat-card-avatar >
-      <img [src]="this.profileImage" alt="">
+<div class="dimg">
+  <div class="container d">
+    <div class="row align-items-center">
+      <div class="col d1">
+        <input
+          class="text-title"
+          [(ngModel)]="registerData.title"
+          matInput
+          disabled
+        /><br />
+      </div>
     </div>
-    <mat-card-title> <input class="text"
-      [(ngModel)]="registerData.title"
-      matInput
-     
-      
-    /></mat-card-title>
-    <mat-card-subtitle>Creada por: </mat-card-subtitle>
-  </mat-card-header>
-  
-  <mat-card-content>
-    <input
-    [(ngModel)]="registerData.description"
-    matInput
-    disabled
-  />
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-    <button mat-button>DELETE</button>
-    <button mat-button>ACTUALIZAR</button>
-  </mat-card-actions>
-</mat-card>  
+    <div class="row align-items-center">
+      <div class="col d2">
+        <div class="row align-items-center">
+          <div class="col d6">
+            <p class="card-text">
+              <span>Creada por </span>
+              <input
+                class="text"
+                [(ngModel)]="registerData.userId.name"
+                matInput
+                disabled
+              /><br />
+            </p>
+          </div>
+
+          <div class="col d7">
+            <img
+              [src]="
+                registerData.userId.userImg != ''
+                  ? registerData.userId.userImg
+                  : '../../../../assets/img/userExample.png'
+              "
+              alt="profile-photo"
+              class="profileConfig"
+            />
+          </div>
+        </div>
+
+        <p class="p-description">
+          <span>Descripción </span>
+          <input
+            class="text-description"
+            [(ngModel)]="registerData.description"
+            matInput
+            disabled
+          /><br />
+        </p>
+        <p class="p-asigned">
+          <span>Asignada a: </span>
+          <input
+            class="text"
+            [(ngModel)]="registerData.assignedUser.name"
+            matInput
+            disabled
+            matInput
+          /><br />
+        </p>
+      </div>
+      <div class="col d3">
+        <img
+          [src]="
+            registerData.imgUrl != ''
+              ? registerData.imgUrl
+              : '../../../../assets/img/no_task_img.PNG'
+          "
+          class="imgtask"
+        />
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div class="col d4">
+        <p>
+          <span>Fecha de Creación:</span>
+          <input
+            class="text textdate"
+            [ngModel]="registerData.date | date"
+            matInput
+            disabled
+          /><br />
+        </p>
+        <p>
+          <span>Fecha de Entrega: </span>
+          <input
+            class="text textdate"
+            [ngModel]="registerData.date | date"
+            matInput
+            disabled
+          /><br />
+        </p>
+      </div>
+      <div class="col d5">
+        <button mat-icon-button class="mt-1">
+          <mat-icon class="icon">person</mat-icon>
+        </button>
+        <button mat-icon-button class="mt-1">
+          <mat-icon class="icon">priority_high</mat-icon>
+        </button>
+        <button mat-icon-button class="mt-1">
+          <mat-icon class="icon">thumb_up_off_alt</mat-icon>
+        </button>
+        <!-- <span>{{ item.like }}</span>-->
+        <button mat-icon-button class="mt-1">
+          <mat-icon class="icon">chat_bubble_outline</mat-icon>
+        </button>
+        <button mat-icon-button class="mt-1">
+          <mat-icon class="icon">delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Prueba con card-->
+<div class="container border card">
+  <div class="row">
+    <div class="col-12 title text-center">
+      <input [(ngModel)]="registerData.title" matInput disabled /><br />
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <div class="col-2 divCreated">
+          <img
+            [src]="
+              registerData.userId.userImg != ''
+                ? registerData.userId.userImg
+                : '../../../../assets/img/userExample.png'
+            "
+            alt="profile-photo"
+            class="profileConfig"
+          />
+        </div>
+        <div
+          class="
+            col-10
+            divCreated
+            justify-content-between justify-content-center
+          "
+        >
+          <p class="text-1">
+            Creada por:
+            <input
+              [(ngModel)]="registerData.userId.name"
+              matInput
+              disabled
+            /><br />
+          </p>
+        </div>
+        <div class="col-10 justify-content-between justify-content-center">
+          <p class="text-2">
+            Asignada a:
+            <input
+              [(ngModel)]="registerData.assignedUser.name"
+              matInput
+              disabled
+              matInput
+            /><br />
+          </p>
+          <p>
+            <input
+              [(ngModel)]="registerData.description"
+              matInput
+              disabled
+              class="description"
+            /><br />
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 divImg">
+      <img
+        [src]="
+          registerData.imgUrl != ''
+            ? registerData.imgUrl
+            : '../../../../assets/img/no_task_img.PNG'
+        "
+        class="imgtask"
+      />
+    </div>
+    <div class="col-8 divDates">
+      <p>
+        Fecha de Creación:
+        <input
+          class="text textdate"
+          [ngModel]="registerData.date | date"
+          matInput
+          disabled
+        /><br />
+      </p>
+      <p>
+        Fecha de Entrega:
+        <input
+          class="text textdate"
+          [ngModel]="registerData.date | date"
+          matInput
+          disabled
+        /><br />
+      </p>
+    </div>
+    <div class="col-4">
+      <button mat-icon-button class="mt-1">
+        <mat-icon class="icon">person</mat-icon>
+      </button>
+      <button mat-icon-button class="mt-1">
+        <mat-icon class="icon">priority_high</mat-icon>
+      </button>
+      <button mat-icon-button class="mt-1">
+        <mat-icon class="icon">thumb_up_off_alt</mat-icon>
+      </button>
+      <!-- <span>{{ item.like }}</span>-->
+      <button mat-icon-button class="mt-1">
+        <mat-icon class="icon">chat_bubble_outline</mat-icon>
+      </button>
+      <button mat-icon-button class="mt-1">
+        <mat-icon class="icon">delete</mat-icon>
+      </button>
+    </div>
   </div>
 </div>

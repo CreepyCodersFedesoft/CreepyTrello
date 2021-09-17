@@ -244,7 +244,7 @@ const listLogTask = async (req, res) => {
 
 const findTask = async (req, res) => {
   const task = await Task.findOne({ _id: req.params["_id"] })
-    .populate("sprintId")
+    .populate("sprintId").populate("userId").populate("assignedUser")
     .exec();
   if (!task || task.lenght === 0) return res.status(400).send("No search task");
   return res.status(200).send({ task });
