@@ -31,9 +31,10 @@ export class ListUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._userService.getAllUser().subscribe(
+    this._userService.updateListTask();
+    this._userService.listUsers.subscribe(
       (res) => {
-        this.userData = res.users;
+        this.userData = res;
         this.dataSource = new MatTableDataSource(this.userData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

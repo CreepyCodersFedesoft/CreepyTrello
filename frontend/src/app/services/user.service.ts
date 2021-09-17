@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,11 +13,25 @@ export class UserService {
   private messageSource = new BehaviorSubject(true);
   isChanged = this.messageSource.asObservable();
 
+  public _listUsers: BehaviorSubject<any> = new BehaviorSubject([]);
+  public readonly listUsers: Observable<any> = this._listUsers.asObservable();
+
   constructor(
     private _http: HttpClient,
     private _router: Router,
   ) { 
     this. env = environment.APP_URL;
+  }
+
+  updateListTask() {    
+    this._http.get<any>(this.env + 'user/listUserAll').subscribe(
+      (res) => {
+        this._listUsers.next(res.users);
+      },
+      (err) => {
+        this._listUsers.next([]);        
+      }
+    );
   }
 
   changeDataUser(message: boolean) {
