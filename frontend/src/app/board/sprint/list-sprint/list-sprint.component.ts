@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UtilitiesService } from 'src/app/services/utilities.service';
@@ -38,10 +39,22 @@ export class ListSprintComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let now = new Date();
+    
     this.chargeBoard();
     this._sprintService.listSprints.subscribe((res) => {
       let anyArray: any[] = res.sprint
       for (const i in anyArray) {
+        let start = new Date(anyArray[i].startDate)
+        let end = new Date(anyArray[i].endDate)
+
+        if(start <= now && now <= end){
+          anyArray[i].color = 'aquamarine';
+        }else if(now < start){
+          anyArray[i].color = 'lightgray';
+        }else if(end < now){
+          anyArray[i].color = 'coral';
+        }
         anyArray[i].sprintOptions = false;
       }
       this.sprintData = anyArray;
@@ -71,6 +84,8 @@ export class ListSprintComponent implements OnInit {
     for(let sprint of this.sprintData){
       if(sprint._id == this.sprintId){
         sprint.sprintOptions = !sprint.sprintOptions;
+        console.log("sprint->",sprint);
+        
       }else{
         sprint.sprintOptions = false;
       }
