@@ -116,7 +116,7 @@ export class ListSprintComponent implements OnInit {
       width: '400px',
       height: '400px',
     });
-    this.chargeSprint(sprintId);
+    //this.chargeSprint(sprintId);
   }
 
   async deleteSprint() {

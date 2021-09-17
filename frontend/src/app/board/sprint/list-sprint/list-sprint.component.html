@@ -16,18 +16,21 @@
     <div *ngIf="sprint.sprintOptions" class="text-center">
       <button 
         mat-button 
-        matTooltip="Nueva Task" 
+        matTooltip="Nueva Task"
+        [matTooltipShowDelay]=500
         (click)="addTask(sprint._id, boardData._id)">
         <mat-icon class="text-white text-wrap fs-6">library_add</mat-icon>
       </button>
       <button 
         mat-button 
-        matTooltip="Borrar Sprint" 
+        matTooltip="Borrar Sprint"
+        [matTooltipShowDelay]=500
         (click)="deleteSprint()">
         <mat-icon class="text-white fs-6">delete_forever</mat-icon></button>
       <button 
         mat-button 
-        matTooltip="Actualizar Sprint" 
+        matTooltip="Actualizar Sprint"
+        [matTooltipShowDelay]=500
         (click)="updateSprint(sprint._id, boardData._id)">
         <mat-icon class="text-white fs-6">settings</mat-icon>
       </button>
