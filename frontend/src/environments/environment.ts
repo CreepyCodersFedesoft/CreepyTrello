@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  APP_URL: 'http://localhost:3001/api/'
+  APP_URL: 'https://creepytrello.herokuapp.com/api/' 
+  //Para trabajar en backend local'http://localhost:3001/api/'
 };
 
 /*
