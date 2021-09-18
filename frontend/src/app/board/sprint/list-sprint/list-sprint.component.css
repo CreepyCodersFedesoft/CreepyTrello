@@ -1,3 +1,6 @@
+.contentListTask{
+  background-color: #F5F5DC;
+}
 /*Termina cambios sidebar */
 .sidebar {
   height: 100%;
@@ -32,22 +35,24 @@
 .openbtn { 
   font-size: 20px;
   cursor: pointer;
-  background-color: #0394c0;
+  background-color: #c07e03;
   color: white;
   padding: 10px 15px;
   border: none;
   border-radius: 5%;
+  z-index: 2;
+  position: absolute;
 }
 
 .openbtn:hover {
-  background-color: #0084AD;
+  background-color: #b17301;
 }
 
 #main {
   transition: margin-left .5s;
-  padding: 16px;
+  /*padding: 16px;
   max-height: 100%;
-  height: 100%;
+  height: 100%;*/
 }
 /*Termina cambios sidebar */
 

@@ -1,4 +1,4 @@
-<div class="container at-5">
+<div class="container-fluid contentTask overflow-auto w-100 at-5">
   <div class="row">
     <h2 class="text-center">Proceso de las Tareas</h2>
   </div>
@@ -27,8 +27,8 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button [routerLink]="['/listTask/', task._id]"  mat-menu-item>
-              <mat-icon >details</mat-icon>
+            <button [routerLink]="['/listTask/', task._id]" mat-menu-item>
+              <mat-icon>details</mat-icon>
               <span>Detalles</span>
             </button>
             <button mat-menu-item>
@@ -45,16 +45,18 @@
             {{ task.date | date }} {{ task.date | date: "shortTime" }}
           </div>
           <div class="d-flex justify-content-end">
-            <button 
-              mat-icon-button 
+            <button
+              mat-icon-button
               class="mt-1"
               (click)="task.visibleAssign = !task.visibleAssign"
             >
               <mat-icon class="icon">person</mat-icon>
             </button>
             <button mat-icon-button class="mt-1">
-              <mat-icon class="icon" style="padding-right: 0px !important;">priority_high</mat-icon>
-              <small class="px-0">{{task.priority}}</small>
+              <mat-icon class="icon" style="padding-right: 0px !important"
+                >priority_high</mat-icon
+              >
+              <small class="px-0">{{ task.priority }}</small>
             </button>
             <button mat-icon-button class="mt-1">
               <mat-icon class="icon">thumb_up_off_alt</mat-icon>
@@ -67,16 +69,20 @@
             >
               <mat-icon class="icon">chat_bubble_outline</mat-icon>
             </button>
-            <hr>
+            <hr />
           </div>
-            <!-- Aquí va el contenido de los componentes añadidos -->
-            <div *ngIf="task.visibleComments" >
-              <app-list-comments [taskId]="task._id"></app-list-comments>
-            </div>
-            <div *ngIf="task.visibleAssign" >
-              <app-assign-task [taskId]="task._id" [assignedUser]="task.assignedUser" [boardId]="boardId">
-              </app-assign-task>
-            </div>  
+          <!-- Aquí va el contenido de los componentes añadidos -->
+          <div *ngIf="task.visibleComments">
+            <app-list-comments [taskId]="task._id"></app-list-comments>
+          </div>
+          <div *ngIf="task.visibleAssign">
+            <app-assign-task
+              [taskId]="task._id"
+              [assignedUser]="task.assignedUser"
+              [boardId]="boardId"
+            >
+            </app-assign-task>
+          </div>
         </div>
       </div>
     </div>
