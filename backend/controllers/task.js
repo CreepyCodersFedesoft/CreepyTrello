@@ -65,7 +65,7 @@ const listTask = async (req, res) => {
   //puede llegar una imagen y un usuario asignado
   const task = await Task.find({ sprintId: req.params.sprintId });
   if (!task || task.length == 0)
-    return res.status(400).send({msg: "This Sprint haven't assigned task"});
+    return res.status(400).send({ msg: "This Sprint haven't assigned task" });
 
   let history = new History({
     userId: req.user._id,
@@ -233,19 +233,34 @@ const assignUser = async (req, res) => {
   if (!resultHistory) console.log("failed to create history task");
   //console.log(resultHistory);
 
-  return res.status(200).send({msg: "Task assigned successfully"});
+  return res.status(200).send({ msg: "Task assigned successfully" });
 };
 
 const listLogTask = async (req, res) => {
-  let history = await History.find({ taskId: req.body.taskId });
+  let history = await History.find({ taskId: req.body.taskId })
+    .sort("-date")
+    .populate("userId")
+    .exec();
   if (!history) return res.status(400).send("No logs for this task");
   return res.status(200).send({ history });
 };
 
 const findTask = async (req, res) => {
   const task = await Task.findOne({ _id: req.params["_id"] })
-    .populate("sprintId").populate("userId").populate("assignedUser")
+    .populate({
+      path: "sprintId",
+      populate: [
+        {
+          path: "boardId",
+          model: "board",
+          select: "name",
+        },
+      ],
+    })
+    .populate("userId")
+    .populate("assignedUser")
     .exec();
+
   if (!task || task.lenght === 0) return res.status(400).send("No search task");
   return res.status(200).send({ task });
 };

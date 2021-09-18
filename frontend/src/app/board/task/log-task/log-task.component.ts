@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TaskService } from '../../../services/task.service';
 import { UserService } from 'src/app/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilitiesService } from '../../../services/utilities.service';
-
+import { TaskService } from '../../../services/task.service';
 import {
   MatDialog,
   MatDialogConfig,
@@ -12,17 +11,18 @@ import {
 } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-task-details',
-  templateUrl: './task-details.component.html',
-  styleUrls: ['./task-details.component.css'],
+  selector: 'app-log-task',
+  templateUrl: './log-task.component.html',
+  styleUrls: ['./log-task.component.css'],
 })
-export class TaskDetailsComponent {
-  @Input() sprintId: any = null;
+export class LogTaskComponent implements OnInit {
+  @Input() taskId: string = '';
+  logData: any;
+  displayedColumns: string[] = ['Fecha', 'Nombre', 'Accion'];
   registerData: any;
   message: string = '';
   _id: string;
-  name: any;
-
+  taskData: any[];
   constructor(
     private _taskService: TaskService,
     private _utilitiesService: UtilitiesService,
@@ -33,25 +33,25 @@ export class TaskDetailsComponent {
   ) {
     this.registerData = {};
     this._id = '';
-    this.name = '';
+    this.taskData = [];
   }
 
   ngOnInit(): void {
-    this._Arouter.params.subscribe((params) => {
-      this._id = params['_id'];
-      this._taskService.findTask(this._id).subscribe(
-        (res) => {
-          this.registerData = res.task;
-          console.log(this.registerData);
-          this.name = this.registerData.assignedUser;
-        },
-        (err) => {
-          this.message = err.error;
-          this._utilitiesService.openSnackBarError(this.message);
-        }
-      );
-    });
+    this.listLog();
   }
 
-  updateTask() {}
+  listLog() {
+    this._taskService.listLogTask(this.taskId).subscribe(
+      (res) => {
+        console.log(res);
+        this.logData = res.history;
+        console.log(this.logData);
+      },
+      (err) => {
+        this._utilitiesService.openSnackBarError(
+          'No se han encontrado logs para esta tarea'
+        );
+      }
+    );
+  }
 }

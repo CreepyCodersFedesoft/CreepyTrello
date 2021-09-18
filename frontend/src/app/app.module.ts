@@ -60,6 +60,7 @@ import { TaskDetailsComponent } from './board/task/task-details/task-details.com
 import { InviteUserBoardComponent } from './board/invite-user-board/invite-user-board.component';
 import { AssignTaskComponent } from './board/task/assign-task/assign-task.component';
 import { UpdateUserAdminComponent } from './admin/update-user-admin/update-user-admin.component';
+import { LogTaskComponent } from './board/task/log-task/log-task.component';
 
 
 @NgModule({
@@ -85,6 +86,7 @@ import { UpdateUserAdminComponent } from './admin/update-user-admin/update-user-
     InviteUserBoardComponent,
     AssignTaskComponent,
     UpdateUserAdminComponent,
+    LogTaskComponent,
 
   ],
   imports: [

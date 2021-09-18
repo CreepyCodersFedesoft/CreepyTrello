@@ -1,12 +1,15 @@
 .container {
   display: flex;
   flex-direction: column;
+  padding-top: 10%;
+  padding-left: 5%;
 }
 
 .d1 {
   width: 100%;
   height: 3em;
   background: hsla(0, 0%, 100%, 0);
+  
 }
 
 .d2 {
@@ -31,14 +34,14 @@
   max-width: 30em;
   height: 5em;
   width: 100%;
-
+padding-top: 5%;
   background: hsla(0, 0%, 100%, 0);
 }
 
 .d5 {
   height: 5em;
   width: 100%;
-
+  padding-top: 10%;
   background: hsla(0, 0%, 100%, 0);
 }
 .d6 {
@@ -48,6 +51,7 @@
   display: flex;
   justify-content: left;
   align-items: center;
+  padding-top: 15px;
 }
 
 .d7 {
@@ -57,25 +61,31 @@
   justify-content: center;
   align-items: center;
   text-align: left;
-  padding-top: 10px;
+  padding-top: 15px;
 }
 .d {
-  margin-top: 2%;
   min-width: 100px;
-  max-width: 600px;
+  max-width: 650px;
   width: 100%;
   height: 100%;
-  margin: 0 auto;
+ 
 }
 
 .dimg {
+  width: 1100px;
+  height: 780px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
   background-image: url("../../../../assets/img/post-it-img.jpg");
   background-repeat: no-repeat;
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  padding-top: 20%;
+  background-position: center center;
+  background-size:cover;
+  
+  
 }
 
 input:disabled {
@@ -101,10 +111,11 @@ input:disabled {
   height: auto;
 }
 .text-title {
-  font-size: 2em;
+  font-size: 2.3em;
   font-family: cursive;
   font-weight: bold;
   text-align: center;
+ 
 }
 .text-description {
   font-size: 1.5em;
@@ -112,6 +123,9 @@ input:disabled {
   text-align: center;
   margin: auto;
   padding-top: 100px;
+  width:100px;
+  height:200px;
+ 
 }
 
 span {
@@ -125,11 +139,32 @@ p {
 }
 
 .p-description {
-  padding-top: 50px;
+  padding-top: 20px;
 }
 
 .p-asigned {
-  padding-top: 30px;
+  padding-top: 5px;
+}
+
+textarea{
+  background-color: rgba(0, 255, 255, 0);
+  resize:none;
+  text-align: center;
+  font-size: 1em;
+  font-family:cursive;
+  font-weight: bold;
+  border: 0;
+ 
+  
+}
+.t-board{
+  color: black;
+}
+
+.icon{
+  align-items: left;
+  justify-content: left;
+padding-left: 7em;
 }
 /* CSS de Card*/
 .card {
@@ -149,6 +184,7 @@ p {
   display: flex;
   align-items: center;
   max-width: 200px;
+  max-height: 250px;
 }
 
 .text-1 {

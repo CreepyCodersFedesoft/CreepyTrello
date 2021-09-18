@@ -86,7 +86,7 @@ export class ListTaskComponent implements OnInit{
           this.taskData.splice(index, 1);
           this.message = res.message;
 
-          console.log('la tas tiene' + task);
+          console.log('la task tiene' + task);
         }
       },
       (err) => {
