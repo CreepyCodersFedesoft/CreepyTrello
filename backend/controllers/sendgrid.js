@@ -6,7 +6,7 @@ const sendMail = async (req, res) => {
 
   const msg = {
     to: req.body.email, // Change to your recipient
-    from: "dianaeleira@gmail.com", // Change to your verified sender
+    from: "creepytrello@gmail.com", // Change to your verified sender
     subject: "Bienvenido a Creppy Trello Software",
     name: "Creppy Trello",
     html:
