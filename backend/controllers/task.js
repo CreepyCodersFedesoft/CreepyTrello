@@ -237,7 +237,6 @@ const assignUser = async (req, res) => {
 
   let resultHistory = await history.save();
   if (!resultHistory) console.log("failed to create history task");
-  //console.log(resultHistory);
 
   return res.status(200).send({msg: "Task assigned successfully"});
 };

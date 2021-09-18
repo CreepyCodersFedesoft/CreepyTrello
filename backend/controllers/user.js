@@ -69,7 +69,6 @@ const createUser = async (req, res) => {
   const hash = await bcrypt.hash(req.body.password, 10);
 
   const role = await Role.findOne({ name: "user" });
-  console.log(role);
   if (!role) return res.status(400).send("Error: No role was assigned.");
 
   let imageUrl = "";
