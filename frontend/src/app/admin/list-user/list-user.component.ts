@@ -54,22 +54,32 @@ export class ListUserComponent implements OnInit {
     }
   }
 
-  deleteUser(user: any){
-    this._userService.deleteUser(user).subscribe(
-      (res) => {
-        let index = this.userData.indexOf(user);
-        if (index > -1) {
-          console.log('1: ', this.userData);
-          this.userData.splice(index, 1);
-          console.log('2: ', this.userData);
-          this.dataSource = new MatTableDataSource(this.userData);
-          this._utilitiesService.openSnackBarSuccesfull('Usuario eliminado');
-        }
-      },
-      (err) => {
-        this._utilitiesService.openSnackBarError(err.error);
-      }
+  async deleteUser(user: any){
+    let result = await this._utilitiesService.SweetAlertConfirmation(
+      '¿Esta seguro de que desea eliminar el usuario seleccionado?',
+      '¡No serás capaz de revertir estos cambios!',
+      '¡Si, Eliminalo!',
+      'warning'      
     );
+
+    if(result.isConfirmed){
+      this._userService.deleteUser(user).subscribe(
+        (res) => {
+          let index = this.userData.indexOf(user);
+          if (index > -1) {
+            console.log('1: ', this.userData);
+            this.userData.splice(index, 1);
+            console.log('2: ', this.userData);
+            this.dataSource = new MatTableDataSource(this.userData);
+            //this._utilitiesService.openSnackBarSuccesfull('Usuario eliminado');
+            this._utilitiesService.SweetAlert('Proceso Exitoso', '¡Usuario eliminado con existo!', 'success');
+          }
+        },
+        (err) => {
+          this._utilitiesService.openSnackBarError(err.error);
+        }
+      );
+    }
   }
 
   updateUser(userId: any){

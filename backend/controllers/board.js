@@ -1,4 +1,7 @@
 const Board = require("../models/board");
+const Sprint = require("../models/sprint");
+const Task = require("../models/task");
+const Comment = require("../models/comment");
 const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
@@ -124,6 +127,66 @@ const deleteBoard = async (req, res) => {
   boardImg = boardImg.split("/")[4];
   let boardServerImg = "./uploads/" + boardImg;
 
+  let sprints = await Sprint.find({ boardId: req.params._id });
+  let sprintsIds = [];
+  let tasksIds = [];
+  let tasksUrls = [];
+  let task;
+
+  sprints.forEach((springId) => {
+    sprintsIds.push(springId._id);
+  });
+
+  for (const sprintsId in sprintsIds) {
+    task = await Task.find({ sprintId: sprintsIds[sprintsId] });
+
+    task.forEach((taskOne) => {
+      tasksUrls.push(taskOne.imgUrl);
+      tasksIds.push(taskOne._id);
+    });
+  }
+
+  for (const sprintsId in sprintsIds) {
+    task = await Task.find({ sprintId: sprintsIds[sprintsId] });
+
+    task.forEach((taskOne) => {
+      tasksUrls.push(taskOne.imgUrl);
+      tasksIds.push(taskOne._id);
+    });
+  }
+
+  //eliminamos los comentarios
+  let CommentFoundToDeleted;
+  for (const tasksId in tasksIds) {
+    CommentFoundToDeleted = await Comment.deleteMany({taskId: tasksIds[tasksId] });
+    if(!CommentFoundToDeleted) return res.status(400).send('Error to delete associated Comments');
+  }
+
+  //ahora borramos las tareas
+  let TaskFoundToDeleted;
+  for (const sprintsId in sprintsIds) {
+    TaskFoundToDeleted = await Task.deleteMany({ sprintId: sprintsIds[sprintsId] });
+    if(!TaskFoundToDeleted) return res.status(400).send('Error to delete associated Comments');
+  }
+
+  //si elimino correctamente las tareas, ahora eliminamos las imagenes de dichas tareas
+  tasksUrls.forEach((url) => {
+    if (url !== "") {
+      try {
+        url = "./uploads/" + url.split("/")[4];
+        fs.unlinkSync(url);
+        console.log(url + " eliminated");
+      } catch (err) {
+        console.log("Image no found in server");
+      }
+    }
+  });
+
+  //ahora borramos el spring
+  let SprintFoundToDeleted = await Sprint.deleteMany({boardId: req.params._id});
+  if(!SprintFoundToDeleted) return res.status(400).send('Error to delete associated tasks');
+
+  //por ultimo borramos el board
   const board = await Board.findByIdAndDelete(req.params._id);
   if (!board) return res.status(400).send("Board not found");
 

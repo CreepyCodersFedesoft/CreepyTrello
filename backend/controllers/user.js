@@ -161,6 +161,7 @@ const getEmail = async (req, res) => {
 //de seguridad no puede usarla un usuario para actualizar sus propios datos, para ello será necesario
 //registrar posteriormente otra funcion
 const updateUser = async (req, res) => {
+  
   if (!req.user._id || !req.body.name || !req.body.email)
     return res.status(400).send("Error: Empty fields");
 
@@ -312,8 +313,8 @@ const activateUser = async (req, res) => {
 
   if (!user || user.length === 0)
     return res.status(400).send("No search results");
-
-  const urlWelcome = process.env.URL_MESSAGES + "/templates/template.html";
+    
+  const urlWelcome = req.protocol + "://" + req.get("host") + "/templates/template.html";
   res.status(200).redirect(urlWelcome);
 };
 

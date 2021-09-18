@@ -135,20 +135,18 @@ export class ListSprintComponent implements OnInit {
   }
 
   async deleteSprint() {
-    let result = await swal.fire({
-      title: '¿Esta seguro de que desea eliminar el sprint seleccionado?',
-      text: '¡No serás capaz de revertir estos cambios!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: '¡Si, Eliminalo!',
-    });
+    let result = await this._utilitiesService.SweetAlertConfirmation(
+      '¿Esta seguro de que desea eliminar el board seleccionado?',
+      '¡No serás capaz de revertir estos cambios!',
+      '¡Si, Eliminalo!',
+      'warning'
+    );
 
     if (result.isConfirmed) {
       this._sprintService.deleteSprint(this.sprintId).subscribe();
-      swal.fire('Proceso Exitoso', '¡Sprint eliminado con existo!', 'success');
+      this._utilitiesService.SweetAlert('Proceso Exitoso', 'Board eliminado con existo!', 'success');
       this._sprintService.updateListSprints(this.boardData._id);
     }
   }
+
 }
