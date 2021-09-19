@@ -71,15 +71,6 @@ const listTask = async (req, res) => {
   if (!task || task.length == 0)
     return res.status(400).send({msg: "This Sprint haven't assigned task"});
 
-  let history = new History({
-    userId: req.user._id,
-    actionType: "Listed Task",
-  });
-
-  let resultHistory = await history.save();
-  if (!resultHistory) console.log("failed to create history task");
-  //console.log(resultHistory);
-
   return res.status(200).send({ task });
 };
 
