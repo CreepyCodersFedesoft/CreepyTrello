@@ -84,7 +84,6 @@ export class ListSprintComponent implements OnInit {
     for(let sprint of this.sprintData){
       if(sprint._id == this.sprintId){
         sprint.sprintOptions = !sprint.sprintOptions;
-        console.log("sprint->",sprint);
         
       }else{
         sprint.sprintOptions = false;
