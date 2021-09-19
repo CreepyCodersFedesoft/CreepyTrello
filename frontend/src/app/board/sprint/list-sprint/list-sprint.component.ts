@@ -16,7 +16,7 @@ import { UpdateSprintComponent } from '../update-sprint/update-sprint.component'
   styleUrls: ['./list-sprint.component.css'],
 })
 export class ListSprintComponent implements OnInit {
-  show: boolean = false; //volver a cambiar a true
+  show: boolean = true;
   sprintData: any;
   boardData: any;
   sprintId: any;
@@ -33,7 +33,7 @@ export class ListSprintComponent implements OnInit {
   ) {
     this.sprintData = {};
     this.boardData = {};
-    this.sprintId = '614661d37fe1fb75291674dc';//voler a cambiar a null
+    this.sprintId = null;
     this.boardId = null;
     this.message = '';
   }
