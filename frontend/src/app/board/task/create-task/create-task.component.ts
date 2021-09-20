@@ -8,6 +8,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-create-task',
@@ -19,12 +20,14 @@ export class CreateTaskComponent implements OnInit {
   registerData: any;
   selectedFile: any;
   message: string = '';
+  boardImg:any ='';
 
   constructor(
     private _taskService: TaskService,
     private _router: Router,
     private _utilitiesService: UtilitiesService,
     public _dialogRef: MatDialog,
+    private _sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: {
       sprintId: string,
       boardId: string
@@ -38,6 +41,7 @@ export class CreateTaskComponent implements OnInit {
 
   uploadImg(event: any) {
     this.selectedFile = <File>event.target.files[0];
+    this.boardImg = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.selectedFile));
   }
 
   createTask() {

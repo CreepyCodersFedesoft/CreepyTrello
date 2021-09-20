@@ -132,7 +132,7 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button (click)="onCreate()" mat-menu-item>
+            <button [routerLink]="['/listTask/', task._id]" mat-menu-item>
               <mat-icon>details</mat-icon>
               <span>Detalles</span>
             </button>
@@ -238,7 +238,7 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button (click)="onCreate()" mat-menu-item>
+            <button [routerLink]="['/listTask/', task._id]" mat-menu-item>
               <mat-icon>details</mat-icon>
               <span>Detalles</span>
             </button>

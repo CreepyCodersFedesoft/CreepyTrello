@@ -21,13 +21,19 @@
                 required
               />
             </mat-form-field>
-            <input type="file" (change)="uploadImg($event)" />
+            <img 
+            *ngIf="this.boardImg != '' "
+            class="m-3"
+              width="150px"
+              [src]="this.boardImg"
+              alt=""
+            />
+            <div *ngIf="selectedFile !=null">{{ selectedFile.name }}</div>
+            <label for="upload">Seleccionar IMG</label>
+            <input type="file" id="upload" (change)="uploadImg($event)" />
           </div>
         </mat-card-content>
         <mat-card-actions>
-          <!-- <button (click)="saveTask()" class="button" mat-raised-button>
-            Create
-          </button> -->
           <button (click)="createTask(); onClose()" class="button" mat-raised-button>
             Create
           </button>
