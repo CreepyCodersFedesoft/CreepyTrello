@@ -13,7 +13,7 @@
 <div class="card-wrapper" *ngIf="boardData.length">
   <div *ngFor="let board of filteredBoards">
     <mat-card class="information-card" fxFlexAlign="stretch">
-      <mat-card-header >
+      <mat-card-header class="title-card">
         <mat-card-title class="title" (click)="enterSprint(board._id)">{{
           board.name
         }}</mat-card-title>
@@ -43,7 +43,7 @@
         [src]="board.boardImg != '' ? board.boardImg : '../../../../../assets/img/userBoardExample.jpg'"
       />
       <mat-card-content>
-        <p>{{ board.description }}</p>
+        <p>Propietario: {{board.userId.name}}</p>
       </mat-card-content>
     </mat-card>
   </div>
