@@ -157,6 +157,16 @@ const getEmail = async (req, res) => {
   const userImg = user.userImg;
   return res.status(200).send({ name, email, userImg });
 };
+const getNameAndImage = async (req, res) => {
+  const user = await User.findOne({ _id: req.params._id });
+  if (!user || user.length === 0)
+    return res.status(400).send("Error: User no found");
+  const userData = {
+    name: user.name,
+    userImg: user.userImg,
+  };
+  return res.status(200).send({ userData });
+};
 //esta funcion esta disenada para que un admin actualice a cualquier usuario, pero por cuestiones
 //de seguridad no puede usarla un usuario para actualizar sus propios datos, para ello será necesario
 //registrar posteriormente otra funcion
@@ -330,5 +340,6 @@ module.exports = {
   getEmail,
   activateUser,
   getUserById,
-  uptdateUserByAdmin
+  uptdateUserByAdmin,
+  getNameAndImage,
 };
