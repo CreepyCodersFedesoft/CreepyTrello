@@ -20,9 +20,10 @@ img{
 .information-card {
   width: 210px;
   margin: 10px 10px 10px 10px;
-  max-height: 275px;
   border-radius: 10%;
   border: 2px solid #ffca6f;
+  cursor: pointer;
+  text-align: start;
 }
 
 .title{
@@ -30,8 +31,8 @@ img{
 }
 
 img {
-  max-height: 120px;
-  max-width: 210px;
+  height: 120px;
+  width: 206px;
 }
 
 .card-wrapper {
@@ -44,4 +45,20 @@ img {
 
 .icon{
   justify-content: flex-end;
+}
+
+.title-card {
+  width: 100%;
+  min-height: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.name {
+  width: 90%;
+  position: absolute;
+}
+
+.top {
+  width: 10%;
 }

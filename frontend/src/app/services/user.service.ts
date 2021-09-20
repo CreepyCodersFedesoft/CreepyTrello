@@ -45,6 +45,9 @@ export class UserService {
   getEmail() {
     return this._http.get<any>(this.env + 'user/getEmail');
   }
+  getNameAndImage(user: string) {
+    return this._http.get<any>(this.env + 'user/getNameAndImage/' + user);
+  }
   updateUser(user: any) {
     return this._http.put<any>(this.env + 'user/updateUser', user);
   } 
@@ -66,7 +69,6 @@ export class UserService {
   }
 
   createUser(user: any) {
-    console.log(user);
     return this._http.post<any>(this.env + 'user/createUser', user);
   }
 
@@ -76,11 +78,18 @@ export class UserService {
 
   getRole(email: string) {
     return this._http.get<any>(this.env + 'user/getRole/' + email);
-  } 
-  
+
+  }  
+
+  getAllEmails(){
+    return this._http.get<any>(this.env + 'user/getAllEmails');
+  }
+
+ 
   getUserById(id: String){
     return this._http.get<any>(this.env + 'user/getUserById/' + id);
   }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');

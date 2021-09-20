@@ -35,7 +35,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
+
+
 
 import { HeaderComponent } from './home/header/header.component';
 import { RegisterComponent } from './home/register/register.component';
@@ -62,7 +64,12 @@ import { AssignTaskComponent } from './board/task/assign-task/assign-task.compon
 import { UpdateUserAdminComponent } from './admin/update-user-admin/update-user-admin.component';
 import { LogTaskComponent } from './board/task/log-task/log-task.component';
 
+import { MatChipsModule } from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
+
+
+1
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,6 +94,7 @@ import { LogTaskComponent } from './board/task/log-task/log-task.component';
     AssignTaskComponent,
     UpdateUserAdminComponent,
     LogTaskComponent,
+
 
   ],
   imports: [
@@ -118,6 +126,9 @@ import { LogTaskComponent } from './board/task/log-task/log-task.component';
     MatTabsModule,
     MatTooltipModule,
     MatGridListModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    
   ],
   providers: [
     UserService,
@@ -133,6 +144,7 @@ import { LogTaskComponent } from './board/task/log-task/log-task.component';
     TaskService,
     CommentService,
     UtilitiesService,
+    
   ],
   bootstrap: [AppComponent],
 })
