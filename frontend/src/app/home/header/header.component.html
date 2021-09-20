@@ -1,17 +1,10 @@
 <mat-toolbar class="bgHeader">
-  <ul>
-    <a *ngIf="_userService.loggedIn()" mat-button routerLink="registerBoard"
-      >Crear Tablero</a
-    >
+  <ul class="inicio">
+      <a *ngIf="_userService.loggedIn()"  mat-button routerLink="registerBoard">Crear Tablero</a>
+      <a *ngIf="_userService.loggedIn()"  mat-button routerLink="listBoard">Lista de Tableros</a>
   </ul>
-  <ul>
-    <a *ngIf="_userService.loggedIn()" mat-button routerLink="listBoard"
-      >Lista de Tableros</a
-    >
-  </ul> 
 
-  <span *ngIf="!_userService.loggedIn()" class="headerSpacer"></span>
-  <ul>
+  <ul class="medio">
     <img
       class="img"
       src="../../../assets/img/logo/logo.gif"
@@ -19,13 +12,11 @@
       routerLink="listBoard"
     />
   </ul>
-
-  <span class="headerSpacer"></span>
-  <span class="headerSpacer"></span>
-  <ul>
+  
+  <ul class="fin">
     <a
       *ngIf="_userService.loggedIn() && _userService.isAdmin()"
-      class="dropdown"
+      class="dropdown m-2"
       mat-button
       >Administración
       <div class="dropdown-content">
@@ -37,13 +28,11 @@
           Usuarios</a>
       </div>
     </a>
-  </ul>
-  <ul>
-    <a *ngIf="!_userService.loggedIn()" mat-button routerLink="register"
-      >Sign Up</a
-    >
-    <a *ngIf="!_userService.loggedIn()" mat-button routerLink="login">Login</a>
-    <a mat-button class="dropdown" *ngIf="this._userService.loggedIn()">
+
+    <a *ngIf="!_userService.loggedIn()" class="m-2" mat-button routerLink="register">Sign Up</a>
+    <a *ngIf="!_userService.loggedIn()" class="m-2" mat-button routerLink="login">Login</a>
+
+    <a mat-button class="dropdown m-2" *ngIf="this._userService.loggedIn()">
       <img
         [src]="this.profileImage"
         class="imgDoesnExist profileConfig"

@@ -7,17 +7,33 @@
     <p class="text-wrap">{{ boardData.name }}</p>
   </a>
   <div *ngFor="let sprint of sprintData; let i = index">
-    <a 
-    (click)="chargeSprint(sprint._id); sprint.sprintOptions = !sprint.sprintOptions"
-    class="text-center"
-    class="p-2 fs-5 text-wrap" mat-button
-    >
-      {{ sprint.title }}
+    <a
+      [ngStyle]="{'color':sprint.color }"
+      (click)="chargeSprint(sprint._id)"
+      class="p-2 fs-5 text-wrap" mat-button>
+      <b>{{ sprint.title }}</b>
     </a>
     <div *ngIf="sprint.sprintOptions" class="text-center">
-      <button mat-button (click)="addTask(sprint._id, boardData._id)"><mat-icon class="text-white text-wrap fs-6">library_add</mat-icon></button>
-      <button mat-button (click)="deleteSprint()"><mat-icon class="text-white fs-6">delete_forever</mat-icon></button>
-      <button mat-button (click)="updateSprint(sprint._id, boardData._id)"><mat-icon class="text-white fs-6">settings</mat-icon></button>
+      <button 
+        mat-button 
+        matTooltip="Nueva Task"
+        [matTooltipShowDelay]=500
+        (click)="addTask(sprint._id, boardData._id)">
+        <mat-icon class="text-white text-wrap fs-6">library_add</mat-icon>
+      </button>
+      <button 
+        mat-button 
+        matTooltip="Borrar Sprint"
+        [matTooltipShowDelay]=500
+        (click)="deleteSprint()">
+        <mat-icon class="text-white fs-6">delete_forever</mat-icon></button>
+      <button 
+        mat-button 
+        matTooltip="Actualizar Sprint"
+        [matTooltipShowDelay]=500
+        (click)="updateSprint(sprint._id, boardData._id)">
+        <mat-icon class="text-white fs-6">settings</mat-icon>
+      </button>
     </div>
   </div>
   <a mat-button class="fs-6" (click)="saveSprint(boardData._id)">Add Sprint <mat-icon>library_add</mat-icon></a>
@@ -29,7 +45,7 @@ this.show == true
   ? 'margin-left: 250px'
   : 'margin-left: 0;'
 ">
-<div class="">
+  <div class="contentListTask">
   <!--
     [style]="boardData.boardImg != '' ? 'background: url('+boardData.boardImg+') no-repeat;background-repeat: no-repeat;background-size: cover;width: 100%;height: 100%;': '' "
   -->
@@ -83,7 +99,8 @@ this.show == true
         <br><br>
         <img [src]="boardData.boardImg" class="img-fluid w-25 h-25 align-content-center" alt="">
         <br>
-        (Aquí irán opciones para ctualizar el board)
+        (Aquí irán opciones para actualizar el board)
       </p>
     </div>
-  </div></div>
+  </div>
+</div>

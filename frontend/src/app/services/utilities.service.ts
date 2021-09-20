@@ -4,7 +4,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-
+import swal from 'sweetalert2';
 @Injectable({
   providedIn: 'root'
 })
@@ -35,4 +35,31 @@ export class UtilitiesService {
     });
   }
 
+  /*
+        '¿Esta seguro de que desea eliminar el sprint seleccionado?',
+      '¡No serás capaz de revertir estos cambios!',
+      '¡Si, Eliminalo!',
+      'warning'
+  */
+  async SweetAlertConfirmation(
+    title: string, 
+    text: string, 
+    confirmButtonText: string,
+    icon: any,
+    ) {
+    let result = await swal.fire({
+      title: title,
+      text: text,
+      icon: icon,
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: confirmButtonText,
+    });
+    return result;
+  }
+
+  SweetAlert(title: string, text: string ,icon: any){
+    swal.fire(title, text, icon);
+  }
 }

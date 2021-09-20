@@ -25,10 +25,11 @@ export class ListTaskComponent implements OnInit{
   @Input() sprintId: any = null;
   @Input() boardId: any = null;
 
-  taskData: any[];
   taskData1: string[] = [];
-  taskData2: any[] = [];
-  taskData3: any[] = [];
+  allData: any[];
+  taskData: any[];
+  taskData2: any[];
+  taskData3: any[];
   message: string = '';
   commentInput = '';
   open = false;
@@ -39,6 +40,7 @@ export class ListTaskComponent implements OnInit{
     private _matDialog: MatDialog,
     private _router: Router,
   ) {
+    this.allData = [];
     this.taskData = [];
     this.taskData2 = [];
     this.taskData3 = [];
@@ -47,10 +49,26 @@ export class ListTaskComponent implements OnInit{
   ngOnInit(): void {
     this._taskService.listTasks.subscribe(
       (res) => {
-        this.taskData = res
-        this.taskData.forEach(tData => {
+        this.taskData = [];
+        this.taskData2 = [];
+        this.taskData3 = [];
+
+        this.allData = res
+        this.allData.forEach(tData => {
           tData.visibleComments = false;
-          tData.visibleAssign = false;
+          tData.visibleDescription = false;
+          tData.visibleAssign = false;          
+          
+          if(tData.taskStatus === 'to-do'){
+            this.taskData.push(tData);
+          }
+          if(tData.taskStatus === 'in-progress'){
+            this.taskData2.push(tData);
+          }
+          if(tData.taskStatus === 'done'){
+            this.taskData3.push(tData);
+          }                    
+          
         });
       },
       (err) => {
@@ -63,14 +81,27 @@ export class ListTaskComponent implements OnInit{
     this._taskService.updateListTask(this.sprintId); 
   }
 
-  updateTask(task: any, status: string) {    
+  updateTask(task: any, status: string) {   
+    
     let tempStatus = task.taskStatus;
     task.taskStatus = status;
-    this._taskService.updateTask(task).subscribe(
+
+    const data = new FormData();
+    
+    data.append('_id', task._id);
+    data.append('title', task.title);
+    data.append('description', task.description);
+    data.append('taskStatus', task.taskStatus);
+    data.append('priority', task.priority);
+    data.append('sprintId', task.sprintId);
+
+    this._taskService.updateTask(data).subscribe(
       (res) => {
-        task.status = status;
+        //console.log('Tarea cambiada de estado correctamente');
       },
       (err) => {
+        console.log(err);
+        
         task.status = tempStatus;
         this.message = err.error;
         this._utilitiesService.openSnackBarError(this.message);
@@ -97,6 +128,10 @@ export class ListTaskComponent implements OnInit{
   }
 
   drop(event: CdkDragDrop<any[]>) {
+    //console.log(event);
+    //console.log(event.item.data, 'status: '+ event.container.id);
+    
+
     if (event.previousContainer === event.container) {
       //Dentro del mismo contenedor
       moveItemInArray(
@@ -111,8 +146,19 @@ export class ListTaskComponent implements OnInit{
         event.container.data,
         event.previousIndex,
         event.currentIndex
-      );
+      );      
     }
+    
+    //actualizamos el estado de la tarea
+    this.updateTask(event.item.data, event.container.id);
+
+    //console.log(event.item.data, 'status: '+ event.container.id);
+    /*
+    aqui se deben actualizar la listas
+    console.log('this.taskData ->', this.taskData);
+    console.log('this.taskData2 ->', this.taskData2);
+    console.log('this.taskData2 ->', this.taskData3);
+    */
   }
 
   onCreate() {

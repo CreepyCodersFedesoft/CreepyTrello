@@ -1,6 +1,12 @@
-body {
-  width: 100%;
-  height: 100%;
+.contentTask {
+  height: 100vh !important;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+.bgDescription{
+  background: #ebaf48;
+  border-color:#c79338;
+  border-radius: 2%;
 }
 .mat-icon {
   padding-right: 15px;
@@ -107,3 +113,26 @@ body {
   margin-right: auto;
   max-width: 450px;
 }
+/* cambios scrollbar del sidebar */
+.contentTask::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.contentTask::-webkit-scrollbar:vertical {
+  width:8px;
+}
+
+.contentTask::-webkit-scrollbar-button:increment,.sidebar::-webkit-scrollbar-button {
+  display: none;
+} 
+
+.contentTask::-webkit-scrollbar:horizontal {
+  height: 10px;
+}
+
+.contentTask::-webkit-scrollbar-thumb {
+  background-color: #a16b0d;
+  border-radius: 20px;
+  border: 0;
+}
+/*Terminan cambios scrollbar del sidebar */

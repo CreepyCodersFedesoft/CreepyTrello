@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,11 +13,25 @@ export class UserService {
   private messageSource = new BehaviorSubject(true);
   isChanged = this.messageSource.asObservable();
 
+  public _listUsers: BehaviorSubject<any> = new BehaviorSubject([]);
+  public readonly listUsers: Observable<any> = this._listUsers.asObservable();
+
   constructor(
     private _http: HttpClient,
     private _router: Router,
   ) { 
     this. env = environment.APP_URL;
+  }
+
+  updateListTask() {    
+    this._http.get<any>(this.env + 'user/listUserAll').subscribe(
+      (res) => {
+        this._listUsers.next(res.users);
+      },
+      (err) => {
+        this._listUsers.next([]);        
+      }
+    );
   }
 
   changeDataUser(message: boolean) {
@@ -31,9 +45,16 @@ export class UserService {
   getEmail() {
     return this._http.get<any>(this.env + 'user/getEmail');
   }
+  getNameAndImage(user: string) {
+    return this._http.get<any>(this.env + 'user/getNameAndImage/' + user);
+  }
   updateUser(user: any) {
     return this._http.put<any>(this.env + 'user/updateUser', user);
   } 
+  
+  updateUserAdmin(user: any) {
+    return this._http.put<any>(this.env + 'user/updateUserByAdmin', user);
+  }
 
   loggedIn() {
     return !!localStorage.getItem('token');
@@ -58,10 +79,17 @@ export class UserService {
 
   getRole(email: string) {
     return this._http.get<any>(this.env + 'user/getRole/' + email);
-  }  
+  } 
+  
+  getUserById(id: String){
+    return this._http.get<any>(this.env + 'user/getUserById/' + id);
+  }
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     this._router.navigate(['/login']);
+  }
+  deleteUser(user: any){
+    return this._http.put<any>(this.env + 'user/deleteUser', user);
   }
 }
