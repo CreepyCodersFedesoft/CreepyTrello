@@ -67,11 +67,23 @@ export class ListSprintComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let now = new Date();
+    
     this.chargeBoard();
     this.getMails();
     this._sprintService.listSprints.subscribe((res) => {
       let anyArray: any[] = res.sprint;
       for (const i in anyArray) {
+        let start = new Date(anyArray[i].startDate)
+        let end = new Date(anyArray[i].endDate)
+
+        if(start <= now && now <= end){
+          anyArray[i].color = 'aquamarine';
+        }else if(now < start){
+          anyArray[i].color = 'lightgray';
+        }else if(end < now){
+          anyArray[i].color = 'coral';
+        }
         anyArray[i].sprintOptions = false;
       }
       this.sprintData = anyArray;
@@ -98,6 +110,14 @@ export class ListSprintComponent implements OnInit {
 
   chargeSprint(sprintId: any) {
     this.sprintId = sprintId;
+    for(let sprint of this.sprintData){
+      if(sprint._id == this.sprintId){
+        sprint.sprintOptions = !sprint.sprintOptions;
+        
+      }else{
+        sprint.sprintOptions = false;
+      }
+    }
   }
 
   chargeBoardId(boardId: any) {
@@ -139,23 +159,20 @@ export class ListSprintComponent implements OnInit {
       width: '400px',
       height: '400px',
     });
-    this.chargeSprint(sprintId);
+    //this.chargeSprint(sprintId);
   }
 
   async deleteSprint() {
-    let result = await swal.fire({
-      title: '¿Esta seguro de que desea eliminar el sprint seleccionado?',
-      text: '¡No serás capaz de revertir estos cambios!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: '¡Si, Eliminalo!',
-    });
+    let result = await this._utilitiesService.SweetAlertConfirmation(
+      '¿Esta seguro de que desea eliminar el board seleccionado?',
+      '¡No serás capaz de revertir estos cambios!',
+      '¡Si, Eliminalo!',
+      'warning'
+    );
 
     if (result.isConfirmed) {
       this._sprintService.deleteSprint(this.sprintId).subscribe();
-      swal.fire('Proceso Exitoso', '¡Sprint eliminado con existo!', 'success');
+      this._utilitiesService.SweetAlert('Proceso Exitoso', 'Board eliminado con existo!', 'success');
       this._sprintService.updateListSprints(this.boardData._id);
     }
   }

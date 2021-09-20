@@ -10,7 +10,7 @@ const boardSchema = mongoose.Schema({
   userList: [{ type: mongoose.Schema.ObjectId, ref: "user" }],
   statusList: { 
     type: [String], 
-    default: ["to-do", "in-progres", "done"] 
+    default: ["to-do", "in-progress", "done"] 
   },
 });
 

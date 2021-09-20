@@ -9,7 +9,8 @@ const taskSchema = mongoose.Schema({
   taskStatus: String,
   priority: Number,
   date: { type: Date, default: Date.now },
-  assignedUser: { type: mongoose.Schema.ObjectId, ref: 'user' }
+  assignedUser: { type: mongoose.Schema.ObjectId, ref: 'user' },
+  countComments: { type: Number, default: 0},
 });
 
 const task = mongoose.model('task', taskSchema);

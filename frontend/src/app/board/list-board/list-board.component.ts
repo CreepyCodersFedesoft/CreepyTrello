@@ -22,6 +22,7 @@ export class ListBoardComponent implements OnInit {
   ngOnInit(): void {
     this._boardService.listBoard().subscribe(
       (res) => {
+        console.log(res.board);        
         this.boardData = res.board;
         this.filteredBoards = res.board;
       },
@@ -46,19 +47,31 @@ export class ListBoardComponent implements OnInit {
     this._router.navigate([`sprints/${id}`]);
   }
 
-  deleteBoard(board: any) {
-    this._boardService.deleteBoard(board).subscribe(
-      (res) => {
-        let index = this.boardData.indexOf(board);
-        if (index > -1) {
-          this.boardData.splice(index, 1);
-          this._utilitiesServices.openSnackBarSuccesfull("Board eliminado correctamente");
-        }
-      },
-      (err) => {
-        this._utilitiesServices.openSnackBarError(err.error);
-      }
+  async deleteBoard(board: any) {
+
+    let result = await this._utilitiesServices.SweetAlertConfirmation(
+      '¿Esta seguro de que desea eliminar el sprint seleccionado?',
+      '¡No serás capaz de revertir estos cambios!',
+      '¡Si, Eliminalo!',
+      'warning'
     );
+
+    if(result.isConfirmed) {
+      this._boardService.deleteBoard(board).subscribe(
+        (res) => {
+          let index = this.boardData.indexOf(board);
+          if (index > -1) {
+            this.boardData.splice(index, 1);
+            this._utilitiesServices.SweetAlert('Proceso Exitoso', '¡Sprint eliminado con existo!', 'success');
+            //this._utilitiesServices.openSnackBarSuccesfull("Board eliminado correctamente");
+          }
+        },
+        (err) => {
+          this._utilitiesServices.openSnackBarError(err.error);
+        }
+      );
+    }
+
   }
 
   onCreate(){

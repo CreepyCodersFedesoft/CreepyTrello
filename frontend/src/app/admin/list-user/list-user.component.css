@@ -41,25 +41,21 @@
   }
   
   .colorUpdate {
-    color: #0938d3;
-    cursor: pointer;
-    padding-right: 15px;
+    color: black;
   }
   
   .colorDelete {
-    color: #af0a20;
-    cursor: pointer;
-    padding-right: 15px;
+    color: black;
   }
   
   .deleteIcon:hover {
-    color: #ff0000;
+    color: #FFCA6F;
     cursor: pointer;
     padding-right: 15px;
   }
   
   .updateIcon:hover {
-    color: #20cbff;
+    color: #FFCA6F;
     cursor: pointer;
     padding-right: 15px;
   }

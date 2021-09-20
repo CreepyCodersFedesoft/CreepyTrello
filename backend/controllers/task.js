@@ -1,5 +1,6 @@
 const Task = require("../models/task");
 const User = require("../models/user");
+const Comment = require("../models/comment");
 const History = require("../models/history");
 const fs = require("fs");
 const path = require("path");
@@ -31,8 +32,8 @@ const createTask = async (req, res) => {
   let assignUser = !req.body.assignedUser ? null : req.body.assignedUser;
   let priority = !req.body.priority ? 1 : req.body.priority;
 
-  if (priority < 1 || priority > 5)
-    return res.status(400).send("Error: priority must be in a range of 1 to 5");
+  if (priority < 1 || priority > 3)
+    return res.status(400).send("Error: priority must be in a range of 1 to 3");
 
   const task = new Task({
     userId: req.user._id,
@@ -63,18 +64,12 @@ const createTask = async (req, res) => {
 
 const listTask = async (req, res) => {
   //puede llegar una imagen y un usuario asignado
-  const task = await Task.find({ sprintId: req.params.sprintId });
+  const task = await Task.find({ sprintId: req.params.sprintId })
+  .sort('-priority')
+  .sort('date')
+  .exec();
   if (!task || task.length == 0)
     return res.status(400).send({msg: "This Sprint haven't assigned task"});
-
-  let history = new History({
-    userId: req.user._id,
-    actionType: "Listed Task",
-  });
-
-  let resultHistory = await history.save();
-  if (!resultHistory) console.log("failed to create history task");
-  //console.log(resultHistory);
 
   return res.status(200).send({ task });
 };
@@ -131,10 +126,19 @@ const updateTask = async (req, res) => {
     priority = tempPriority.priority;
   } else {
     priority = req.body.priority;
-    if (priority < 1 || priority > 5)
+    if (priority < 1 || priority > 3)
       return res
         .status(400)
-        .send("Error: priority must be in a range of 1 to 5");
+        .send("Error: priority must be in a range of 1 to 3");
+  }
+
+
+  let sprintId;
+  if (!req.body.sprintId) {
+    let tempSprintId = await Task.findOne({ _id: req.body.sprintId });
+    sprintId = tempSprintId.sprintId;
+  } else {
+    sprintId = req.body.sprintId;
   }
 
   const task = await Task.findByIdAndUpdate(req.body._id, {
@@ -145,6 +149,7 @@ const updateTask = async (req, res) => {
     imgUrl: imageUrl,
     assignedUser: assignUser,
     priority: priority,
+    sprintId: sprintId,
   });
 
   if (!task) return res.status(400).send("Task not found");
@@ -179,10 +184,15 @@ const deleteTask = async (req, res) => {
   if (!validId) return res.status(400).send("Invalid id");
 
   let taskImg = await Task.findById(req.params._id);
+  if (!taskImg) return res.status(400).send("Task not found");
   taskImg = taskImg.imgUrl;
   taskImg = taskImg.split("/")[4];
   let serverImg = "./uploads/" + taskImg;
 
+  //buscamos y eliminamos los comentarios
+  let CommentFoundToDeleted = await Comment.deleteMany({taskId: req.params._id});
+  if(!CommentFoundToDeleted) return res.status(400).send('Error to delete associated comments');
+  //eliminamos la tarea
   const task = await Task.findByIdAndDelete(req.params._id);
   if (!task) return res.status(400).send("Task not found");
 
@@ -231,7 +241,6 @@ const assignUser = async (req, res) => {
 
   let resultHistory = await history.save();
   if (!resultHistory) console.log("failed to create history task");
-  //console.log(resultHistory);
 
   return res.status(200).send({msg: "Task assigned successfully"});
 };

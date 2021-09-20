@@ -4,7 +4,8 @@
   "description": "Backend CreepyTrello",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "test": "nodemon index.js"
   },
   "author": "@CreepyCoders",
   "license": "ISC",
