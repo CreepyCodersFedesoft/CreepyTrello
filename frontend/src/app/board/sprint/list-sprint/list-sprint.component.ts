@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { formatDate } from '@angular/common';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UtilitiesService } from 'src/app/services/utilities.service';
@@ -8,7 +7,17 @@ import { CreateTaskComponent } from '../../task/create-task/create-task.componen
 import { CreateSprintComponent } from '../create-sprint/create-sprint.component';
 import swal from 'sweetalert2';
 import { BoardService } from 'src/app/services/board.service';
+import { UserService } from 'src/app/services/user.service';
 import { UpdateSprintComponent } from '../update-sprint/update-sprint.component';
+
+//cHIPS
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { FormControl } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+//END CHIPS
 
 @Component({
   selector: 'app-list-sprint',
@@ -23,27 +32,47 @@ export class ListSprintComponent implements OnInit {
   boardId: any;
   message: string;
 
+  //CHIPS variables utilizadas en chips
+  selectable = true;
+  removable = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  emailCtrl = new FormControl();
+  filteredEmails: Observable<string[]>;
+  emails: string[] = [];
+  allMails: string[] = [];
+  @ViewChild('emailInput') emailInput!: ElementRef<HTMLInputElement>;
+  //CHIPS
+
   constructor(
     private _sprintService: SprintService,
     private _router: Router,
     private _activeRoute: ActivatedRoute,
     private _matDialog: MatDialog,
     private _utilitiesService: UtilitiesService,
-    private _boardService: BoardService
+    private _boardService: BoardService,
+    private _userService: UserService,
   ) {
     this.sprintData = {};
     this.boardData = {};
     this.sprintId = null;
     this.boardId = null;
     this.message = '';
+
+    this.filteredEmails = this.emailCtrl.valueChanges.pipe(
+      startWith(null),
+      map((mail: string | null) =>
+      mail ? this._filter(mail) : this.allMails.slice()
+      )
+    );
   }
 
   ngOnInit(): void {
     let now = new Date();
     
     this.chargeBoard();
+    this.getMails();
     this._sprintService.listSprints.subscribe((res) => {
-      let anyArray: any[] = res.sprint
+      let anyArray: any[] = res.sprint;
       for (const i in anyArray) {
         let start = new Date(anyArray[i].startDate)
         let end = new Date(anyArray[i].endDate)
@@ -148,4 +177,58 @@ export class ListSprintComponent implements OnInit {
     }
   }
 
+  //CHIPS METHODS
+  getMails(){
+    this._userService
+      .getAllEmails()
+      .subscribe(
+        (res) => {
+          for (let mail of res.user){
+            this.allMails.push(mail.email); 
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      ); 
+  }
+
+  add(event: MatChipInputEvent): void {
+
+    const value = (event.value || '').trim().toLowerCase();
+
+    // Add our mail
+    if (value) {
+      this.emails.push(value);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+    this.emailCtrl.setValue(null);
+  }
+
+  remove(mail: string): void {
+    const index = this.emails.indexOf(mail);
+    if (index >= 0) {
+      this.emails.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    var index = this.emails.indexOf(event.option.viewValue.trim().toLowerCase());
+    if(index === -1){
+      this.emails.push(event.option.viewValue);
+    }
+    this.emailInput.nativeElement.value = '';
+    this.emailCtrl.setValue(null);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allMails.filter((mail) =>
+      mail.toLowerCase().includes(filterValue)
+    );
+  }
+  //END CHIPS METHODS
 }

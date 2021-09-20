@@ -144,19 +144,31 @@ const getRole = async (req, res) => {
     .populate("roleId")
     .exec();
   if (!user || user.length === 0)
-    return res.status(400).send("Error: User no found");
+    return res.status(400).send("Error: User not found");
   const role = user.roleId.name;
   return res.status(200).send({ role });
 };
 const getEmail = async (req, res) => {
   const user = await User.findOne({ _id: req.user._id });
   if (!user || user.length === 0)
-    return res.status(400).send("Error: User no found");
+    return res.status(400).send("Error: User not found");
   const email = user.email;
   const name = user.name;
   const userImg = user.userImg;
   return res.status(200).send({ name, email, userImg });
 };
+
+const getAllEmails = async (req, res) => {
+  const user = await User.find({
+    $and: [{ dbStatus: "true" }],
+  }, { email: 1, _id: 0 });
+  if (!user || user.length === 0)
+    return res.status(400).send("Error: User not found.");
+
+  return res.status(200).send({ user });
+};
+
+
 const getNameAndImage = async (req, res) => {
   const user = await User.findOne({ _id: req.params._id });
   if (!user || user.length === 0)
@@ -339,6 +351,7 @@ module.exports = {
   getRole,
   getEmail,
   activateUser,
+  getAllEmails,
   getUserById,
   uptdateUserByAdmin,
   getNameAndImage,
