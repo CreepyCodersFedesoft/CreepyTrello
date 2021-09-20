@@ -1,4 +1,5 @@
 const Comment = require("../models/comment");
+const Task = require('../models/task');
 
 const createComment = async (req, res) => {
   if (!req.body.taskId || !req.body.text)
@@ -12,6 +13,14 @@ const createComment = async (req, res) => {
 
   const result = await comment.save();
   if (!result) return res.status(400).send("Error registering comment");
+
+  let taskTemp = await Task.findByIdAndUpdate(req.body.taskId, {
+    $inc: { 
+      countComments: + 1
+    }
+  });
+  if(!taskTemp) return res.status(400).send({msg: 'comment added'});
+
   return res.status(200).send({ result });
 };
 

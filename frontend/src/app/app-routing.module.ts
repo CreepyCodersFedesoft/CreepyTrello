@@ -17,14 +17,15 @@ import { UpdateUserComponent } from './home/update-user/update-user.component';
 import { TaskDetailsComponent } from "./board/task/task-details/task-details.component";
 import { InviteUserBoardComponent } from './board/invite-user-board/invite-user-board.component';
 import { LogTaskComponent } from './board/task/log-task/log-task.component';
+import { AuthGuard } from './guard/auth.guard';
 
 
 
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent,
-    pathMatch: 'full',
+    component: ListBoardComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'login',

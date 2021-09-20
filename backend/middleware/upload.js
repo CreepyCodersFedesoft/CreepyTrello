@@ -1,11 +1,7 @@
 const upload = async (req, res, next) => {
-  if (!req.files.image) {
-    next();
-  } 
   if (req.files.image === undefined) {
     next();
-  }
-  else {
+  } else {
     if (req.files.image.type === null) {
       next();
     } else {
