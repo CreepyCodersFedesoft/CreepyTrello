@@ -48,7 +48,6 @@ export class UserService {
   }
 
   createUser(user: any) {
-    console.log(user);
     return this._http.post<any>(this.env + 'user/createUser', user);
   }
 
@@ -59,6 +58,11 @@ export class UserService {
   getRole(email: string) {
     return this._http.get<any>(this.env + 'user/getRole/' + email);
   }  
+
+  getAllEmails(){
+    return this._http.get<any>(this.env + 'user/getAllEmails');
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');

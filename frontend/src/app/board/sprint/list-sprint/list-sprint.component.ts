@@ -7,6 +7,7 @@ import { CreateTaskComponent } from '../../task/create-task/create-task.componen
 import { CreateSprintComponent } from '../create-sprint/create-sprint.component';
 import swal from 'sweetalert2';
 import { BoardService } from 'src/app/services/board.service';
+import { UserService } from 'src/app/services/user.service';
 import { UpdateSprintComponent } from '../update-sprint/update-sprint.component';
 
 //cHIPS
@@ -35,11 +36,11 @@ export class ListSprintComponent implements OnInit {
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
-  @ViewChild('fruitInput') fruitInput!: ElementRef<HTMLInputElement>;
+  emailCtrl = new FormControl();
+  filteredEmails: Observable<string[]>;
+  emails: string[] = [];
+  allMails: string[] = [];
+  @ViewChild('emailInput') emailInput!: ElementRef<HTMLInputElement>;
   //CHIPS
 
   constructor(
@@ -48,7 +49,8 @@ export class ListSprintComponent implements OnInit {
     private _activeRoute: ActivatedRoute,
     private _matDialog: MatDialog,
     private _utilitiesService: UtilitiesService,
-    private _boardService: BoardService
+    private _boardService: BoardService,
+    private _userService: UserService,
   ) {
     this.sprintData = {};
     this.boardData = {};
@@ -56,16 +58,17 @@ export class ListSprintComponent implements OnInit {
     this.boardId = null;
     this.message = '';
 
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+    this.filteredEmails = this.emailCtrl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) =>
-        fruit ? this._filter(fruit) : this.allFruits.slice()
+      map((mail: string | null) =>
+      mail ? this._filter(mail) : this.allMails.slice()
       )
     );
   }
 
   ngOnInit(): void {
     this.chargeBoard();
+    this.getMails();
     this._sprintService.listSprints.subscribe((res) => {
       let anyArray: any[] = res.sprint;
       for (const i in anyArray) {
@@ -157,39 +160,58 @@ export class ListSprintComponent implements OnInit {
     }
   }
 
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
+  //CHIPS METHODS
+  getMails(){
+    this._userService
+      .getAllEmails()
+      .subscribe(
+        (res) => {
+          for (let mail of res.user){
+            this.allMails.push(mail.email); 
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      ); 
+  }
 
-    // Add our fruit
+  add(event: MatChipInputEvent): void {
+
+    const value = (event.value || '').trim().toLowerCase();
+
+    // Add our mail
     if (value) {
-      this.fruits.push(value);
+      this.emails.push(value);
     }
 
     // Clear the input value
     event.chipInput!.clear();
-
-    this.fruitCtrl.setValue(null);
+    this.emailCtrl.setValue(null);
   }
 
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
-
+  remove(mail: string): void {
+    const index = this.emails.indexOf(mail);
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.emails.splice(index, 1);
     }
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
+    var index = this.emails.indexOf(event.option.viewValue.trim().toLowerCase());
+    if(index === -1){
+      this.emails.push(event.option.viewValue);
+    }
+    this.emailInput.nativeElement.value = '';
+    this.emailCtrl.setValue(null);
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.allFruits.filter((fruit) =>
-      fruit.toLowerCase().includes(filterValue)
+    return this.allMails.filter((mail) =>
+      mail.toLowerCase().includes(filterValue)
     );
   }
+  //END CHIPS METHODS
 }

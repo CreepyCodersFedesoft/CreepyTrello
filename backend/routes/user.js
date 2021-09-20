@@ -15,6 +15,7 @@ router.get('/listUserAll/:name?', auth, validateUser, UserController.listUserAll
 router.get('/activateUser/:email?',  UserController.activateUser);
 router.get('/getRole/:email?', auth, validateUser, UserController.getRole);
 router.get('/getEmail', auth, validateUser, UserController.getEmail);
+router.get('/getAllEmails', auth, validateUser, UserController.getAllEmails);
 router.put('/updateUser', mult, Upload, auth, validateUser, UserController.updateUser);//actualiza el propio usuario y no todos, por ello no va con admin
 router.put('/deleteUser', auth, validateUser, admin, UserController.deleteUser);
 
