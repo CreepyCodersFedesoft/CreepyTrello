@@ -45,6 +45,9 @@ export class UserService {
   getEmail() {
     return this._http.get<any>(this.env + 'user/getEmail');
   }
+  getNameAndImage(user: string) {
+    return this._http.get<any>(this.env + 'user/getNameAndImage/' + user);
+  }
   updateUser(user: any) {
     return this._http.put<any>(this.env + 'user/updateUser', user);
   } 

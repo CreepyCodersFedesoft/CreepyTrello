@@ -15,7 +15,8 @@ router.get('/getUserById/:_id', auth, admin, validateUser, UserController.getUse
 router.get('/listUserAll/:name?', auth, validateUser, UserController.listUserAll);
 router.get('/activateUser/:email?',  UserController.activateUser);
 router.get('/getRole/:email?', auth, validateUser, UserController.getRole);
-router.get('/getEmail', auth, validateUser, UserController.getEmail);
+router.get('/getEmail', auth, validateUser, UserController.getEmail);//no debe ir con admin
+router.get('/getNameAndImage/:_id', auth, validateUser, UserController.getNameAndImage);//no debe ir con admin
 router.put('/updateUser', mult, Upload, auth, validateUser, UserController.updateUser);//actualiza el propio usuario y no todos, por ello no va con admin
 router.put('/deleteUser', auth, validateUser, admin, UserController.deleteUser);
 router.put('/updateUserByAdmin', mult, Upload, auth, validateUser, admin, UserController.uptdateUserByAdmin);
