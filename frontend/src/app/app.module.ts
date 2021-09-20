@@ -35,7 +35,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
+
+
 
 import { HeaderComponent } from './home/header/header.component';
 import { RegisterComponent } from './home/register/register.component';
@@ -60,7 +62,12 @@ import { TaskDetailsComponent } from './board/task/task-details/task-details.com
 import { InviteUserBoardComponent } from './board/invite-user-board/invite-user-board.component';
 import { AssignTaskComponent } from './board/task/assign-task/assign-task.component';
 
+import { MatChipsModule } from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
+
+
+1
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,6 +90,7 @@ import { AssignTaskComponent } from './board/task/assign-task/assign-task.compon
     TaskDetailsComponent,
     InviteUserBoardComponent,
     AssignTaskComponent,
+    
 
   ],
   imports: [
@@ -114,6 +122,9 @@ import { AssignTaskComponent } from './board/task/assign-task/assign-task.compon
     MatTabsModule,
     MatTooltipModule,
     MatGridListModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    
   ],
   providers: [
     UserService,
@@ -129,6 +140,7 @@ import { AssignTaskComponent } from './board/task/assign-task/assign-task.compon
     TaskService,
     CommentService,
     UtilitiesService,
+    
   ],
   bootstrap: [AppComponent],
 })

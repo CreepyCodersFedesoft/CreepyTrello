@@ -37,6 +37,41 @@ this.show == true
       <mat-icon>{{this.show == true ? 'keyboard_arrow_left': 'keyboard_arrow_right'}}</mat-icon>
     </button> 
     <app-list-task *ngIf="sprintId != null"  [sprintId]="this.sprintId" [boardId]="this.boardData._id"></app-list-task>
+
+<!--inicio-->
+<mat-form-field class="example-chip-list" appearance="fill">
+  <mat-label>Favorite Fruits</mat-label>
+  <mat-chip-list #chipList aria-label="Fruit selection">
+    <mat-chip
+      *ngFor="let fruit of fruits"
+      [selectable]="selectable"
+      [removable]="removable"
+      (removed)="remove(fruit)">
+      {{fruit}}
+      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+    </mat-chip>
+
+    <input
+      placeholder="New fruit..."
+      #fruitInput
+      [formControl]="fruitCtrl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="add($event)">    
+
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+      {{fruit}}
+    </mat-option>  
+  </mat-autocomplete>
+
+</mat-form-field>
+
+<!--FIN-->
+
+
     <div  *ngIf="sprintId == null" >
       <p class="display-5 fw-bold text-center">
         Bienvenido al Board {{boardData.name}}

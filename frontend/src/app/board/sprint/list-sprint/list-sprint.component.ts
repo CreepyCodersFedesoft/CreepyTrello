@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UtilitiesService } from 'src/app/services/utilities.service';
@@ -8,6 +8,15 @@ import { CreateSprintComponent } from '../create-sprint/create-sprint.component'
 import swal from 'sweetalert2';
 import { BoardService } from 'src/app/services/board.service';
 import { UpdateSprintComponent } from '../update-sprint/update-sprint.component';
+
+//cHIPS
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { FormControl } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+//END CHIPS
 
 @Component({
   selector: 'app-list-sprint',
@@ -22,6 +31,17 @@ export class ListSprintComponent implements OnInit {
   boardId: any;
   message: string;
 
+  //CHIPS variables utilizadas en chips
+  selectable = true;
+  removable = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  fruitCtrl = new FormControl();
+  filteredFruits: Observable<string[]>;
+  fruits: string[] = ['Lemon'];
+  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  @ViewChild('fruitInput') fruitInput!: ElementRef<HTMLInputElement>;
+  //CHIPS
+
   constructor(
     private _sprintService: SprintService,
     private _router: Router,
@@ -35,12 +55,19 @@ export class ListSprintComponent implements OnInit {
     this.sprintId = null;
     this.boardId = null;
     this.message = '';
+
+    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+      startWith(null),
+      map((fruit: string | null) =>
+        fruit ? this._filter(fruit) : this.allFruits.slice()
+      )
+    );
   }
 
   ngOnInit(): void {
     this.chargeBoard();
     this._sprintService.listSprints.subscribe((res) => {
-      let anyArray: any[] = res.sprint
+      let anyArray: any[] = res.sprint;
       for (const i in anyArray) {
         anyArray[i].sprintOptions = false;
       }
@@ -128,5 +155,41 @@ export class ListSprintComponent implements OnInit {
       swal.fire('Proceso Exitoso', '¡Sprint eliminado con existo!', 'success');
       this._sprintService.updateListSprints(this.boardData._id);
     }
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our fruit
+    if (value) {
+      this.fruits.push(value);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+
+    this.fruitCtrl.setValue(null);
+  }
+
+  remove(fruit: string): void {
+    const index = this.fruits.indexOf(fruit);
+
+    if (index >= 0) {
+      this.fruits.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.fruits.push(event.option.viewValue);
+    this.fruitInput.nativeElement.value = '';
+    this.fruitCtrl.setValue(null);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allFruits.filter((fruit) =>
+      fruit.toLowerCase().includes(filterValue)
+    );
   }
 }
