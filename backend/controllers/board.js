@@ -41,7 +41,7 @@ const createBoard = async (req, res) => {
 const listBoard = async (req, res) => {
   const board = await Board.find({
     $or: [{ userId: req.user._id }, { userList: req.user._id }],
-  });
+  }).populate("userId").exec();
   if (!board || board.length === 0)
     return res.status(400).send("You do not have any board");
   return res.status(200).send({ board });
