@@ -1,7 +1,59 @@
 <div class="container-fluid contentTask overflow-auto w-100 at-5">
   
   <div class="row">
-    <h2 class="text-center">Proceso de las Tareas</h2>
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4">
+      <h2 class="text-center pt-2">Proceso de las Tareas</h2>
+
+    </div>
+    <div class="col-md-4 text-center">
+      <button mat-button (click)="filterUnAssignedFunction()" class="d-inline">
+        <mat-icon> {{filterUnAssigned == false ? 'filter_list': 'done'}} </mat-icon>
+        {{filterUnAssigned == false ? 'Todas': 'Sin asignar'}}
+      </button>
+      <button mat-button (click)="searchActive = !searchActive" class="d-inline">
+        <mat-icon> {{searchActive == false ? 'search': 'done'}} </mat-icon>
+        Buscar
+      </button>
+      <button mat-button (click)="priorityFilterActive = !priorityFilterActive;" class="d-inline">
+        <mat-icon> {{priorityFilterActive == false ? 'priority_high': 'done'}}</mat-icon>
+        Prioridad
+      </button>
+      <div *ngIf="priorityFilterActive">
+        <button mat-button (click)="priorityFilterFuncion(null)" class="d-inline">
+          <mat-icon> priority_high </mat-icon>
+          Ninguno
+        </button>
+        <button mat-button (click)="priorityFilterFuncion(1)" class="d-inline">
+          <mat-icon> priority_high </mat-icon>
+          1
+        </button>
+        <button mat-button (click)="priorityFilterFuncion(2)" class="d-inline">
+          <mat-icon> priority_high </mat-icon>
+          2
+        </button>
+        <button mat-button (click)="priorityFilterFuncion(3)" class="d-inline">
+          <mat-icon> priority_high </mat-icon>
+          3
+        </button>
+      </div>
+      <input
+        *ngIf="searchActive"
+        type="text"
+        mat-input
+        class="bgInput form-control text-center rounded-0 border-0 my-2"
+        placeholder="Busca Tus Boards"
+        autofocus
+      />
+      <!--
+      (keyup)="filteredWords()"
+      [(ngModel)]="textFiltered"
+      -->
+      
+    </div>
+    
   </div>
   <div class="row">
     <div class="col-lg-4 text-center font-weight-bold">

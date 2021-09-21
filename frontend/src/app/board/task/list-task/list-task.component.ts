@@ -25,11 +25,22 @@ export class ListTaskComponent implements OnInit{
   @Input() sprintId: any = null;
   @Input() boardId: any = null;
 
-  taskData1: string[] = [];
+  //friltros
+  filterUnAssigned: boolean = false;
+  searchActive: boolean = false;
+  priorityFilterActive: boolean = false;
+  priorityFilter: any = null;
+  searchText: string = '';
+  allDataFiltered: any[] = [];
+
+  //datos de los estados
   allData: any[];
   taskData: any[];
   taskData2: any[];
   taskData3: any[];
+
+  //varios
+  taskData1: string[] = [];
   message: string = '';
   commentInput = '';
   open = false;
@@ -49,27 +60,8 @@ export class ListTaskComponent implements OnInit{
   ngOnInit(): void {
     this._taskService.listTasks.subscribe(
       (res) => {
-        this.taskData = [];
-        this.taskData2 = [];
-        this.taskData3 = [];
-
-        this.allData = res
-        this.allData.forEach(tData => {
-          tData.visibleComments = false;
-          tData.visibleDescription = false;
-          tData.visibleAssign = false;          
-          
-          if(tData.taskStatus === 'to-do'){
-            this.taskData.push(tData);
-          }
-          if(tData.taskStatus === 'in-progress'){
-            this.taskData2.push(tData);
-          }
-          if(tData.taskStatus === 'done'){
-            this.taskData3.push(tData);
-          }                    
-          
-        });
+        this.allData = res;
+        this.chargeData();
       },
       (err) => {
         this._utilitiesService.openSnackBarError(err.msg);
@@ -77,8 +69,87 @@ export class ListTaskComponent implements OnInit{
     );
   }
 
+  chargeData(){
+    this.taskData = [];
+    this.taskData2 = [];
+    this.taskData3 = [];
+
+    this.allData.forEach(tData => {
+      tData.visibleComments = false;
+      tData.visibleDescription = false;
+      tData.visibleAssign = false;          
+      
+      if(this.filterUnAssigned && this.priorityFilterActive && this.priorityFilter != null){
+        if(tData.taskStatus === 'to-do' && 
+          tData.assignedUser == null &&
+          tData.priority == this.priorityFilter
+        ){
+          this.taskData.push(tData);
+        }
+        if(tData.taskStatus === 'in-progress' && 
+          tData.assignedUser == null &&
+          tData.priority == this.priorityFilter
+        ){
+          this.taskData2.push(tData);
+        }
+        if(tData.taskStatus === 'done' && 
+          tData.assignedUser == null &&
+          tData.priority == this.priorityFilter
+        ){
+          this.taskData3.push(tData);
+        }  
+      } else if(this.filterUnAssigned){
+        if(tData.taskStatus === 'to-do' && tData.assignedUser == null){
+          this.taskData.push(tData);
+        }
+        if(tData.taskStatus === 'in-progress' && tData.assignedUser == null){
+          this.taskData2.push(tData);
+        }
+        if(tData.taskStatus === 'done' && tData.assignedUser == null){
+          this.taskData3.push(tData);
+        }  
+      } else if (this.priorityFilterActive && this.priorityFilter != null) {
+        if(tData.taskStatus === 'to-do' && 
+          tData.priority == this.priorityFilter
+        ){
+          this.taskData.push(tData);
+        }
+        if(tData.taskStatus === 'in-progress' && 
+          tData.priority == this.priorityFilter
+        ){
+          this.taskData2.push(tData);
+        }
+        if(tData.taskStatus === 'done' && 
+          tData.priority == this.priorityFilter
+        ){
+          this.taskData3.push(tData);
+        }  
+      } else {
+        if(tData.taskStatus === 'to-do'){
+          this.taskData.push(tData);
+        }
+        if(tData.taskStatus === 'in-progress'){
+          this.taskData2.push(tData);
+        }
+        if(tData.taskStatus === 'done'){
+          this.taskData3.push(tData);
+        }
+      }      
+    });
+  }
+
+  priorityFilterFuncion(prioritySelected: any){
+    this.priorityFilter = prioritySelected;
+    this.chargeData();
+  }
+
+  filterUnAssignedFunction(){
+    this.filterUnAssigned = !this.filterUnAssigned;
+    this.chargeData();
+  }
+
   ngOnChanges(): void {
-    this._taskService.updateListTask(this.sprintId); 
+    this._taskService.updateListTask(this.sprintId);
   }
 
   updateTask(task: any, status: string) {   
@@ -116,8 +187,6 @@ export class ListTaskComponent implements OnInit{
         if (index > -1) {
           this.taskData.splice(index, 1);
           this.message = res.message;
-
-          console.log('la tas tiene' + task);
         }
       },
       (err) => {
@@ -128,10 +197,7 @@ export class ListTaskComponent implements OnInit{
   }
 
   drop(event: CdkDragDrop<any[]>) {
-    //console.log(event);
-    //console.log(event.item.data, 'status: '+ event.container.id);
     
-
     if (event.previousContainer === event.container) {
       //Dentro del mismo contenedor
       moveItemInArray(
