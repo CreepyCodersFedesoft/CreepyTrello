@@ -61,6 +61,7 @@ export class ListTaskComponent implements OnInit{
     this._taskService.listTasks.subscribe(
       (res) => {
         this.allData = res;
+        this.allDataFiltered = res;
         this.chargeData();
       },
       (err) => {
@@ -74,7 +75,7 @@ export class ListTaskComponent implements OnInit{
     this.taskData2 = [];
     this.taskData3 = [];
 
-    this.allData.forEach(tData => {
+    this.allDataFiltered.forEach(tData => {
       tData.visibleComments = false;
       tData.visibleDescription = false;
       tData.visibleAssign = false;          
@@ -215,16 +216,7 @@ export class ListTaskComponent implements OnInit{
       );      
     }
     
-    //actualizamos el estado de la tarea
     this.updateTask(event.item.data, event.container.id);
-
-    //console.log(event.item.data, 'status: '+ event.container.id);
-    /*
-    aqui se deben actualizar la listas
-    console.log('this.taskData ->', this.taskData);
-    console.log('this.taskData2 ->', this.taskData2);
-    console.log('this.taskData2 ->', this.taskData3);
-    */
   }
 
   onCreate() {
@@ -247,5 +239,18 @@ export class ListTaskComponent implements OnInit{
     matDialog.width = '90%';
     matDialog.height = '90%';
     this._matDialog.open(TaskDetailsComponent, matDialog);
+  }
+
+  filteredWords() {
+    this.allDataFiltered = this.allData.filter(
+      (tData) =>
+        tData.title
+          .toLocaleLowerCase()
+          .includes(this.searchText.toLocaleLowerCase()) ||
+        tData.description
+          .toLocaleLowerCase()
+          .includes(this.searchText.toLocaleLowerCase())
+    );
+    this.chargeData();    
   }
 }

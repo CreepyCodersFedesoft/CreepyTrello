@@ -45,11 +45,12 @@
         mat-input
         class="bgInput form-control text-center rounded-0 border-0 my-2"
         placeholder="Busca Tus Boards"
+        (keyup)="filteredWords()"
+        [(ngModel)]="searchText"
         autofocus
       />
       <!--
-      (keyup)="filteredWords()"
-      [(ngModel)]="textFiltered"
+      
       -->
       
     </div>
