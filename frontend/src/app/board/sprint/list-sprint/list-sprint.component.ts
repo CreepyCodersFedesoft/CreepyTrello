@@ -155,9 +155,9 @@ export class ListSprintComponent implements OnInit {
     this._matDialog.open(CreateTaskComponent, {
       data: { sprintId, boardId },
       autoFocus: true,
-      panelClass: [''],
-      width: '400px',
-      height: '400px',
+      panelClass: ['dialog'],
+      width: '500px',
+      height: '470px',
     });
     //this.chargeSprint(sprintId);
   }
