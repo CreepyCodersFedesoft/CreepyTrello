@@ -23,6 +23,7 @@ img{
   border-radius: 10%;
   border: 2px solid #ffca6f;
   cursor: pointer;
+  text-align: start;
 }
 
 .title{
@@ -47,5 +48,17 @@ img {
 }
 
 .title-card {
-  min-height: 70px;
+  width: 100%;
+  min-height: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.name {
+  width: 90%;
+  position: absolute;
+}
+
+.top {
+  width: 10%;
 }
