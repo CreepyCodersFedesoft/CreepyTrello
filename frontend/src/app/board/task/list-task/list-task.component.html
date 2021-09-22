@@ -142,7 +142,7 @@
           </div>
           <!-- Aquí va el contenido de los componentes añadidos -->
           <div *ngIf="task.visibleComments">
-            <app-list-comments [taskId]="task._id"></app-list-comments>
+            <app-list-comments [taskId]="task._id" (newComment)="onNewComment(task)"></app-list-comments>
           </div>
           <div *ngIf="task.visibleAssign">
             <app-assign-task
@@ -251,7 +251,7 @@
           </div>
           <!-- Aquí va el contenido de los componentes añadidos -->
           <div *ngIf="task.visibleComments">
-            <app-list-comments [taskId]="task._id"></app-list-comments>
+            <app-list-comments [taskId]="task._id" (newComment)="onNewComment(task)"></app-list-comments>
           </div>
           <div *ngIf="task.visibleAssign">
             <app-assign-task
@@ -360,7 +360,7 @@
           </div>
           <!-- Aquí va el contenido de los componentes añadidos -->
           <div *ngIf="task.visibleComments">
-            <app-list-comments [taskId]="task._id"></app-list-comments>
+            <app-list-comments [taskId]="task._id" (newComment)="onNewComment(task)"></app-list-comments>
           </div>
           <div *ngIf="task.visibleAssign">
             <app-assign-task
