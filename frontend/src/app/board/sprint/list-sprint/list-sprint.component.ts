@@ -171,9 +171,15 @@ export class ListSprintComponent implements OnInit {
     );
 
     if (result.isConfirmed) {
-      this._sprintService.deleteSprint(this.sprintId).subscribe();
-      this._utilitiesService.SweetAlert('Proceso Exitoso', 'Board eliminado con existo!', 'success');
-      this._sprintService.updateListSprints(this.boardData._id);
+      this._sprintService.deleteSprint(this.sprintId).subscribe(
+        (res) => {
+          this._utilitiesService.SweetAlert('Proceso Exitoso', 'Board eliminado con existo!', 'success');
+          this._sprintService.updateListSprints(this.boardData._id);
+        },
+        (err) => {
+          this._utilitiesService.openSnackBarError(err.error);
+        }
+      );
     }
   }
 
