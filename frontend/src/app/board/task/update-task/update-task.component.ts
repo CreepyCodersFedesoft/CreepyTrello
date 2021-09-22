@@ -25,6 +25,7 @@ export class UpdateTaskComponent implements OnInit {
     public data: {
       taskId: any;
       taskStatus: any;
+      sprintId:any
     }
   ) {
     this.registerData = {};
@@ -74,7 +75,8 @@ export class UpdateTaskComponent implements OnInit {
       data.append('taskStatus', this.data.taskStatus);
 
       this._taskService.updateTask(data).subscribe(
-        (res) => {
+        (res) => {          
+          this._taskService.updateListTask(this.data.sprintId);
           this._utilitiesService.openSnackBarSuccesfull(
             'Successfull update task'
           );

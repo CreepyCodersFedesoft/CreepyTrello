@@ -265,8 +265,9 @@ export class ListTaskComponent implements OnInit{
   }
 
   updateTask2(taskId: any, taskStatus: any) {
+    let sprintId = this.sprintId
     this._matDialog.open(UpdateTaskComponent, {
-      data: { taskId, taskStatus },
+      data: { taskId, taskStatus, sprintId },
       autoFocus: true,
       panelClass: [''],
       width: '400px',
