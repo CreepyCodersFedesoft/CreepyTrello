@@ -73,6 +73,10 @@ export class ListTaskComponent implements OnInit{
     );
   }
 
+  onNewComment(task:any){
+    task.countComments += 1;
+  }
+
   chargeData(){
     this.taskData = [];
     this.taskData2 = [];

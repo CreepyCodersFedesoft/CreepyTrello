@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommentService } from 'src/app/services/comment.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 
@@ -10,6 +10,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 })
 export class ListCommentsComponent implements OnInit {
   @Input() taskId: string = "";
+  @Output() newComment = new EventEmitter();
 
   commentData: any;
 
@@ -35,6 +36,7 @@ export class ListCommentsComponent implements OnInit {
     );
   }
   onCreateComment(){
+    this.newComment.emit();
     this.chargeComment();
   }
 
