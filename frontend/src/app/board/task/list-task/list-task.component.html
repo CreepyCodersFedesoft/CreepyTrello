@@ -44,7 +44,7 @@
         type="text"
         mat-input
         class="bgInput form-control text-center rounded-0 border-0 my-2"
-        placeholder="Busca Tus Boards"
+        placeholder="Busca Tus Tareas"
         (keyup)="filteredWords()"
         [(ngModel)]="searchText"
         autofocus
@@ -85,7 +85,7 @@
               <mat-icon>details</mat-icon>
               <span>Detalles</span>
             </button>
-            <button mat-menu-item>
+            <button (click)="updateTask2(task._id, task.taskStatus)" mat-menu-item>
               <mat-icon>edit</mat-icon>
               <span>Editar</span>
             </button>
@@ -193,7 +193,7 @@
               <mat-icon>details</mat-icon>
               <span>Detalles</span>
             </button>
-            <button mat-menu-item>
+            <button (click)="updateTask2(task._id, task.taskStatus)" mat-menu-item>
               <mat-icon>edit</mat-icon>
               <span>Editar</span>
             </button>
@@ -303,7 +303,7 @@
               <mat-icon>details</mat-icon>
               <span>Detalles</span>
             </button>
-            <button mat-menu-item>
+            <button (click)="updateTask2(task._id, task.taskStatus)" mat-menu-item>
               <mat-icon>edit</mat-icon>
               <span>Editar</span>
             </button>

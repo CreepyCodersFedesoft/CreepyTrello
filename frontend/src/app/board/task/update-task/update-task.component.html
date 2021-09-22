@@ -1,0 +1,54 @@
+<div class="bgComponent">
+  <div class="form">
+    <mat-card class="card">
+      <mat-card-title>Actualizar Tarea</mat-card-title>
+      <mat-card-content>
+        <div class="container">
+          <mat-form-field>
+            <input
+              [(ngModel)]="registerData.title"
+              matInput
+              placeholder="Task title"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              [(ngModel)]="registerData.description"
+              matInput
+              placeholder="Description"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Choose sprint</mat-label>
+            <mat-select [(ngModel)]="registerData.sprintId">
+              <mat-option *ngFor="let sprint of sprints" [value]="sprint._id">{{
+                sprint.title
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-100" appearance="fill">
+            <mat-label>Prioridad</mat-label>
+            <mat-select [(ngModel)]="registerData.priority" required>
+              <mat-option value="1"> 1 </mat-option>
+              <mat-option value="2"> 2 </mat-option>
+              <mat-option value="3"> 3 </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <input type="file" (change)="uploadImg($event)" />
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button
+          (click)="updateTask(); onClose()"
+          class="button"
+          mat-raised-button
+        >
+          Actualizar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
