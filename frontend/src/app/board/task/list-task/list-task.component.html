@@ -117,8 +117,12 @@
               <mat-icon class="icon px-4">description</mat-icon>
             </button>            
             <button mat-icon-button class="mt-1">
-              <mat-icon class="icon" style="padding-right: 0px !important"
-                >priority_high</mat-icon
+              <mat-icon *ngIf="changeHigh(task.priority)" class="icon" style="padding-right: 0px !important"
+                >trending_up</mat-icon
+              ><mat-icon *ngIf="changeMedium(task.priority)" class="icon" style="padding-right: 0px !important"
+                >trending_flat</mat-icon
+              ><mat-icon *ngIf="changeLow(task.priority)" class="icon" style="padding-right: 0px !important"
+                >trending_down</mat-icon
               >
               <small class="px-0">{{ task.priority }}</small>
             </button>
@@ -222,9 +226,13 @@
               <mat-icon class="icon px-4">description</mat-icon>
             </button>            
             <button mat-icon-button class="mt-1">
-              <mat-icon class="icon" style="padding-right: 0px !important">
-                priority_high
-              </mat-icon>
+              <mat-icon *ngIf="changeHigh(task.priority)" class="icon" style="padding-right: 0px !important"
+                >trending_up</mat-icon
+              ><mat-icon *ngIf="changeMedium(task.priority)" class="icon" style="padding-right: 0px !important"
+                >trending_flat</mat-icon
+              ><mat-icon *ngIf="changeLow(task.priority)" class="icon" style="padding-right: 0px !important"
+                >trending_down</mat-icon
+              >
               <small class="px-0">{{ task.priority }}</small>
             </button>
             <button mat-icon-button class="mt-1">
@@ -327,8 +335,12 @@
               <mat-icon class="icon px-4">description</mat-icon>
             </button>            
             <button mat-icon-button class="mt-1">
-              <mat-icon class="icon" style="padding-right: 0px !important"
-                >priority_high</mat-icon
+              <mat-icon *ngIf="changeHigh(task.priority)" class="icon" style="padding-right: 0px !important"
+                >trending_up</mat-icon
+              ><mat-icon *ngIf="changeMedium(task.priority)" class="icon" style="padding-right: 0px !important"
+                >trending_flat</mat-icon
+              ><mat-icon *ngIf="changeLow(task.priority)" class="icon" style="padding-right: 0px !important"
+                >trending_down</mat-icon
               >
               <small class="px-0">{{ task.priority }}</small>
             </button>

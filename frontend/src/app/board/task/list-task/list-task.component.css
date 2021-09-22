@@ -140,4 +140,16 @@
   border-radius: 20px;
   border: 0;
 }
+
+.icon-high{
+  color: red;
+}
+
+.icon-medium{
+  color: yellow;
+}
+
+.icon-low{
+  color: blue;
+}
 /*Terminan cambios scrollbar del sidebar */

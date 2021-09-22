@@ -59,7 +59,7 @@ export class ListTaskComponent implements OnInit{
   
   ngOnInit(): void {
     this._taskService.listTasks.subscribe(
-      (res) => {
+      (res) => {        
         this.allData = res;
         this.allDataFiltered = res;
         this.chargeData();
@@ -147,6 +147,18 @@ export class ListTaskComponent implements OnInit{
   filterUnAssignedFunction(){
     this.filterUnAssigned = !this.filterUnAssigned;
     this.chargeData();
+  }
+
+  changeHigh(priority: any){
+    return priority == 3 ? true: false;
+  }
+
+  changeMedium(priority: any){
+    return priority == 2 ? true: false;
+  }
+
+  changeLow(priority: any){
+    return priority == 1 ? true: false;
   }
 
   ngOnChanges(): void {
