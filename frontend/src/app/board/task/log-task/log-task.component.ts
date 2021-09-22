@@ -54,4 +54,21 @@ export class LogTaskComponent implements OnInit {
       }
     );
   }
+
+  list(){
+    this._Arouter.params.subscribe((params) => {
+      this._id = params['_id'];
+      this._taskService.findTask(this._id).subscribe(
+        (res) => {
+          this.registerData = res.task;
+          console.log(this.registerData);
+          
+        },
+        (err) => {
+          this.message = err.error;
+          this._utilitiesService.openSnackBarError(this.message);
+        }
+      );
+    });
+  }
 }

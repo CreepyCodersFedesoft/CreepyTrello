@@ -15,6 +15,7 @@ import {
 import { CreateTaskComponent } from '../create-task/create-task.component';
 import { TaskDetailsComponent} from "../task-details/task-details.component";
 import { Router } from '@angular/router';
+import { UpdateTaskComponent } from "../update-task/update-task.component";
 
 @Component({
   selector: 'app-list-task',
@@ -33,6 +34,7 @@ export class ListTaskComponent implements OnInit{
   message: string = '';
   commentInput = '';
   open = false;
+  taskId: any;
 
   constructor(
     private _taskService: TaskService,
@@ -44,6 +46,7 @@ export class ListTaskComponent implements OnInit{
     this.taskData = [];
     this.taskData2 = [];
     this.taskData3 = [];
+    this.taskId = null;
   }
   
   ngOnInit(): void {
@@ -181,5 +184,21 @@ export class ListTaskComponent implements OnInit{
     matDialog.width = '90%';
     matDialog.height = '90%';
     this._matDialog.open(TaskDetailsComponent, matDialog);
+  }
+
+  chargeTaskId(taskId: any) {
+    this.taskId = taskId;
+  }
+
+  updateTask2(taskId: any, taskStatus: any) {
+    this._matDialog.open(UpdateTaskComponent, {
+      data: { taskId, taskStatus },
+      autoFocus: true,
+      panelClass: [''],
+      width: '400px',
+      height: '500px',
+    });
+    this.chargeTaskId(taskId);
+   
   }
 }
