@@ -153,7 +153,8 @@
             </app-assign-task>
           </div>
           <div *ngIf="task.visibleDescription">
-            <img *ngIf="task.imgUrl !== ''" [src]="task.imgUrl" class="pt-2 img-fluid w-100 h-auto">
+            <img *ngIf="task.imgUrl !== ''" [src]="task.imgUrl" class="pt-2 img-fluid w-100 h-auto" 
+            (click)="modalImg(task.imgUrl)">
             <p type="textarea" class="p-4 fs-4 w-100 bgDescription">{{task.description}}</p>
             <small class="fst-italic">
               Fecha de creación:
