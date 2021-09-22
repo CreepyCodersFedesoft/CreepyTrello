@@ -64,18 +64,12 @@ const createTask = async (req, res) => {
 
 const listTask = async (req, res) => {
   //puede llegar una imagen y un usuario asignado
-  const task = await Task.find({ sprintId: req.params.sprintId });
+  const task = await Task.find({ sprintId: req.params.sprintId })
+  .sort('-priority')
+  .sort('date')
+  .exec();
   if (!task || task.length == 0)
     return res.status(400).send({msg: "This Sprint haven't assigned task"});
-
-  let history = new History({
-    userId: req.user._id,
-    actionType: "Listed Task",
-  });
-
-  let resultHistory = await history.save();
-  if (!resultHistory) console.log("failed to create history task");
-  //console.log(resultHistory);
 
   return res.status(200).send({ task });
 };
@@ -138,6 +132,15 @@ const updateTask = async (req, res) => {
         .send("Error: priority must be in a range of 1 to 3");
   }
 
+
+  let sprintId;
+  if (!req.body.sprintId) {
+    let tempSprintId = await Task.findOne({ _id: req.body.sprintId });
+    sprintId = tempSprintId.sprintId;
+  } else {
+    sprintId = req.body.sprintId;
+  }
+
   const task = await Task.findByIdAndUpdate(req.body._id, {
     userId: req.body.userId,
     title: req.body.title,
@@ -146,6 +149,7 @@ const updateTask = async (req, res) => {
     imgUrl: imageUrl,
     assignedUser: assignUser,
     priority: priority,
+    sprintId: sprintId,
   });
 
   if (!task) return res.status(400).send("Task not found");
@@ -237,7 +241,6 @@ const assignUser = async (req, res) => {
 
   let resultHistory = await history.save();
   if (!resultHistory) console.log("failed to create history task");
-  //console.log(resultHistory);
 
   return res.status(200).send({msg: "Task assigned successfully"});
 };

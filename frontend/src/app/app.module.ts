@@ -35,7 +35,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
+
+
 
 import { HeaderComponent } from './home/header/header.component';
 import { RegisterComponent } from './home/register/register.component';
@@ -61,7 +63,12 @@ import { InviteUserBoardComponent } from './board/invite-user-board/invite-user-
 import { AssignTaskComponent } from './board/task/assign-task/assign-task.component';
 import { UpdateUserAdminComponent } from './admin/update-user-admin/update-user-admin.component';
 
+import { MatChipsModule } from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
+
+
+1
 @NgModule({
   declarations: [
     AppComponent,
@@ -85,6 +92,7 @@ import { UpdateUserAdminComponent } from './admin/update-user-admin/update-user-
     InviteUserBoardComponent,
     AssignTaskComponent,
     UpdateUserAdminComponent,
+
 
   ],
   imports: [
@@ -116,6 +124,9 @@ import { UpdateUserAdminComponent } from './admin/update-user-admin/update-user-
     MatTabsModule,
     MatTooltipModule,
     MatGridListModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    
   ],
   providers: [
     UserService,
@@ -131,6 +142,7 @@ import { UpdateUserAdminComponent } from './admin/update-user-admin/update-user-
     TaskService,
     CommentService,
     UtilitiesService,
+    
   ],
   bootstrap: [AppComponent],
 })

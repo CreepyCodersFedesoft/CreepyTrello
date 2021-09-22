@@ -34,9 +34,6 @@
 .dropdown:hover .dropdown-content {
   display: block;
 }
-.headerSpacer {
-  flex: 1 1 auto;
-}
 
 a {
   text-decoration: none;
@@ -44,8 +41,22 @@ a {
   background-color: #ffca6f;
 }
 
-ul {
-  margin: auto;
+ul{
+  display: flex;
+  flex-grow: 1;
+  margin-top: auto;
+  width: 100%;
+}
+.inicio{
+  justify-content:start;
+}
+
+.medio{
+  justify-content:center;
+}
+
+.fin{
+  justify-content:end;
 }
 
 .bgHeader {
@@ -59,8 +70,4 @@ mat-form-field {
   font-size: 15px;
   width: 300px;
   padding: 6px;
-}
-
-.img {
-  margin-left: 200px;
 }

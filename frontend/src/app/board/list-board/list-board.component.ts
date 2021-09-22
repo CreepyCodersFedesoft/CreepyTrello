@@ -22,6 +22,7 @@ export class ListBoardComponent implements OnInit {
   ngOnInit(): void {
     this._boardService.listBoard().subscribe(
       (res) => {
+        console.log(res.board);        
         this.boardData = res.board;
         this.filteredBoards = res.board;
       },

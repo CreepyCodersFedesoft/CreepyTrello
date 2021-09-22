@@ -25,10 +25,22 @@ export class ListTaskComponent implements OnInit{
   @Input() sprintId: any = null;
   @Input() boardId: any = null;
 
+  //friltros
+  filterUnAssigned: boolean = false;
+  searchActive: boolean = false;
+  priorityFilterActive: boolean = false;
+  priorityFilter: any = null;
+  searchText: string = '';
+  allDataFiltered: any[] = [];
+
+  //datos de los estados
+  allData: any[];
   taskData: any[];
+  taskData2: any[];
+  taskData3: any[];
+
+  //varios
   taskData1: string[] = [];
-  taskData2: any[] = [];
-  taskData3: any[] = [];
   message: string = '';
   commentInput = '';
   open = false;
@@ -39,6 +51,7 @@ export class ListTaskComponent implements OnInit{
     private _matDialog: MatDialog,
     private _router: Router,
   ) {
+    this.allData = [];
     this.taskData = [];
     this.taskData2 = [];
     this.taskData3 = [];
@@ -47,11 +60,9 @@ export class ListTaskComponent implements OnInit{
   ngOnInit(): void {
     this._taskService.listTasks.subscribe(
       (res) => {
-        this.taskData = res
-        this.taskData.forEach(tData => {
-          tData.visibleComments = false;
-          tData.visibleAssign = false;
-        });
+        this.allData = res;
+        this.allDataFiltered = res;
+        this.chargeData();
       },
       (err) => {
         this._utilitiesService.openSnackBarError(err.msg);
@@ -59,18 +70,110 @@ export class ListTaskComponent implements OnInit{
     );
   }
 
-  ngOnChanges(): void {
-    this._taskService.updateListTask(this.sprintId); 
+  chargeData(){
+    this.taskData = [];
+    this.taskData2 = [];
+    this.taskData3 = [];
+
+    this.allDataFiltered.forEach(tData => {
+      tData.visibleComments = false;
+      tData.visibleDescription = false;
+      tData.visibleAssign = false;          
+      
+      if(this.filterUnAssigned && this.priorityFilterActive && this.priorityFilter != null){
+        if(tData.taskStatus === 'to-do' && 
+          tData.assignedUser == null &&
+          tData.priority == this.priorityFilter
+        ){
+          this.taskData.push(tData);
+        }
+        if(tData.taskStatus === 'in-progress' && 
+          tData.assignedUser == null &&
+          tData.priority == this.priorityFilter
+        ){
+          this.taskData2.push(tData);
+        }
+        if(tData.taskStatus === 'done' && 
+          tData.assignedUser == null &&
+          tData.priority == this.priorityFilter
+        ){
+          this.taskData3.push(tData);
+        }  
+      } else if(this.filterUnAssigned){
+        if(tData.taskStatus === 'to-do' && tData.assignedUser == null){
+          this.taskData.push(tData);
+        }
+        if(tData.taskStatus === 'in-progress' && tData.assignedUser == null){
+          this.taskData2.push(tData);
+        }
+        if(tData.taskStatus === 'done' && tData.assignedUser == null){
+          this.taskData3.push(tData);
+        }  
+      } else if (this.priorityFilterActive && this.priorityFilter != null) {
+        if(tData.taskStatus === 'to-do' && 
+          tData.priority == this.priorityFilter
+        ){
+          this.taskData.push(tData);
+        }
+        if(tData.taskStatus === 'in-progress' && 
+          tData.priority == this.priorityFilter
+        ){
+          this.taskData2.push(tData);
+        }
+        if(tData.taskStatus === 'done' && 
+          tData.priority == this.priorityFilter
+        ){
+          this.taskData3.push(tData);
+        }  
+      } else {
+        if(tData.taskStatus === 'to-do'){
+          this.taskData.push(tData);
+        }
+        if(tData.taskStatus === 'in-progress'){
+          this.taskData2.push(tData);
+        }
+        if(tData.taskStatus === 'done'){
+          this.taskData3.push(tData);
+        }
+      }      
+    });
   }
 
-  updateTask(task: any, status: string) {    
+  priorityFilterFuncion(prioritySelected: any){
+    this.priorityFilter = prioritySelected;
+    this.chargeData();
+  }
+
+  filterUnAssignedFunction(){
+    this.filterUnAssigned = !this.filterUnAssigned;
+    this.chargeData();
+  }
+
+  ngOnChanges(): void {
+    this._taskService.updateListTask(this.sprintId);
+  }
+
+  updateTask(task: any, status: string) {   
+    
     let tempStatus = task.taskStatus;
     task.taskStatus = status;
-    this._taskService.updateTask(task).subscribe(
+
+    const data = new FormData();
+    
+    data.append('_id', task._id);
+    data.append('title', task.title);
+    data.append('description', task.description);
+    data.append('taskStatus', task.taskStatus);
+    data.append('priority', task.priority);
+    data.append('sprintId', task.sprintId);
+
+    this._taskService.updateTask(data).subscribe(
       (res) => {
-        task.status = status;
+        //console.log('Tarea cambiada de estado correctamente');
       },
       (err) => {
+        console.log(err);
+        
         task.status = tempStatus;
         this.message = err.error;
         this._utilitiesService.openSnackBarError(this.message);
@@ -85,8 +188,6 @@ export class ListTaskComponent implements OnInit{
         if (index > -1) {
           this.taskData.splice(index, 1);
           this.message = res.message;
-
-          console.log('la tas tiene' + task);
         }
       },
       (err) => {
@@ -97,6 +198,7 @@ export class ListTaskComponent implements OnInit{
   }
 
   drop(event: CdkDragDrop<any[]>) {
+    
     if (event.previousContainer === event.container) {
       //Dentro del mismo contenedor
       moveItemInArray(
@@ -111,8 +213,10 @@ export class ListTaskComponent implements OnInit{
         event.container.data,
         event.previousIndex,
         event.currentIndex
-      );
+      );      
     }
+    
+    this.updateTask(event.item.data, event.container.id);
   }
 
   onCreate() {
@@ -135,5 +239,18 @@ export class ListTaskComponent implements OnInit{
     matDialog.width = '90%';
     matDialog.height = '90%';
     this._matDialog.open(TaskDetailsComponent, matDialog);
+  }
+
+  filteredWords() {
+    this.allDataFiltered = this.allData.filter(
+      (tData) =>
+        tData.title
+          .toLocaleLowerCase()
+          .includes(this.searchText.toLocaleLowerCase()) ||
+        tData.description
+          .toLocaleLowerCase()
+          .includes(this.searchText.toLocaleLowerCase())
+    );
+    this.chargeData();    
   }
 }

@@ -11,17 +11,19 @@ const createBoard = async (req, res) => {
   if (!req.body.name || !req.body.description)
     return res.status(400).send("Incomplete Data");
 
-   let boardImgUrl = "";
-   if(req.files.image){
-     if(req.files.image.type !=null){
-    let url = req.protocol + "://" + req.get("host")
-    let serverImg = "./uploads/" + moment().unix() + path.extname(req.files.image.path);
-    fs.createReadStream(req.files.image.path).pipe(fs.createWriteStream(serverImg));
-    boardImgUrl=url + "/uploads/" + moment().unix() + path.extname(req.files.image.path);
+  let boardImgUrl = "";
+  if (req.files.image != undefined) {
+    let url = req.protocol + "://" + req.get("host");
+    let serverImg =
+      "./uploads/" + moment().unix() + path.extname(req.files.image.path);
+    fs.createReadStream(req.files.image.path).pipe(
+      fs.createWriteStream(serverImg)
+    );
+    boardImgUrl =
+      url + "/uploads/" + moment().unix() + path.extname(req.files.image.path);
     console.log(boardImgUrl);
-     }
-   }
-   
+  }
+
   const board = new Board({
     userId: req.user._id,
     name: req.body.name,
@@ -39,19 +41,22 @@ const createBoard = async (req, res) => {
 const listBoard = async (req, res) => {
   const board = await Board.find({
     $or: [{ userId: req.user._id }, { userList: req.user._id }],
-  });
+  }).populate("userId").exec();
   if (!board || board.length === 0)
     return res.status(400).send("You do not have any board");
   return res.status(200).send({ board });
 };
 const updateBoard = async (req, res) => {
+
+  //se valida que el id ObjectId sea valido y que los datos lleguen completos
   let validId = mongoose.Types.ObjectId.isValid(req.body._id);
   if (!validId) return res.status(400).send("Invalid id");
   if (!req.body._id || !req.body.name || !req.body.description)
     return res.status(400).send("Incomplete Data");
 
+  
   let imageUrl = "";
-  if (req.files.image) {
+  if (req.files.image) {//req.files.image != undefined
     if (req.files.image.type != null) {
       const url = req.protocol + "://" + req.get("host") + "/";
       const serverImg =
@@ -97,27 +102,30 @@ const getBoardById = async (req, res) => {
   if (!board || board.length === 0)
     return res.status(400).send("You do not have any board");
   return res.status(200).send({ board });
-}
+};
 const getUsersOnBoard = async (req, res) => {
-  const board = await Board.findById(req.params._id).populate('userList').populate('userId').exec();
+  const board = await Board.findById(req.params._id)
+    .populate("userList")
+    .populate("userId")
+    .exec();
   if (!board || board.length === 0)
     return res.status(400).send("You do not have any board");
 
   let listUsersOnBoard = board.userList;
   listUsersOnBoard.push(board.userId);
   let filteredList = [];
-  listUsersOnBoard.forEach(lUOnBoard => {
+  listUsersOnBoard.forEach((lUOnBoard) => {
     filteredList.push({
       _id: lUOnBoard._id,
       name: lUOnBoard.name,
       email: lUOnBoard.email,
       userImg: lUOnBoard.userImg,
       dbStatus: lUOnBoard.dbStatus,
-    })
+    });
   });
 
   return res.status(200).send({ filteredList });
-}
+};
 const deleteBoard = async (req, res) => {
   const validId = mongoose.Types.ObjectId.isValid(req.params._id);
   if (!validId) return res.status(400).send("Invalid id");
@@ -158,15 +166,21 @@ const deleteBoard = async (req, res) => {
   //eliminamos los comentarios
   let CommentFoundToDeleted;
   for (const tasksId in tasksIds) {
-    CommentFoundToDeleted = await Comment.deleteMany({taskId: tasksIds[tasksId] });
-    if(!CommentFoundToDeleted) return res.status(400).send('Error to delete associated Comments');
+    CommentFoundToDeleted = await Comment.deleteMany({
+      taskId: tasksIds[tasksId],
+    });
+    if (!CommentFoundToDeleted)
+      return res.status(400).send("Error to delete associated Comments");
   }
 
   //ahora borramos las tareas
   let TaskFoundToDeleted;
   for (const sprintsId in sprintsIds) {
-    TaskFoundToDeleted = await Task.deleteMany({ sprintId: sprintsIds[sprintsId] });
-    if(!TaskFoundToDeleted) return res.status(400).send('Error to delete associated Comments');
+    TaskFoundToDeleted = await Task.deleteMany({
+      sprintId: sprintsIds[sprintsId],
+    });
+    if (!TaskFoundToDeleted)
+      return res.status(400).send("Error to delete associated Comments");
   }
 
   //si elimino correctamente las tareas, ahora eliminamos las imagenes de dichas tareas
@@ -183,8 +197,11 @@ const deleteBoard = async (req, res) => {
   });
 
   //ahora borramos el spring
-  let SprintFoundToDeleted = await Sprint.deleteMany({boardId: req.params._id});
-  if(!SprintFoundToDeleted) return res.status(400).send('Error to delete associated tasks');
+  let SprintFoundToDeleted = await Sprint.deleteMany({
+    boardId: req.params._id,
+  });
+  if (!SprintFoundToDeleted)
+    return res.status(400).send("Error to delete associated tasks");
 
   //por ultimo borramos el board
   const board = await Board.findByIdAndDelete(req.params._id);
@@ -197,7 +214,8 @@ const deleteBoard = async (req, res) => {
   }
   return res.status(200).send({ message: "Board deleted" });
 };
-const addListBoard = async (req, res) => {//añade un usuario invitado al board
+const addListBoard = async (req, res) => {
+  //añade un usuario invitado al board
   if (!req.body._id || !req.body.newUserId)
     return res.status(400).send("Error: empty data");
 
@@ -223,7 +241,8 @@ const addListBoard = async (req, res) => {//añade un usuario invitado al board
 
   res.status(200).send({ board });
 };
-const dropListBoard = async (req, res) => {//borrar a un usuario invitado del board
+const dropListBoard = async (req, res) => {
+  //borrar a un usuario invitado del board
   if (!req.body._id || !req.body.newUserId)
     return res.status(400).send("Error: empty data");
 

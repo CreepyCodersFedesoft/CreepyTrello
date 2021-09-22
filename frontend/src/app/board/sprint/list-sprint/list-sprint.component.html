@@ -3,7 +3,7 @@
   class="sidebar overflow-auto"
   [style]="this.show == true ? 'width:250px' : 'width:0'"
 >
-  <a class="py-4 text-start  sidebar-board" mat-button (click)="sprintId = null">
+  <a class="py-4 text-start sidebar-board" mat-button (click)="sprintId = null">
     <p class="text-wrap">{{ boardData.name }}</p>
   </a>
   <div *ngFor="let sprint of sprintData; let i = index">
@@ -36,7 +36,9 @@
       </button>
     </div>
   </div>
-  <a mat-button class="fs-6" (click)="saveSprint(boardData._id)">Add Sprint <mat-icon>library_add</mat-icon></a>
+  <a mat-button class="fs-6" (click)="saveSprint(boardData._id)"
+    >Add Sprint <mat-icon>library_add</mat-icon></a
+  >
 </div>
 
 <div id="main"
@@ -45,26 +47,75 @@ this.show == true
   ? 'margin-left: 250px'
   : 'margin-left: 0;'
 ">
-<div class="">
+  <div class="contentListTask">
   <!--
     [style]="boardData.boardImg != '' ? 'background: url('+boardData.boardImg+') no-repeat;background-repeat: no-repeat;background-size: cover;width: 100%;height: 100%;': '' "
   -->
     <button class="openbtn" (click)="this.show = !this.show">
-      <mat-icon>{{this.show == true ? 'keyboard_arrow_left': 'keyboard_arrow_right'}}</mat-icon>
-    </button> 
-    <app-list-task *ngIf="sprintId != null"  [sprintId]="this.sprintId" [boardId]="this.boardData._id"></app-list-task>
-    <div  *ngIf="sprintId == null" >
+      <mat-icon>{{
+        this.show == true ? "keyboard_arrow_left" : "keyboard_arrow_right"
+      }}</mat-icon>
+    </button>
+    <app-list-task
+      *ngIf="sprintId != null"
+      [sprintId]="this.sprintId"
+      [boardId]="this.boardData._id"
+    ></app-list-task>
+
+    <div *ngIf="sprintId == null">
       <p class="display-5 fw-bold text-center">
-        Bienvenido al Board {{boardData.name}}
+        Bienvenido al Board {{ boardData.name }}
       </p>
-      <p class="fs-4 text-center"> {{boardData.description}} </p>
-      
+      <p class="fs-4 text-center">{{ boardData.description }}</p>
+
+      <p class="fs-5 text-center p-4">
+
+        <!--inicio chips-->
+        <mat-form-field class="example-chip-list" appearance="fill">
+          <mat-label>Invitar usuarios</mat-label>
+          <mat-chip-list #chipList aria-label="Fruit selection">
+            <mat-chip
+              *ngFor="let email of emails"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="remove(email)"
+            >
+              {{ email }}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+
+            <input
+              placeholder="Selecciona mail..."
+              #emailInput
+              [formControl]="emailCtrl"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)"
+            />
+          </mat-chip-list>
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="selected($event)"
+          >
+            <mat-option
+              *ngFor="let email of filteredEmails | async"
+              [value]="email"
+            >
+              {{ email }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <!--FIN chips-->
+
+    <div  *ngIf="sprintId == null" >      
       <p class="fs-5 text-center p-4">
         Prueba de background Board
         <br><br>
         <img [src]="boardData.boardImg" class="img-fluid w-25 h-25 align-content-center" alt="">
         <br>
-        (Aquí irán opciones para ctualizar el board)
+        (Aquí irán opciones para actualizar el board)
       </p>
     </div>
-  </div></div>
+  </div>
+</div>

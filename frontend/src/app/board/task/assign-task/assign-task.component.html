@@ -1,3 +1,6 @@
+<small class="fst-italic">
+  Tarea asignada actualmente a: {{assignedUser != null ? userAssigned: 'Nadie'}}
+</small>
 <mat-form-field class="w-100" appearance="fill">
   <mat-label>Asignar Usuario</mat-label>
   <mat-select [(ngModel)]="seletedUser.assignedUser" [(value)]="assignedUser">
