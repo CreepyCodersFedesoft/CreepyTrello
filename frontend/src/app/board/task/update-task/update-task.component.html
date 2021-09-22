@@ -30,10 +30,11 @@
           </mat-form-field>
           <mat-form-field class="w-100" appearance="fill">
             <mat-label>Prioridad</mat-label>
-            <mat-select [(ngModel)]="registerData.priority" required>
-              <mat-option value="1"> 1 </mat-option>
-              <mat-option value="2"> 2 </mat-option>
-              <mat-option value="3"> 3 </mat-option>
+            <mat-select 
+              [(ngModel)]="registerData.priority" 
+              required>
+              <mat-option *ngFor="let item of prioridades" [value]="item"> {{item}} </mat-option>
+              
             </mat-select>
           </mat-form-field>
           <input type="file" (change)="uploadImg($event)" />

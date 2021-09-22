@@ -1,9 +1,10 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit } from '@angular/core';
 import { TaskService } from '../../../services/task.service';
 import { UserService } from '../../../services/user.service';
 import { SprintService } from '../../../services/sprint.service';
 import { UtilitiesService } from '../../../services/utilities.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-task',
@@ -12,11 +13,14 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class UpdateTaskComponent implements OnInit {
   @Input() sprintId: any = null;
+  onAdd = new EventEmitter();
   registerData: any;
   selectedFile: any;
   sprints: Array<any>;
+  prioridades: Array<any>;
 
   constructor(
+    private _router:Router,
     private _taskService: TaskService,
     private _sprintService: SprintService,
     private _utilitiesService: UtilitiesService,
@@ -30,6 +34,7 @@ export class UpdateTaskComponent implements OnInit {
   ) {
     this.registerData = {};
     this.sprints = [];
+    this.prioridades = [1,2,3];
     this.selectedFile = null;
   }
 
@@ -51,9 +56,11 @@ export class UpdateTaskComponent implements OnInit {
       }
     );
   }
+
   uploadImg(event: any) {
     this.selectedFile = <File>event.target.files[0];
   }
+
   updateTask() {
     if (!this.registerData.title || !this.registerData.description) {
       this._utilitiesService.openSnackBarError('Datos de tarea incompletos');
@@ -75,7 +82,10 @@ export class UpdateTaskComponent implements OnInit {
       data.append('taskStatus', this.data.taskStatus);
 
       this._taskService.updateTask(data).subscribe(
-        (res) => {          
+        (res) => {
+          if(this.data.sprintId != this.registerData.sprintId){
+            this.onAdd.emit(this.registerData.sprintId);
+          }
           this._taskService.updateListTask(this.data.sprintId);
           this._utilitiesService.openSnackBarSuccesfull(
             'Successfull update task'
@@ -87,7 +97,12 @@ export class UpdateTaskComponent implements OnInit {
       );
     }
   }
+
   onClose(): void {
     this._dialogRef.closeAll();
+  }
+
+  compareObjects(o1: any, o2: any): boolean {
+    return o1 === o2._id;
   }
 }

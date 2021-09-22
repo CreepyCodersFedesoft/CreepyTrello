@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TaskService } from '../../../services/task.service';
 import { UtilitiesService } from '../../../services/utilities.service';
 import {
@@ -25,6 +25,7 @@ import { UpdateTaskComponent } from "../update-task/update-task.component";
 export class ListTaskComponent implements OnInit{
   @Input() sprintId: any = null;
   @Input() boardId: any = null;
+  @Output() onChange = new EventEmitter();
 
   //friltros
   filterUnAssigned: boolean = false;
@@ -266,13 +267,17 @@ export class ListTaskComponent implements OnInit{
 
   updateTask2(taskId: any, taskStatus: any) {
     let sprintId = this.sprintId
-    this._matDialog.open(UpdateTaskComponent, {
+    let dialogRef = this._matDialog.open(UpdateTaskComponent, {
       data: { taskId, taskStatus, sprintId },
       autoFocus: true,
       panelClass: [''],
       width: '400px',
       height: '500px',
     });
+    const sub = dialogRef.componentInstance.onAdd.subscribe((e) => {
+      this.onChange.emit(e);
+    });
+
     this.chargeTaskId(taskId);
   }
   filteredWords() {

@@ -120,6 +120,10 @@ export class ListSprintComponent implements OnInit {
     }
   }
 
+  onChangeSprint(e:any){
+    this.chargeSprint(e);
+  }
+
   chargeBoardId(boardId: any) {
     this.boardId = boardId;
   }
