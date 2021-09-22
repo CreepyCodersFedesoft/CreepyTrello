@@ -2,14 +2,8 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import { TaskService } from '../../../services/task.service';
 import { UserService } from '../../../services/user.service';
 import { SprintService } from '../../../services/sprint.service';
-import { Router, ActivatedRoute } from '@angular/router';
 import { UtilitiesService } from '../../../services/utilities.service';
-import {
-  MatDialog,
-  MatDialogConfig,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-update-task',
@@ -29,9 +23,8 @@ export class UpdateTaskComponent implements OnInit {
     public _dialogRef: MatDialog,
     @Inject(MAT_DIALOG_DATA)
     public data: {
-      sprintId: string;
-      taskId: string;
-      taskStatus: string;
+      taskId: any;
+      taskStatus: any;
     }
   ) {
     this.registerData = {};
@@ -46,7 +39,6 @@ export class UpdateTaskComponent implements OnInit {
         this._sprintService.listSprints.subscribe(
           (res) => {
             this.sprints = res.sprint;
-            console.log(this.sprints);
           },
           (err) => {
             this._utilitiesService.openSnackBarError(err.error);
@@ -66,6 +58,12 @@ export class UpdateTaskComponent implements OnInit {
       this._utilitiesService.openSnackBarError('Datos de tarea incompletos');
     } else {
       const data = new FormData();
+      if (
+        this.registerData.priority != null &&
+        this.registerData.priority !== ''
+      ) {
+        data.append('priority', this.registerData.priority);
+      }
       if (this.selectedFile != null) {
         data.append('image', this.selectedFile, this.selectedFile.name);
       }
@@ -74,15 +72,9 @@ export class UpdateTaskComponent implements OnInit {
       data.append('sprintId', this.registerData.sprintId);
       data.append('_id', this.data.taskId);
       data.append('taskStatus', this.data.taskStatus);
-      console.log(data);
-
-      this._utilitiesService.openSnackBarSuccesfull(
-        'actualizando tarea con ' + data
-      );
 
       this._taskService.updateTask(data).subscribe(
         (res) => {
-          this._taskService.updateListTask(this.data.sprintId);
           this._utilitiesService.openSnackBarSuccesfull(
             'Successfull update task'
           );

@@ -70,6 +70,7 @@ export class TaskDetailsComponent {
           this.registerData.userId.name != undefined
             ? (this.user = this.registerData.userId.name)
             : (this.user = 'No hay usuario de creacion de tarea');
+            
           this.registerData.description != undefined
             ? (this.description = this.registerData.description)
             : (this.description = 'No hay descripción para la tarea');

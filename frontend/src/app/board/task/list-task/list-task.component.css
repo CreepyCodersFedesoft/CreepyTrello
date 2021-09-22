@@ -1,3 +1,8 @@
+.bgInput {
+  justify-content: right;
+  background: #ffca6f;
+  color: black;
+}
 .contentTask {
   height: 100vh !important;
   padding-left: 1%;
