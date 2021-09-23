@@ -1,5 +1,7 @@
 /*colores */
 .contentListTask{
+  position: relative;
+  height: 100vh;
   background-color: #F5F5DC;
 }
 
@@ -38,11 +40,13 @@
   cursor: pointer;
   background-color: #3A656F;
   color: white;
-  padding: 10px 15px;
+  padding: 25px 0px;
   border: none;
-  border-radius: 5%;
+  border-radius: 0 10px 10px 0;
   z-index: 2;
   position: absolute;
+  margin: auto;
+  top: 50%;
 }
 
 .openbtn:hover {
