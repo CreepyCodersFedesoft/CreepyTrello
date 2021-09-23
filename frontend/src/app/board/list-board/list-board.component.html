@@ -10,43 +10,46 @@
   />
 </div>
 
-<div class="card-wrapper" *ngIf="boardData.length">
-  <div *ngFor="let board of filteredBoards">
-    <mat-card class="information-card" fxFlexAlign="stretch">
-      <mat-card-header class="title-card">
-        <div class="name">
-          <mat-card-title class="title" (click)="enterSprint(board._id)">{{
-            board.name
-          }}</mat-card-title>
-        </div>
-        <div class="top">
-          <button
-            mat-icon-button
-            [matMenuTriggerFor]="menu"
-            aria-label="Example icon-button with a menu"
-          >
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu class="menu" #menu="matMenu" >
-            <button (click)="onCreate()" mat-menu-item>
-              <mat-icon>edit</mat-icon>
-              <span>Editar</span>
+<div class="container">
+  <div class="card-wrapper" *ngIf="boardData.length">
+    <div *ngFor="let board of filteredBoards">
+      <mat-card class="information-card" fxFlexAlign="stretch">
+        <mat-card-header class="title-card">
+          <div class="name">
+            <mat-card-title class="title" (click)="enterSprint(board._id)">{{
+              board.name
+            }}</mat-card-title>
+          </div>
+          <div class="top">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu"
+            >
+              <mat-icon>more_vert</mat-icon>
             </button>
-            <button (click)="deleteBoard(board)" mat-menu-item>
-              <mat-icon>delete</mat-icon>
-              <span>Eliminar</span>
-            </button>
-          </mat-menu>
-        </div>
-      </mat-card-header>
-      <img
-        mat-card-image
-        (click)="enterSprint(board._id)"
-        [src]="board.boardImg != '' ? board.boardImg : '../../../../../assets/img/userBoardExample.jpg'"
-      />
-      <mat-card-content>
-        <p>Propietario: {{board.userId.name}}</p>
-      </mat-card-content>
-    </mat-card>
+            <mat-menu class="menu" #menu="matMenu" >
+              <button (click)="onCreate()" mat-menu-item>
+                <mat-icon>edit</mat-icon>
+                <span>Editar</span>
+              </button>
+              <button (click)="deleteBoard(board)" mat-menu-item>
+                <mat-icon>delete</mat-icon>
+                <span>Eliminar</span>
+              </button>
+            </mat-menu>
+          </div>
+        </mat-card-header>
+        <img
+          mat-card-image
+          (click)="enterSprint(board._id)"
+          [src]="board.boardImg != '' ? board.boardImg : '../../../../../assets/img/userBoardExample.jpg'"
+        />
+        <mat-card-content>
+          <p>Propietario: {{board.userId.name}}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
+
 </div>

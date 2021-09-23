@@ -308,6 +308,11 @@ export class ListTaskComponent implements OnInit {
 
     this.chargeTaskId(taskId);
   }
+  modalImg(ImageUrl: any){
+    this._utilitiesService.SweetAlertImage(ImageUrl)
+    console.log(ImageUrl);
+    
+  }
   filteredWords() {
     this.allDataFiltered = this.allData.filter(
       (tData) =>

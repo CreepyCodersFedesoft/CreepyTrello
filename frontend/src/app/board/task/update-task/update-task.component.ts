@@ -4,6 +4,7 @@ import { UserService } from '../../../services/user.service';
 import { SprintService } from '../../../services/sprint.service';
 import { UtilitiesService } from '../../../services/utilities.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,6 +19,7 @@ export class UpdateTaskComponent implements OnInit {
   selectedFile: any;
   sprints: Array<any>;
   prioridades: Array<any>;
+  taskImg: any = '';
 
   constructor(
     private _router:Router,
@@ -25,6 +27,7 @@ export class UpdateTaskComponent implements OnInit {
     private _sprintService: SprintService,
     private _utilitiesService: UtilitiesService,
     public _dialogRef: MatDialog,
+    private _sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       taskId: any;
@@ -59,7 +62,10 @@ export class UpdateTaskComponent implements OnInit {
 
   uploadImg(event: any) {
     this.selectedFile = <File>event.target.files[0];
-  }
+    this.taskImg = this._sanitizer.bypassSecurityTrustUrl(
+      URL.createObjectURL(this.selectedFile)
+    );
+  }  
 
   updateTask() {
     if (!this.registerData.title || !this.registerData.description) {

@@ -63,9 +63,6 @@
         [(ngModel)]="searchText"
         autofocus
       />
-      <!--
-      
-      -->
     </div>
   </div>
   <div class="row">
@@ -152,9 +149,6 @@
               >
               <small class="px-0">{{ task.priority }}</small>
             </button>
-            <button mat-icon-button class="mt-1">
-              <mat-icon class="icon">thumb_up_off_alt</mat-icon>
-            </button>
             <button
               mat-icon-button
               disableRipple
@@ -182,14 +176,9 @@
             </app-assign-task>
           </div>
           <div *ngIf="task.visibleDescription">
-            <img
-              *ngIf="task.imgUrl !== ''"
-              [src]="task.imgUrl"
-              class="pt-2 img-fluid w-100 h-auto"
-            />
-            <p type="textarea" class="p-4 fs-4 w-100 bgDescription">
-              {{ task.description }}
-            </p>
+            <img *ngIf="task.imgUrl !== ''" [src]="task.imgUrl" class="pt-2 img-fluid w-100 h-auto" 
+            (click)="modalImg(task.imgUrl)">
+            <p type="textarea" class="p-4 fs-4 w-100 bgDescription">{{task.description}}</p>
             <small class="fst-italic">
               Fecha de creación:
               {{ task.date | date }}
@@ -283,9 +272,6 @@
               >
               <small class="px-0">{{ task.priority }}</small>
             </button>
-            <button mat-icon-button class="mt-1">
-              <mat-icon class="icon">thumb_up_off_alt</mat-icon>
-            </button>
             <button
               mat-icon-button
               disableRipple
@@ -313,14 +299,9 @@
             </app-assign-task>
           </div>
           <div *ngIf="task.visibleDescription">
-            <img
-              *ngIf="task.imgUrl !== ''"
-              [src]="task.imgUrl"
-              class="pt-2 img-fluid w-100 h-auto"
-            />
-            <p type="textarea" class="p-4 fs-4 w-100 bgDescription">
-              {{ task.description }}
-            </p>
+            <img *ngIf="task.imgUrl !== ''" [src]="task.imgUrl" class="pt-2 img-fluid w-100 h-auto"
+            (click)="modalImg(task.imgUrl)">
+            <p type="textarea" class="p-4 fs-4 w-100 bgDescription">{{task.description}}</p>
             <small class="fst-italic">
               Fecha de creación:
               {{ task.date | date }}
@@ -415,9 +396,6 @@
               >
               <small class="px-0">{{ task.priority }}</small>
             </button>
-            <button mat-icon-button class="mt-1">
-              <mat-icon class="icon">thumb_up_off_alt</mat-icon>
-            </button>
             <button
               mat-icon-button
               disableRipple
@@ -445,14 +423,9 @@
             </app-assign-task>
           </div>
           <div *ngIf="task.visibleDescription">
-            <img
-              *ngIf="task.imgUrl !== ''"
-              [src]="task.imgUrl"
-              class="pt-2 img-fluid w-100 h-auto"
-            />
-            <p type="textarea" class="p-4 fs-4 w-100 bgDescription">
-              {{ task.description }}
-            </p>
+            <img *ngIf="task.imgUrl !== ''" [src]="task.imgUrl" class="pt-2 img-fluid w-100 h-auto"
+            (click)="modalImg(task.imgUrl)">
+            <p type="textarea" class="p-4 fs-4 w-100 bgDescription">{{task.description}}</p>
             <small class="fst-italic">
               Fecha de creación:
               {{ task.date | date }}
