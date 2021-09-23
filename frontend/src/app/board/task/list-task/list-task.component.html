@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">
-      <h2 class="text-center pt-2">Proceso de las Tareas</h2>
+      <h2 class="text-center pt-2 fs-2">Proceso de las Tareas</h2>
     </div>
     <div class="col-md-4 text-center">
       <button mat-button (click)="filterUnAssignedFunction()" class="d-inline">
@@ -67,7 +67,7 @@
   </div>
   <div class="row">
     <div class="col-lg-4 text-center font-weight-bold">
-      <h4>To-Do</h4>
+      <h4 class="fs-3">To-Do</h4>
       <div
         cdkDropList
         class="example-list"
@@ -77,7 +77,7 @@
         (cdkDropListDropped)="drop($event)"
       >
         <div
-          class="example-box row align-items-start"
+          class="example-box colorTaskToDo row align-items-start"
           *ngFor="let task of taskData"
           [cdkDragData]="task"
           cdkDrag
@@ -178,7 +178,7 @@
           <div *ngIf="task.visibleDescription">
             <img *ngIf="task.imgUrl !== ''" [src]="task.imgUrl" class="pt-2 img-fluid w-100 h-auto" 
             (click)="modalImg(task.imgUrl)">
-            <p type="textarea" class="p-4 fs-4 w-100 bgDescription">{{task.description}}</p>
+            <p type="textarea" class="p-4 fs-4 w-100 bgDescriptionToDo">{{task.description}}</p>
             <small class="fst-italic">
               Fecha de creación:
               {{ task.date | date }}
@@ -190,7 +190,7 @@
     </div>
 
     <div class="col-lg-4 text-center">
-      <h4>In progress</h4>
+      <h4 class="fs-3">In progress</h4>
       <div
         cdkDropList
         class="example-list"
@@ -200,7 +200,7 @@
         (cdkDropListDropped)="drop($event)"
       >
         <div
-          class="example-box row align-items-start"
+          class="example-box colorTaskInProgress row align-items-start"
           *ngFor="let task of taskData2"
           [cdkDragData]="task"
           cdkDrag
@@ -301,7 +301,7 @@
           <div *ngIf="task.visibleDescription">
             <img *ngIf="task.imgUrl !== ''" [src]="task.imgUrl" class="pt-2 img-fluid w-100 h-auto"
             (click)="modalImg(task.imgUrl)">
-            <p type="textarea" class="p-4 fs-4 w-100 bgDescription">{{task.description}}</p>
+            <p type="textarea" class="p-4 fs-4 w-100 bgDescriptionInProgress">{{task.description}}</p>
             <small class="fst-italic">
               Fecha de creación:
               {{ task.date | date }}
@@ -313,7 +313,7 @@
     </div>
 
     <div class="col-lg-4 text-center">
-      <h4>Done</h4>
+      <h4 class="fs-3">Done</h4>
       <div
         cdkDropList
         class="example-list"
@@ -323,7 +323,7 @@
         (cdkDropListDropped)="drop($event)"
       >
         <div
-          class="example-box row align-items-start"
+          class="example-box colorTaskDone row align-items-start"
           *ngFor="let task of taskData3"
           [cdkDragData]="task"
           (cdkDropListDropped)="updateTask(task, 'done')"
@@ -425,7 +425,7 @@
           <div *ngIf="task.visibleDescription">
             <img *ngIf="task.imgUrl !== ''" [src]="task.imgUrl" class="pt-2 img-fluid w-100 h-auto"
             (click)="modalImg(task.imgUrl)">
-            <p type="textarea" class="p-4 fs-4 w-100 bgDescription">{{task.description}}</p>
+            <p type="textarea" class="p-4 fs-4 w-100 bgDescriptionDone">{{task.description}}</p>
             <small class="fst-italic">
               Fecha de creación:
               {{ task.date | date }}

@@ -1,16 +1,17 @@
+/*colores */
 .contentListTask{
   background-color: #F5F5DC;
 }
-/*Termina cambios sidebar */
+
 .sidebar {
   height: 100%;
   width: 0;
   position: absolute;
   z-index: 0;
   left: 0;
-  background: #AD6F03;
-  background: -webkit-linear-gradient(to bottom, #AD6F03, #AD6F03);
-  background: linear-gradient(to bottom, #AD6F03, #AD6F03); 
+  background: #3A656F ;
+  background: -webkit-linear-gradient(to bottom, #3A656F , #3A656F );
+  background: linear-gradient(to bottom, #3A656F , #3A656F ); 
   overflow-x: hidden;
   transition: 0.5s;
 }
@@ -29,13 +30,13 @@
 }
 
 .sidebar-board {
-  background: #a06704;
+  background: #30525a;
 }
 
 .openbtn { 
   font-size: 20px;
   cursor: pointer;
-  background-color: #c07e03;
+  background-color: #3A656F;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -45,9 +46,9 @@
 }
 
 .openbtn:hover {
-  background-color: #b17301;
+  background-color: #284a52;
 }
-
+/*Termina cambios colores*/
 #main {
   transition: margin-left .5s;
   /*padding: 16px;
@@ -74,7 +75,7 @@
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-  background-color: #915f0b;
+  background-color: #30525a;
   border-radius: 20px;
   border: 0;
 }

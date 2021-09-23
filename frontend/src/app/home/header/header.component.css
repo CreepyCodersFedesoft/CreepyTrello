@@ -1,3 +1,9 @@
+/*Colores header*/
+.bgHeader {
+  background: #30525a;
+  background: -webkit-linear-gradient(to right, #30525a, #30525a);
+  background: linear-gradient(to right, #30525a, #30525a); 
+}
 .profileConfig{
   background-image: url('../../../assets/img/userExample.png');
   background-size: cover;
@@ -6,41 +12,38 @@
   border-radius: 75%;
   border-color: #000;
 }
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
 .dropdown-content {
   box-sizing: border-box;
   position: absolute;
   display: none;
-  background-color: #FFCA6F;
+  background-color: #3A656F;
   min-width: 100%;
   padding: 0 0;
   margin: 0% 0% 0% 0%;
   z-index: 1;
   left: 0;
 }
-
+a {
+  text-decoration: none;
+  color: white;
+  background-color: #3A656F;
+}
 .dropdown-content-element:hover {
-  background-color: #b98c3d;
+  background-color: #2e4e55;
+}
+/*Termina Colores header*/
+.dropdown {
+  position: relative;
+  display: inline-block;
 }
 .dropdown-content-element {
   min-width: 100%;
   padding: 7px 18px;
   margin: 0%;
 }
-
 .dropdown:hover .dropdown-content {
   display: block;
 }
-
-a {
-  text-decoration: none;
-  color: #000000;
-  background-color: #ffca6f;
-}
-
 ul{
   display: flex;
   flex-grow: 1;
@@ -58,13 +61,6 @@ ul{
 .fin{
   justify-content:end;
 }
-
-.bgHeader {
-  background: #FFCA6F;
-  background: -webkit-linear-gradient(to right, #FFCA6F, #ddb063);
-  background: linear-gradient(to right, #FFCA6F, #ddb063); 
-}
-
 mat-form-field {
   margin: 5px 0px;
   font-size: 15px;

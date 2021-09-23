@@ -1,14 +1,31 @@
-.container {
-  display: flex;
-  flex-direction: column;
+/*Comienza colores*/
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #3A656F;
+  display: inline-block;
+  transition: all 0.5s;
+  cursor: pointer;
+  padding: 15px 40px !important;
+  text-transform: uppercase;
+  width: fit-content;
+  text-align: center;
+}
+.textColor {
+  color: #3A656F;
 }
 
 .button {
   width: 100%;
-  background-color: #ffca6f;
+  background-color: #3A656F;
   color: white;
 }
-
+/*Termina colores*/
+.container {
+  display: flex;
+  flex-direction: column;
+}
 .card {
   min-width: 150px;
   max-width: 500px;
@@ -39,16 +56,4 @@ input#upload {
   position: absolute;
   z-index: -1;
 }
-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: rgb(1, 0, 75);
-  background-color: #ffca6f;
-  display: inline-block;
-  transition: all 0.5s;
-  cursor: pointer;
-  padding: 15px 40px !important;
-  text-transform: uppercase;
-  width: fit-content;
-  text-align: center;
-}
+

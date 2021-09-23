@@ -9,19 +9,19 @@ img{
 .bgInput {
   display: inline-block;
   justify-content: right;
-  background: #ffca6f;
+  background: #3A656F;
+  color: #ffffff;
   width: 500px;
-  color: black;
 }
 .bgInput::placeholder {
-  color: black;
+  color: #ffffff;
   border-radius: 10%;
 }
 .information-card {
   width: 210px;
   margin: 10px 10px 10px 10px;
   border-radius: 10%;
-  border: 2px solid #ffca6f;
+  border: 2px solid #3A656F;
   cursor: pointer;
   text-align: start;
 }
