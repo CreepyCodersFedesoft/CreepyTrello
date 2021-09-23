@@ -30,14 +30,26 @@
           </mat-form-field>
           <mat-form-field class="w-100" appearance="fill">
             <mat-label>Prioridad</mat-label>
-            <mat-select 
-              [(ngModel)]="registerData.priority" 
-              required>
-              <mat-option *ngFor="let item of prioridades" [value]="item"> {{item}} </mat-option>
-              
+            <mat-select [(ngModel)]="registerData.priority" required>
+              <mat-option *ngFor="let item of prioridades" [value]="item">
+                {{ item }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
-          <input type="file" (change)="uploadImg($event)" />
+
+          <div class="text-center">
+            <img
+              *ngIf="this.taskImg != ''"
+              class="m-3"
+              width="150px"
+              [src]="this.taskImg"
+              alt=""
+            />
+            <div *ngIf="selectedFile != null">{{ selectedFile.name }}</div>
+            <label for="upload">Seleccionar IMG</label>
+            <input type="file" id="upload" (change)="uploadImg($event)" />
+          </div>
+
         </div>
       </mat-card-content>
 

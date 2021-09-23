@@ -48,16 +48,19 @@
               </mat-select>
             </mat-form-field>            
 
-            <img 
-            *ngIf="this.boardImg != '' "
-            class="m-3"
-              width="150px"
-              [src]="this.boardImg"
-              alt=""
-            />
-            <div *ngIf="selectedFile !=null">{{ selectedFile.name }}</div>
-            <label for="upload">Seleccionar IMG</label>
-            <input type="file" id="upload" (change)="uploadImg($event)" />
+            <div class="text-center">
+              <img 
+              *ngIf="this.boardImg != '' "
+              class="m-3"
+                width="150px"
+                [src]="this.boardImg"
+                alt=""
+              />
+              <div *ngIf="selectedFile !=null">{{ selectedFile.name }}</div>
+              <label for="upload">Seleccionar IMG</label>
+              <input type="file" id="upload" (change)="uploadImg($event)" />
+            </div>
+
           </div>
         </mat-card-content>
         <mat-card-actions>
