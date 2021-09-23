@@ -14,7 +14,9 @@
   overflow-x: hidden;
   transition: 0.5s;
 }
-
+.text-title{
+  font-size: 30px !important;
+}
 .sidebar a {
   padding-bottom: 7px;
   text-decoration: none;
@@ -82,4 +84,8 @@
 
 .example-chip-list {
   width: 50%;
+}
+
+.color-button{
+  background-color: #17a2b8;
 }

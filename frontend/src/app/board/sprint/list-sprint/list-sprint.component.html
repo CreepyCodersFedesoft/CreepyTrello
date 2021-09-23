@@ -11,7 +11,7 @@
       [ngStyle]="{'color':sprint.color }"
       (click)="chargeSprint(sprint._id)"
       class="p-2 fs-5 text-wrap" mat-button>
-      <b>{{ sprint.title }}</b>
+      <b>{{ sprint.title }}</b>&nbsp;&nbsp;<mat-icon>playlist_play</mat-icon>
     </a>
     <div *ngIf="sprint.sprintOptions" class="text-center">
       <button 
@@ -63,7 +63,7 @@ this.show == true
     ></app-list-task>
 
     <div *ngIf="sprintId == null">
-      <p class="display-5 fw-bold text-center">
+      <p class="display-5 fw-bold text-center text-title"><br />
         Bienvenido al Board {{ boardData.name }}
       </p>
       <p class="fs-4 text-center">{{ boardData.description }}</p>
@@ -73,7 +73,7 @@ this.show == true
         <!--inicio chips-->
         <mat-form-field class="example-chip-list" appearance="fill">
           <mat-label>Invitar usuarios</mat-label>
-          <mat-chip-list #chipList aria-label="Fruit selection">
+          <mat-chip-list #chipList aria-label="Mail selection">
             <mat-chip
               *ngFor="let email of emails"
               [selectable]="selectable"
@@ -106,9 +106,15 @@ this.show == true
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+        &nbsp;
+        <button mat-fab class="color-button" aria-label="Example icon button with a home icon">
+          <mat-icon>supervisor_account</mat-icon>
+        </button>
+
+        
         <!--FIN chips-->
 
-    <div  *ngIf="sprintId == null" >      
+    <!--div  *ngIf="sprintId == null" >      
       <p class="fs-5 text-center p-4">
         Prueba de background Board
         <br><br>
@@ -116,6 +122,6 @@ this.show == true
         <br>
         (Aquí irán opciones para actualizar el board)
       </p>
-    </div>
+    </div-->
   </div>
 </div>

@@ -19,6 +19,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 //END CHIPS
 
+
 @Component({
   selector: 'app-list-sprint',
   templateUrl: './list-sprint.component.html',
@@ -63,7 +64,7 @@ export class ListSprintComponent implements OnInit {
       map((mail: string | null) =>
       mail ? this._filter(mail) : this.allMails.slice()
       )
-    );
+    );    
   }
 
   ngOnInit(): void {
