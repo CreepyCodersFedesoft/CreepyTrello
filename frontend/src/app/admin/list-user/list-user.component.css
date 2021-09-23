@@ -1,3 +1,18 @@
+.bgShearch {
+  background-color: #3A656F;
+  color: #fff;
+}
+.deleteIcon:hover {
+  color: #3A656F;
+  cursor: pointer;
+  padding-right: 15px;
+}
+
+.updateIcon:hover {
+  color: #3A656F;
+  cursor: pointer;
+  padding-right: 15px;
+}
 .bgComponent {
     background-repeat: no-repeat;
     background-size: cover;
@@ -7,7 +22,7 @@
   }
   
 .title {
-  color: black;
+  color: #fff;
   margin-left: 10px;
 }
 
@@ -30,12 +45,6 @@
   th {
     width: 15%;
   }
-  
-  .bgShearch {
-    background-color: #ffca6f;
-    color: black;
-  }
-  
   .mat-icon {
     padding: 15px;
   }
@@ -48,17 +57,7 @@
     color: black;
   }
   
-  .deleteIcon:hover {
-    color: #FFCA6F;
-    cursor: pointer;
-    padding-right: 15px;
-  }
-  
-  .updateIcon:hover {
-    color: #FFCA6F;
-    cursor: pointer;
-    padding-right: 15px;
-  }
+
   
   .button {
     display: flex;

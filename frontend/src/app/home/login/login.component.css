@@ -1,3 +1,12 @@
+/*comienza colores*/
+.main-wrapper .mat-stroked-button {
+	-webkit-box-shadow: 5px 5px 6px -2px #7a7a7a;
+	box-shadow: 5px 5px 6px -2px #7a7a7a;
+	line-height: 54px;
+	background: #3A656F;
+	color: #fff;
+  }
+/*termina colores*/
 html,
 body {
 	height: 100%;
@@ -98,14 +107,6 @@ body {
 .main-wrapper .mat-card {
 	padding: 45px 70px 55px;
 }
-
-.main-wrapper .mat-stroked-button {
-	-webkit-box-shadow: 5px 5px 6px -2px #7a7a7a;
-	box-shadow: 5px 5px 6px -2px #7a7a7a;
-	line-height: 54px;
-	background: #f6c36c;
-	color: #000;
-  }
 
 .main-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix {
 	padding: 0.8375em 0;
