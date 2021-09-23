@@ -1,0 +1,27 @@
+h3 {
+  font-size: 2em;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-style: normal;
+  font-weight: bolder;
+}
+th {
+  color: #000000;
+}
+
+table {
+  counter-reset: rowNumber;
+}
+
+table tr {
+  counter-increment: rowNumber;
+}
+
+table tr td:first-child::before {
+  content: counter(rowNumber);
+  min-width: 1em;
+  margin-right: 0.5em;
+}
+
+.bgcomponent {
+  background-color: yellow;
+}

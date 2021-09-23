@@ -3,6 +3,7 @@ import { TaskService } from '../../../services/task.service';
 import { UserService } from 'src/app/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilitiesService } from '../../../services/utilities.service';
+import { LogTaskComponent } from "../log-task/log-task.component";
 
 import {
   MatDialog,
@@ -60,7 +61,6 @@ export class TaskDetailsComponent {
       this._taskService.findTask(this._id).subscribe(
         (res) => {
           this.registerData = res.task;
-          console.log(this.registerData);
 
           this.registerData.assignedUser != null &&
           this.registerData.assignedUser.name != undefined
@@ -109,5 +109,14 @@ export class TaskDetailsComponent {
     });
   }
 
-  updateTask() {}
+  logTask() {
+    let sprintId = this.sprintId
+    this._matDialog.open(LogTaskComponent, {
+      data: {taskId: this._id},
+      autoFocus: true,
+      panelClass: [''],
+      width: '400px',
+      height: '500px',
+    });
+  }
 }

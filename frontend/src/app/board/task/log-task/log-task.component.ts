@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilitiesService } from '../../../services/utilities.service';
@@ -9,6 +9,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+import {MatTableModule} from '@angular/material/table';
 
 @Component({
   selector: 'app-log-task',
@@ -16,7 +17,7 @@ import {
   styleUrls: ['./log-task.component.css'],
 })
 export class LogTaskComponent implements OnInit {
-  @Input() taskId: string = '';
+  
   logData: any;
   displayedColumns: string[] = ['Fecha', 'Nombre', 'Accion'];
   registerData: any;
@@ -29,11 +30,18 @@ export class LogTaskComponent implements OnInit {
     private _matDialog: MatDialog,
     private _router: Router,
     private _Arouter: ActivatedRoute,
-    public _userService: UserService
+    public _userService: UserService,
+    @Inject(MAT_DIALOG_DATA)
+  public data: {
+    taskId: string;
+    
+  }
   ) {
     this.registerData = {};
     this._id = '';
     this.taskData = [];
+    this.logData = []
+    
   }
 
   ngOnInit(): void {
@@ -41,7 +49,7 @@ export class LogTaskComponent implements OnInit {
   }
 
   listLog() {
-    this._taskService.listLogTask(this.taskId).subscribe(
+    this._taskService.listLogTask(this.data.taskId).subscribe(
       (res) => {
         console.log(res);
         this.logData = res.history;

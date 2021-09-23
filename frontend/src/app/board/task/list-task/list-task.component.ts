@@ -1,4 +1,11 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { TaskService } from '../../../services/task.service';
 import { UtilitiesService } from '../../../services/utilities.service';
 import {
@@ -13,16 +20,16 @@ import {
   MatDialog,
 } from '@angular/material/dialog';
 import { CreateTaskComponent } from '../create-task/create-task.component';
-import { TaskDetailsComponent} from "../task-details/task-details.component";
+import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { Router } from '@angular/router';
-import { UpdateTaskComponent } from "../update-task/update-task.component";
+import { UpdateTaskComponent } from '../update-task/update-task.component';
 
 @Component({
   selector: 'app-list-task',
   templateUrl: './list-task.component.html',
   styleUrls: ['./list-task.component.css'],
 })
-export class ListTaskComponent implements OnInit{
+export class ListTaskComponent implements OnInit {
   @Input() sprintId: any = null;
   @Input() boardId: any = null;
   @Output() onChange = new EventEmitter();
@@ -40,7 +47,7 @@ export class ListTaskComponent implements OnInit{
   taskData: any[];
   taskData2: any[];
   taskData3: any[];
-
+  tasksData: any;
   //varios
   taskData1: string[] = [];
   message: string = '';
@@ -52,18 +59,19 @@ export class ListTaskComponent implements OnInit{
     private _taskService: TaskService,
     private _utilitiesService: UtilitiesService,
     private _matDialog: MatDialog,
-    private _router: Router,
+    private _router: Router
   ) {
     this.allData = [];
     this.taskData = [];
     this.taskData2 = [];
     this.taskData3 = [];
     this.taskId = null;
+    this.tasksData = {};
   }
-  
+
   ngOnInit(): void {
     this._taskService.listTasks.subscribe(
-      (res) => {        
+      (res) => {
         this.allData = res;
         this.allDataFiltered = res;
         this.chargeData();
@@ -74,112 +82,121 @@ export class ListTaskComponent implements OnInit{
     );
   }
 
-  onNewComment(task:any){
+  onNewComment(task: any) {
     task.countComments += 1;
   }
 
-  chargeData(){
+  chargeData() {
     this.taskData = [];
     this.taskData2 = [];
     this.taskData3 = [];
 
-    this.allDataFiltered.forEach(tData => {
+    this.allDataFiltered.forEach((tData) => {
       tData.visibleComments = false;
       tData.visibleDescription = false;
-      tData.visibleAssign = false;          
-      
-      if(this.filterUnAssigned && this.priorityFilterActive && this.priorityFilter != null){
-        if(tData.taskStatus === 'to-do' && 
+      tData.visibleAssign = false;
+
+      if (
+        this.filterUnAssigned &&
+        this.priorityFilterActive &&
+        this.priorityFilter != null
+      ) {
+        if (
+          tData.taskStatus === 'to-do' &&
           tData.assignedUser == null &&
           tData.priority == this.priorityFilter
-        ){
+        ) {
           this.taskData.push(tData);
         }
-        if(tData.taskStatus === 'in-progress' && 
+        if (
+          tData.taskStatus === 'in-progress' &&
           tData.assignedUser == null &&
           tData.priority == this.priorityFilter
-        ){
+        ) {
           this.taskData2.push(tData);
         }
-        if(tData.taskStatus === 'done' && 
+        if (
+          tData.taskStatus === 'done' &&
           tData.assignedUser == null &&
           tData.priority == this.priorityFilter
-        ){
+        ) {
           this.taskData3.push(tData);
-        }  
-      } else if(this.filterUnAssigned){
-        if(tData.taskStatus === 'to-do' && tData.assignedUser == null){
+        }
+      } else if (this.filterUnAssigned) {
+        if (tData.taskStatus === 'to-do' && tData.assignedUser == null) {
           this.taskData.push(tData);
         }
-        if(tData.taskStatus === 'in-progress' && tData.assignedUser == null){
+        if (tData.taskStatus === 'in-progress' && tData.assignedUser == null) {
           this.taskData2.push(tData);
         }
-        if(tData.taskStatus === 'done' && tData.assignedUser == null){
+        if (tData.taskStatus === 'done' && tData.assignedUser == null) {
           this.taskData3.push(tData);
-        }  
+        }
       } else if (this.priorityFilterActive && this.priorityFilter != null) {
-        if(tData.taskStatus === 'to-do' && 
+        if (
+          tData.taskStatus === 'to-do' &&
           tData.priority == this.priorityFilter
-        ){
+        ) {
           this.taskData.push(tData);
         }
-        if(tData.taskStatus === 'in-progress' && 
+        if (
+          tData.taskStatus === 'in-progress' &&
           tData.priority == this.priorityFilter
-        ){
+        ) {
           this.taskData2.push(tData);
         }
-        if(tData.taskStatus === 'done' && 
+        if (
+          tData.taskStatus === 'done' &&
           tData.priority == this.priorityFilter
-        ){
+        ) {
           this.taskData3.push(tData);
-        }  
+        }
       } else {
-        if(tData.taskStatus === 'to-do'){
+        if (tData.taskStatus === 'to-do') {
           this.taskData.push(tData);
         }
-        if(tData.taskStatus === 'in-progress'){
+        if (tData.taskStatus === 'in-progress') {
           this.taskData2.push(tData);
         }
-        if(tData.taskStatus === 'done'){
+        if (tData.taskStatus === 'done') {
           this.taskData3.push(tData);
         }
-      }      
+      }
     });
   }
 
-  priorityFilterFuncion(prioritySelected: any){
+  priorityFilterFuncion(prioritySelected: any) {
     this.priorityFilter = prioritySelected;
     this.chargeData();
   }
 
-  filterUnAssignedFunction(){
+  filterUnAssignedFunction() {
     this.filterUnAssigned = !this.filterUnAssigned;
     this.chargeData();
   }
 
-  changeHigh(priority: any){
-    return priority == 3 ? true: false;
+  changeHigh(priority: any) {
+    return priority == 3 ? true : false;
   }
 
-  changeMedium(priority: any){
-    return priority == 2 ? true: false;
+  changeMedium(priority: any) {
+    return priority == 2 ? true : false;
   }
 
-  changeLow(priority: any){
-    return priority == 1 ? true: false;
+  changeLow(priority: any) {
+    return priority == 1 ? true : false;
   }
 
   ngOnChanges(): void {
     this._taskService.updateListTask(this.sprintId);
   }
 
-  updateTask(task: any, status: string) {   
-    
+  updateTask(task: any, status: string) {
     let tempStatus = task.taskStatus;
     task.taskStatus = status;
 
     const data = new FormData();
-    
+
     data.append('_id', task._id);
     data.append('title', task.title);
     data.append('description', task.description);
@@ -193,7 +210,7 @@ export class ListTaskComponent implements OnInit{
       },
       (err) => {
         console.log(err);
-        
+
         task.status = tempStatus;
         this.message = err.error;
         this._utilitiesService.openSnackBarError(this.message);
@@ -201,24 +218,36 @@ export class ListTaskComponent implements OnInit{
     );
   }
 
-  deleteTask(task: any) {
-    this._taskService.deleteTask(task).subscribe(
-      (res) => {
-        let index = this.taskData.indexOf(task);
-        if (index > -1) {
-          this.taskData.splice(index, 1);
-          this.message = res.message;
-        }
-      },
-      (err) => {
-        this.message = err.error;
-        this._utilitiesService.openSnackBarError(this.message);
-      }
+  async deleteTask(task: any) {
+    let result = await this._utilitiesService.SweetAlertConfirmation(
+      '¿Esta seguro de que desea eliminar la tarea seleccionada?',
+      '¡No serás capaz de revertir estos cambios!',
+      '¡Si, Eliminalo!',
+      'warning'
     );
+
+    if (result.isConfirmed) {
+      this._taskService.deleteTask(task).subscribe(
+        (res) => {
+          this._utilitiesService.SweetAlert(
+            'Proceso Exitoso',
+            'Tarea eliminada con existo!',
+            'success'
+          );
+          let index = this.taskData.indexOf(task);
+          if (index > -1) {
+            this.taskData.splice(index, 1);
+            this.message = res.message;
+          }
+        },
+        (err) => {
+          this._utilitiesService.openSnackBarError(err.error);
+        }
+      );
+    }
   }
 
   drop(event: CdkDragDrop<any[]>) {
-    
     if (event.previousContainer === event.container) {
       //Dentro del mismo contenedor
       moveItemInArray(
@@ -233,9 +262,9 @@ export class ListTaskComponent implements OnInit{
         event.container.data,
         event.previousIndex,
         event.currentIndex
-      );      
+      );
     }
-    
+
     this.updateTask(event.item.data, event.container.id);
   }
 
@@ -252,7 +281,6 @@ export class ListTaskComponent implements OnInit{
   }
 
   showDetails() {
-    
     const matDialog = new MatDialogConfig();
     matDialog.disableClose = false;
     matDialog.autoFocus = true;
@@ -266,7 +294,7 @@ export class ListTaskComponent implements OnInit{
   }
 
   updateTask2(taskId: any, taskStatus: any) {
-    let sprintId = this.sprintId
+    let sprintId = this.sprintId;
     let dialogRef = this._matDialog.open(UpdateTaskComponent, {
       data: { taskId, taskStatus, sprintId },
       autoFocus: true,
@@ -290,6 +318,6 @@ export class ListTaskComponent implements OnInit{
           .toLocaleLowerCase()
           .includes(this.searchText.toLocaleLowerCase())
     );
-    this.chargeData();    
+    this.chargeData();
   }
 }

@@ -1,23 +1,30 @@
-<p>log-task works!</p>
-<table mat-table [dataSource]="logData" class="mat-elevation-z8">
-  <!-- id Column -->
-  <ng-container matColumnDef="logData.history">
-    <th mat-header-cell *matHeaderCellDef>id</th>
-    <td mat-cell *matCellDef="let history">{{ history.userId }}</td>
-  </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="logData.history">
-    <th mat-header-cell *matHeaderCellDef>Name</th>
-    <td mat-cell *matCellDef="let history">{{ history.name }}</td>
-  </ng-container>
+<h3 class="text-center">Historial de la tarea</h3>
 
-  <!--date Column -->
-  <ng-container matColumnDef="logData.history">
-    <th mat-header-cell *matHeaderCellDef>Accion</th>
-    <td mat-cell *matCellDef="let history">{{history.actionType}</td>
-  </ng-container>
+<span class='col-12' *ngIf="logData"  >
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table>
+  <table  class='table table-striped table-hover text-center' >
+    <thead class='table-warning text-center bgcomponent'>
+      <th  scope="col">N°</th>
+      <th  scope="col">Usuario</th>
+      <th  scope="col">Acción</th>
+      <th  scope="col">Fecha</th>
+      <th  scope="col">Hora</th>
+    </thead>
+    <tbody>
+      <tr scope="row" *ngFor="let datos of logData">
+        <td></td>
+        <td>{{datos.userId.name}}</td>
+        <td>{{datos.actionType}}</td>
+        <td>{{datos.date | date}}</td>
+        <td>{{datos.date | date: "shortTime"}}</td>
+      </tr>
+    </tbody>
+
+  </table>
+</span>
+
+<div class='col-12'>
+
+<h1 *ngIf="!logData">No hay datos cargados</h1>
+</div>

@@ -246,7 +246,7 @@ const assignUser = async (req, res) => {
 };
 
 const listLogTask = async (req, res) => {
-  let history = await History.find({ taskId: req.body.taskId })
+  let history = await History.find({ taskId: req.params.taskId })
     .sort("-date")
     .populate("userId")
     .exec();
