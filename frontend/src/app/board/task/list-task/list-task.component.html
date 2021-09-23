@@ -83,6 +83,8 @@
           cdkDrag
         >
           <button
+            matTooltip="Menu"
+            [matTooltipShowDelay]=500
             mat-icon-button
             [matMenuTriggerFor]="menu"
             aria-label="Example icon-button with a menu"
@@ -113,10 +115,12 @@
           <div class="d-flex justify-content-end">
             <button
               mat-icon-button
-              class="mt-1 px-0"
+              class="mt-1 px-0 mx-2"
               (click)="task.visibleAssign = !task.visibleAssign"
             >
-              <mat-icon class="fs-5 icon px-0 mx-0">
+              <mat-icon class="fs-5 icon px-0 mx-0"
+              [matTooltip]="task.assignedUser == null ? 'No Asignado': 'Asignado' "
+              [matTooltipShowDelay]=500>
                 <mat-icon class="fs-6 px-0 mx-0">{{
                   task.assignedUser == null ? "warning" : "check"
                 }}</mat-icon>
@@ -124,13 +128,17 @@
               </mat-icon>
             </button>
             <button
+              matTooltip="Descripción"
+              [matTooltipShowDelay]=500
               mat-icon-button
-              class="mt-1"
+              class="mt-1 mx-0"
               (click)="task.visibleDescription = !task.visibleDescription"
             >
               <mat-icon class="icon px-4">description</mat-icon>
             </button>
-            <button mat-icon-button class="mt-1">
+            <button mat-icon-button class="mt-1"
+              matTooltip="Prioridad"
+              [matTooltipShowDelay]=500>
               <mat-icon
                 *ngIf="changeHigh(task.priority)"
                 class="icon"
@@ -150,6 +158,8 @@
               <small class="px-0">{{ task.priority }}</small>
             </button>
             <button
+              matTooltip="Comentarios"
+              [matTooltipShowDelay]=500
               mat-icon-button
               disableRipple
               class="mt-1"
@@ -206,6 +216,8 @@
           cdkDrag
         >
           <button
+            matTooltip="Menu"
+            [matTooltipShowDelay]=500
             mat-icon-button
             [matMenuTriggerFor]="menu"
             aria-label="Example icon-button with a menu"
@@ -236,24 +248,30 @@
           <div class="d-flex justify-content-end">
             <button
               mat-icon-button
-              class="mt-1"
+              class="mt-1 px-0 mx-2"
               (click)="task.visibleAssign = !task.visibleAssign"
             >
-              <mat-icon class="fs-5 icon px-0">
-                <mat-icon class="fs-6 px-0">{{
+              <mat-icon class="fs-5 icon px-0 mx-0"
+              [matTooltip]="task.assignedUser == null ? 'No Asignado': 'Asignado' "
+              [matTooltipShowDelay]=500>
+                <mat-icon class="fs-6 px-0 mx-0">{{
                   task.assignedUser == null ? "warning" : "check"
                 }}</mat-icon>
                 person
               </mat-icon>
             </button>
             <button
+              matTooltip="Descripción"
+              [matTooltipShowDelay]=500
               mat-icon-button
-              class="mt-1"
+              class="mt-1 mx-0"
               (click)="task.visibleDescription = !task.visibleDescription"
             >
               <mat-icon class="icon px-4">description</mat-icon>
             </button>
-            <button mat-icon-button class="mt-1">
+            <button mat-icon-button class="mt-1"
+              matTooltip="Prioridad"
+              [matTooltipShowDelay]=500>
               <mat-icon
                 *ngIf="changeHigh(task.priority)"
                 class="icon"
@@ -273,6 +291,8 @@
               <small class="px-0">{{ task.priority }}</small>
             </button>
             <button
+              matTooltip="Comentarios"
+              [matTooltipShowDelay]=500
               mat-icon-button
               disableRipple
               class="mt-1"
@@ -330,6 +350,8 @@
           cdkDrag
         >
           <button
+            matTooltip="Menu"
+            [matTooltipShowDelay]=500
             mat-icon-button
             [matMenuTriggerFor]="menu"
             aria-label="Example icon-button with a menu"
@@ -360,24 +382,30 @@
           <div class="d-flex justify-content-end">
             <button
               mat-icon-button
-              class="mt-1"
+              class="mt-1 px-0 mx-2"
               (click)="task.visibleAssign = !task.visibleAssign"
             >
-              <mat-icon class="fs-5 icon px-0">
-                <mat-icon class="fs-6 px-0">{{
+              <mat-icon class="fs-5 icon px-0 mx-0"
+              [matTooltip]="task.assignedUser == null ? 'No Asignado': 'Asignado' "
+              [matTooltipShowDelay]=500>
+                <mat-icon class="fs-6 px-0 mx-0">{{
                   task.assignedUser == null ? "warning" : "check"
                 }}</mat-icon>
                 person
               </mat-icon>
             </button>
             <button
+              matTooltip="Descripción"
+              [matTooltipShowDelay]=500
               mat-icon-button
-              class="mt-1"
+              class="mt-1 mx-0"
               (click)="task.visibleDescription = !task.visibleDescription"
             >
               <mat-icon class="icon px-4">description</mat-icon>
             </button>
-            <button mat-icon-button class="mt-1">
+            <button mat-icon-button class="mt-1"
+              matTooltip="Prioridad"
+              [matTooltipShowDelay]=500>
               <mat-icon
                 *ngIf="changeHigh(task.priority)"
                 class="icon"
@@ -397,6 +425,8 @@
               <small class="px-0">{{ task.priority }}</small>
             </button>
             <button
+              matTooltip="Comentarios"
+              [matTooltipShowDelay]=500
               mat-icon-button
               disableRipple
               class="mt-1"
