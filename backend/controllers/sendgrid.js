@@ -10,10 +10,10 @@ const sendMail = async (req, res) => {
     subject: "Bienvenido a Creppy Trello Software",
     name: "Creppy Trello",
     html:
-      "Hi, " +
+      "Hola, " +
       req.body.name +
       "!<br />Bienvenido a Creppy Trello Software." +
-      "Por favor, active su correo haciendo clic <strong><a href='" +
+      "Por favor, activa su correo haciendo clic <strong><a href='" +
       urlMail +
       "'>aquí</a></strong>",
   };
@@ -27,4 +27,30 @@ const sendMail = async (req, res) => {
       return "error";
     });
 };
-module.exports = { sendMail };
+
+
+
+
+const sendMailInvited = async (req, res) => {
+  const msg = {
+    to: req.body.mail, // Change to your recipient
+    from: "creepytrello@gmail.com", // Change to your verified sender
+    subject: "Bienvenido a tu nuevo proyecto!" ,
+    name: "Creppy Trello",
+    html:
+      "Hola, " +
+      req.body.userName +
+      "!<br />Fuiste invitado a colaborar en el proyecto .<b>" + req.body.boardName +".</b>"
+  };
+
+  sgMail
+    .send(msg)
+    .then((response) => {
+      return "ok";
+    })
+    .catch((error) => {
+      return "error";
+    });
+};
+
+module.exports = { sendMail, sendMailInvited };

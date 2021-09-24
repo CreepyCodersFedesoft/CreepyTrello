@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
 const moment = require("moment");
+const sendMailInvited = require('./sendgrid');
 
 const createBoard = async (req, res) => {
   if (!req.body.name || !req.body.description)
@@ -217,13 +218,15 @@ const deleteBoard = async (req, res) => {
   }
   return res.status(200).send({ message: "Board deleted" });
 };
+
+
 const addListBoard = async (req, res) => {
-  //añade un usuario invitado al board
-  console.log(req.body);
+
   if (!req.body._id || !req.body.newUserId)
     return res.status(400).send("Error: empty data");
 
   let board = await Board.findById(req.body._id);
+
   if (
     !board ||
     board.length === 0 ||
@@ -233,6 +236,7 @@ const addListBoard = async (req, res) => {
       .status(400)
       .send("Error: No board found or you are not the owner");
 
+  /*
   const doesBoardExist = await board.exists({ userList: req.body.newUserId });
 
   if (doesBoardExist)
@@ -240,12 +244,17 @@ const addListBoard = async (req, res) => {
 
   board = await Board.findByIdAndUpdate(req.body._id, {
     $push: { userList: req.body.newUserId },
-  });
+  });*/
 
   if (!board) return res.status(400).send("Error: error to update board");
 
+
+  sendMailInvited.sendMailInvited(req);
   res.status(200).send({ board });
 };
+
+
+
 const dropListBoard = async (req, res) => {
   //borrar a un usuario invitado del board
   if (!req.body._id || !req.body.newUserId)

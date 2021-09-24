@@ -297,36 +297,29 @@ export class ListSprintComponent implements OnInit {
     );
   }
 
-  mailAction(emailInput: any){
-
+  mailAction(){
     for (let email of this.emails){   
-
       this._userService.getUserByEmail(email).subscribe(
         (res) => {         
           const user = res.user;
-          const idBoard = this.boardData._id
+          const idBoard = this.boardData._id;
+          const boardName = this.boardData.name;
+
           let data = {};
-          data = {_id:idBoard,newUserId:user._id}
-       
-          
-
+          data = {_id:idBoard,newUserId:user._id, mail:email, userName:user.name, boardName:boardName}     
+  
           this.createUserBoard(data, email);
-
         },
         (err) => {
           console.log(err.error);
           this._utilitiesService.openSnackBarError(err.error);
         }
       );
-
-
     }
-
   }
 
   createUserBoard(data:any, email:string){
-    console.log(email);
-    console.log(data),
+
     this._boardService.addListBoard(data).subscribe(
       (res) => {
         console.log(res);              
