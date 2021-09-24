@@ -62,4 +62,12 @@ export class UtilitiesService {
   SweetAlert(title: string, text: string ,icon: any){
     swal.fire(title, text, icon);
   }
+
+  SweetAlertImage(ImageUrl: any){
+    swal.fire({
+      imageUrl: ImageUrl,
+      imageWidth: 900,
+      width: 900
+    })
+  }
 }

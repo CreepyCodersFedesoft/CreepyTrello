@@ -60,6 +60,7 @@ this.show == true
       *ngIf="sprintId != null"
       [sprintId]="this.sprintId"
       [boardId]="this.boardData._id"
+      (onChange)="onChangeSprint($event)"
     ></app-list-task>
 
     <div *ngIf="sprintId == null">

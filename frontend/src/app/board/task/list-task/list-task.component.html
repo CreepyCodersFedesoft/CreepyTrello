@@ -1,26 +1,90 @@
-<div class="container-fluid contentTask overflow-auto w-100 at-5">
-  
+<div class="container-fluid contentTask overflow-auto w-100 px-5 at-5">
   <div class="row">
-    <h2 class="text-center">Proceso de las Tareas</h2>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <h2 class="text-center pt-2 fs-2">Proceso de las Tareas</h2>
+    </div>
+    <div class="col-md-4 text-center">
+      <button mat-button (click)="filterUnAssignedFunction()" class="d-inline">
+        <mat-icon>
+          {{ filterUnAssigned == false ? "filter_list" : "done" }}
+        </mat-icon>
+        {{ filterUnAssigned == false ? "Todas" : "Sin asignar" }}
+      </button>
+      <button
+        mat-button
+        (click)="searchActive = !searchActive"
+        class="d-inline"
+      >
+        <mat-icon> {{ searchActive == false ? "search" : "done" }} </mat-icon>
+        Buscar
+      </button>
+      <button
+        mat-button
+        (click)="priorityFilterActive = !priorityFilterActive"
+        class="d-inline"
+      >
+        <mat-icon>
+          {{
+            priorityFilterActive == false ? "priority_high" : "done"
+          }}</mat-icon
+        >
+        Prioridad
+      </button>
+      <div *ngIf="priorityFilterActive">
+        <button
+          mat-button
+          (click)="priorityFilterFuncion(null)"
+          class="d-inline"
+        >
+          <mat-icon> priority_high </mat-icon>
+          Ninguno
+        </button>
+        <button mat-button (click)="priorityFilterFuncion(1)" class="d-inline">
+          <mat-icon> trending_down </mat-icon>
+          1
+        </button>
+        <button mat-button (click)="priorityFilterFuncion(2)" class="d-inline">
+          <mat-icon> trending_flat </mat-icon>
+          2
+        </button>
+        <button mat-button (click)="priorityFilterFuncion(3)" class="d-inline">
+          <mat-icon> trending_up </mat-icon>
+          3
+        </button>
+      </div>
+      <input
+        *ngIf="searchActive"
+        type="text"
+        mat-input
+        class="bgInput form-control text-center rounded-0 border-0 my-2"
+        placeholder="Busca Tus Tareas"
+        (keyup)="filteredWords()"
+        [(ngModel)]="searchText"
+        autofocus
+      />
+    </div>
   </div>
   <div class="row">
     <div class="col-lg-4 text-center font-weight-bold">
-      <h4>To-Do</h4>
+      <h4 class="fs-3">To-Do</h4>
       <div
         cdkDropList
         class="example-list"
         id="to-do"
         [cdkDropListData]="taskData"
-        [cdkDropListConnectedTo]="['in-progress','done']"
-        (cdkDropListDropped)="drop($event);"
+        [cdkDropListConnectedTo]="['in-progress', 'done']"
+        (cdkDropListDropped)="drop($event)"
       >
         <div
-          class="example-box row align-items-start"
+          class="example-box colorTaskToDo row align-items-start"
           *ngFor="let task of taskData"
           [cdkDragData]="task"
           cdkDrag
         >
           <button
+            matTooltip="Menu"
+            [matTooltipShowDelay]=500
             mat-icon-button
             [matMenuTriggerFor]="menu"
             aria-label="Example icon-button with a menu"
@@ -32,7 +96,10 @@
               <mat-icon>details</mat-icon>
               <span>Detalles</span>
             </button>
-            <button mat-menu-item>
+            <button
+              (click)="updateTask2(task._id, task.taskStatus)"
+              mat-menu-item
+            >
               <mat-icon>edit</mat-icon>
               <span>Editar</span>
             </button>
@@ -48,44 +115,67 @@
           <div class="d-flex justify-content-end">
             <button
               mat-icon-button
-              class="mt-1 px-0"
+              class="mt-1 px-0 mx-2"
               (click)="task.visibleAssign = !task.visibleAssign"
             >
-              <mat-icon class="fs-5 icon px-0 mx-0">
-                <mat-icon class="fs-6 px-0 mx-0">{{task.assignedUser == null ? 'warning': 'check'}}</mat-icon>
+              <mat-icon class="fs-5 icon px-0 mx-0"
+              [matTooltip]="task.assignedUser == null ? 'No Asignado': 'Asignado' "
+              [matTooltipShowDelay]=500>
+                <mat-icon class="fs-6 px-0 mx-0">{{
+                  task.assignedUser == null ? "warning" : "check"
+                }}</mat-icon>
                 person
               </mat-icon>
             </button>
             <button
+              matTooltip="Descripción"
+              [matTooltipShowDelay]=500
               mat-icon-button
-              class="mt-1"
+              class="mt-1 mx-0"
               (click)="task.visibleDescription = !task.visibleDescription"
             >
               <mat-icon class="icon px-4">description</mat-icon>
-            </button>            
-            <button mat-icon-button class="mt-1">
-              <mat-icon class="icon" style="padding-right: 0px !important"
-                >priority_high</mat-icon
+            </button>
+            <button mat-icon-button class="mt-1"
+              matTooltip="Prioridad"
+              [matTooltipShowDelay]=500>
+              <mat-icon
+                *ngIf="changeHigh(task.priority)"
+                class="icon"
+                style="padding-right: 0px !important"
+                >trending_up</mat-icon
+              ><mat-icon
+                *ngIf="changeMedium(task.priority)"
+                class="icon"
+                style="padding-right: 0px !important"
+                >trending_flat</mat-icon
+              ><mat-icon
+                *ngIf="changeLow(task.priority)"
+                class="icon"
+                style="padding-right: 0px !important"
+                >trending_down</mat-icon
               >
               <small class="px-0">{{ task.priority }}</small>
             </button>
-            <button mat-icon-button class="mt-1">
-              <mat-icon class="icon">thumb_up_off_alt</mat-icon>
-            </button>
             <button
+              matTooltip="Comentarios"
+              [matTooltipShowDelay]=500
               mat-icon-button
               disableRipple
               class="mt-1"
               (click)="task.visibleComments = !task.visibleComments"
             >
               <mat-icon class="icon">chat_bubble_outline</mat-icon>
-              {{task.countComments}}
+              {{ task.countComments }}
             </button>
             <hr />
           </div>
           <!-- Aquí va el contenido de los componentes añadidos -->
           <div *ngIf="task.visibleComments">
-            <app-list-comments [taskId]="task._id"></app-list-comments>
+            <app-list-comments
+              [taskId]="task._id"
+              (newComment)="onNewComment(task)"
+            ></app-list-comments>
           </div>
           <div *ngIf="task.visibleAssign">
             <app-assign-task
@@ -96,20 +186,21 @@
             </app-assign-task>
           </div>
           <div *ngIf="task.visibleDescription">
-            <img *ngIf="task.imgUrl !== ''" [src]="task.imgUrl" class="pt-2 img-fluid w-100 h-auto">
-            <p type="textarea" class="p-4 fs-4 w-100 bgDescription">{{task.description}}</p>
+            <img *ngIf="task.imgUrl !== ''" [src]="task.imgUrl" class="pt-2 img-fluid w-100 h-auto" 
+            (click)="modalImg(task.imgUrl)">
+            <p type="textarea" class="p-4 fs-4 w-100 bgDescriptionToDo">{{task.description}}</p>
             <small class="fst-italic">
               Fecha de creación:
               {{ task.date | date }}
               {{ task.date | date: "shortTime" }}
             </small>
-          </div>       
+          </div>
         </div>
       </div>
     </div>
 
     <div class="col-lg-4 text-center">
-      <h4>In progress</h4>
+      <h4 class="fs-3">In progress</h4>
       <div
         cdkDropList
         class="example-list"
@@ -119,12 +210,14 @@
         (cdkDropListDropped)="drop($event)"
       >
         <div
-          class="example-box row align-items-start"
+          class="example-box colorTaskInProgress row align-items-start"
           *ngFor="let task of taskData2"
           [cdkDragData]="task"
           cdkDrag
         >
           <button
+            matTooltip="Menu"
+            [matTooltipShowDelay]=500
             mat-icon-button
             [matMenuTriggerFor]="menu"
             aria-label="Example icon-button with a menu"
@@ -132,15 +225,18 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button (click)="onCreate()" mat-menu-item>
+            <button [routerLink]="['/listTask/', task._id]" mat-menu-item>
               <mat-icon>details</mat-icon>
               <span>Detalles</span>
             </button>
-            <button mat-menu-item>
+            <button
+              (click)="updateTask2(task._id, task.taskStatus)"
+              mat-menu-item
+            >
               <mat-icon>edit</mat-icon>
               <span>Editar</span>
             </button>
-            <button (click)="onCreate()" mat-menu-item>
+            <button (click)="deleteTask(task)" mat-menu-item>
               <mat-icon>delete</mat-icon>
               <span>Eliminar</span>
             </button>
@@ -150,47 +246,69 @@
             {{ task.date | date }} {{ task.date | date: "shortTime" }}
           </div>
           <div class="d-flex justify-content-end">
-
             <button
               mat-icon-button
-              class="mt-1"
+              class="mt-1 px-0 mx-2"
               (click)="task.visibleAssign = !task.visibleAssign"
             >
-              <mat-icon class="fs-5 icon px-0">
-                <mat-icon class="fs-6 px-0">{{task.assignedUser == null ? 'warning': 'check'}}</mat-icon>
+              <mat-icon class="fs-5 icon px-0 mx-0"
+              [matTooltip]="task.assignedUser == null ? 'No Asignado': 'Asignado' "
+              [matTooltipShowDelay]=500>
+                <mat-icon class="fs-6 px-0 mx-0">{{
+                  task.assignedUser == null ? "warning" : "check"
+                }}</mat-icon>
                 person
               </mat-icon>
             </button>
             <button
+              matTooltip="Descripción"
+              [matTooltipShowDelay]=500
               mat-icon-button
-              class="mt-1"
+              class="mt-1 mx-0"
               (click)="task.visibleDescription = !task.visibleDescription"
             >
               <mat-icon class="icon px-4">description</mat-icon>
-            </button>            
-            <button mat-icon-button class="mt-1">
-              <mat-icon class="icon" style="padding-right: 0px !important">
-                priority_high
-              </mat-icon>
+            </button>
+            <button mat-icon-button class="mt-1"
+              matTooltip="Prioridad"
+              [matTooltipShowDelay]=500>
+              <mat-icon
+                *ngIf="changeHigh(task.priority)"
+                class="icon"
+                style="padding-right: 0px !important"
+                >trending_up</mat-icon
+              ><mat-icon
+                *ngIf="changeMedium(task.priority)"
+                class="icon"
+                style="padding-right: 0px !important"
+                >trending_flat</mat-icon
+              ><mat-icon
+                *ngIf="changeLow(task.priority)"
+                class="icon"
+                style="padding-right: 0px !important"
+                >trending_down</mat-icon
+              >
               <small class="px-0">{{ task.priority }}</small>
             </button>
-            <button mat-icon-button class="mt-1">
-              <mat-icon class="icon">thumb_up_off_alt</mat-icon>
-            </button>
             <button
+              matTooltip="Comentarios"
+              [matTooltipShowDelay]=500
               mat-icon-button
               disableRipple
               class="mt-1"
               (click)="task.visibleComments = !task.visibleComments"
             >
               <mat-icon class="icon">chat_bubble_outline</mat-icon>
-              {{task.countComments}}
+              {{ task.countComments }}
             </button>
             <hr />
           </div>
           <!-- Aquí va el contenido de los componentes añadidos -->
           <div *ngIf="task.visibleComments">
-            <app-list-comments [taskId]="task._id"></app-list-comments>
+            <app-list-comments
+              [taskId]="task._id"
+              (newComment)="onNewComment(task)"
+            ></app-list-comments>
           </div>
           <div *ngIf="task.visibleAssign">
             <app-assign-task
@@ -201,8 +319,9 @@
             </app-assign-task>
           </div>
           <div *ngIf="task.visibleDescription">
-            <img *ngIf="task.imgUrl !== ''" [src]="task.imgUrl" class="pt-2 img-fluid w-100 h-auto">
-            <p type="textarea" class="p-4 fs-4 w-100 bgDescription">{{task.description}}</p>
+            <img *ngIf="task.imgUrl !== ''" [src]="task.imgUrl" class="pt-2 img-fluid w-100 h-auto"
+            (click)="modalImg(task.imgUrl)">
+            <p type="textarea" class="p-4 fs-4 w-100 bgDescriptionInProgress">{{task.description}}</p>
             <small class="fst-italic">
               Fecha de creación:
               {{ task.date | date }}
@@ -214,23 +333,25 @@
     </div>
 
     <div class="col-lg-4 text-center">
-      <h4>Done</h4>
+      <h4 class="fs-3">Done</h4>
       <div
         cdkDropList
         class="example-list"
         id="done"
         [cdkDropListData]="taskData3"
-        [cdkDropListConnectedTo]="['to-do','in-progress']"
+        [cdkDropListConnectedTo]="['to-do', 'in-progress']"
         (cdkDropListDropped)="drop($event)"
       >
         <div
-          class="example-box row align-items-start"
+          class="example-box colorTaskDone row align-items-start"
           *ngFor="let task of taskData3"
           [cdkDragData]="task"
           (cdkDropListDropped)="updateTask(task, 'done')"
           cdkDrag
         >
           <button
+            matTooltip="Menu"
+            [matTooltipShowDelay]=500
             mat-icon-button
             [matMenuTriggerFor]="menu"
             aria-label="Example icon-button with a menu"
@@ -238,15 +359,18 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button (click)="onCreate()" mat-menu-item>
+            <button [routerLink]="['/listTask/', task._id]" mat-menu-item>
               <mat-icon>details</mat-icon>
               <span>Detalles</span>
             </button>
-            <button mat-menu-item>
+            <button
+              (click)="updateTask2(task._id, task.taskStatus)"
+              mat-menu-item
+            >
               <mat-icon>edit</mat-icon>
               <span>Editar</span>
             </button>
-            <button (click)="onCreate()" mat-menu-item>
+            <button (click)="deleteTask(task)" mat-menu-item>
               <mat-icon>delete</mat-icon>
               <span>Eliminar</span>
             </button>
@@ -258,44 +382,67 @@
           <div class="d-flex justify-content-end">
             <button
               mat-icon-button
-              class="mt-1"
+              class="mt-1 px-0 mx-2"
               (click)="task.visibleAssign = !task.visibleAssign"
             >
-              <mat-icon class="fs-5 icon px-0">
-                <mat-icon class="fs-6 px-0">{{task.assignedUser == null ? 'warning': 'check'}}</mat-icon>
+              <mat-icon class="fs-5 icon px-0 mx-0"
+              [matTooltip]="task.assignedUser == null ? 'No Asignado': 'Asignado' "
+              [matTooltipShowDelay]=500>
+                <mat-icon class="fs-6 px-0 mx-0">{{
+                  task.assignedUser == null ? "warning" : "check"
+                }}</mat-icon>
                 person
               </mat-icon>
             </button>
             <button
+              matTooltip="Descripción"
+              [matTooltipShowDelay]=500
               mat-icon-button
-              class="mt-1"
+              class="mt-1 mx-0"
               (click)="task.visibleDescription = !task.visibleDescription"
             >
               <mat-icon class="icon px-4">description</mat-icon>
-            </button>            
-            <button mat-icon-button class="mt-1">
-              <mat-icon class="icon" style="padding-right: 0px !important"
-                >priority_high</mat-icon
+            </button>
+            <button mat-icon-button class="mt-1"
+              matTooltip="Prioridad"
+              [matTooltipShowDelay]=500>
+              <mat-icon
+                *ngIf="changeHigh(task.priority)"
+                class="icon"
+                style="padding-right: 0px !important"
+                >trending_up</mat-icon
+              ><mat-icon
+                *ngIf="changeMedium(task.priority)"
+                class="icon"
+                style="padding-right: 0px !important"
+                >trending_flat</mat-icon
+              ><mat-icon
+                *ngIf="changeLow(task.priority)"
+                class="icon"
+                style="padding-right: 0px !important"
+                >trending_down</mat-icon
               >
               <small class="px-0">{{ task.priority }}</small>
             </button>
-            <button mat-icon-button class="mt-1">
-              <mat-icon class="icon">thumb_up_off_alt</mat-icon>
-            </button>
             <button
+              matTooltip="Comentarios"
+              [matTooltipShowDelay]=500
               mat-icon-button
               disableRipple
               class="mt-1"
               (click)="task.visibleComments = !task.visibleComments"
             >
               <mat-icon class="icon">chat_bubble_outline</mat-icon>
-              {{task.countComments}}
+              {{ task.countComments }}
             </button>
             <hr />
           </div>
           <!-- Aquí va el contenido de los componentes añadidos -->
           <div *ngIf="task.visibleComments">
-            <app-list-comments [taskId]="task._id"></app-list-comments>
+            <app-list-comments
+              [taskId]="task._id"
+              (newComment)="onNewComment(task)"
+            ></app-list-comments>
           </div>
           <div *ngIf="task.visibleAssign">
             <app-assign-task
@@ -306,8 +453,9 @@
             </app-assign-task>
           </div>
           <div *ngIf="task.visibleDescription">
-            <img *ngIf="task.imgUrl !== ''" [src]="task.imgUrl" class="pt-2 img-fluid w-100 h-auto">
-            <p type="textarea" class="p-4 fs-4 w-100 bgDescription">{{task.description}}</p>
+            <img *ngIf="task.imgUrl !== ''" [src]="task.imgUrl" class="pt-2 img-fluid w-100 h-auto"
+            (click)="modalImg(task.imgUrl)">
+            <p type="textarea" class="p-4 fs-4 w-100 bgDescriptionDone">{{task.description}}</p>
             <small class="fst-italic">
               Fecha de creación:
               {{ task.date | date }}

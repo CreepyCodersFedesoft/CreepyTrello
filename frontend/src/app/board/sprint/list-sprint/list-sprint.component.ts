@@ -121,6 +121,10 @@ export class ListSprintComponent implements OnInit {
     }
   }
 
+  onChangeSprint(e:any){
+    this.chargeSprint(e);
+  }
+
   chargeBoardId(boardId: any) {
     this.boardId = boardId;
   }
@@ -156,9 +160,9 @@ export class ListSprintComponent implements OnInit {
     this._matDialog.open(CreateTaskComponent, {
       data: { sprintId, boardId },
       autoFocus: true,
-      panelClass: [''],
-      width: '400px',
-      height: '400px',
+      panelClass: ['dialog'],
+      width: '500px',
+      height: '470px',
     });
     //this.chargeSprint(sprintId);
   }
@@ -172,9 +176,15 @@ export class ListSprintComponent implements OnInit {
     );
 
     if (result.isConfirmed) {
-      this._sprintService.deleteSprint(this.sprintId).subscribe();
-      this._utilitiesService.SweetAlert('Proceso Exitoso', 'Board eliminado con existo!', 'success');
-      this._sprintService.updateListSprints(this.boardData._id);
+      this._sprintService.deleteSprint(this.sprintId).subscribe(
+        (res) => {
+          this._utilitiesService.SweetAlert('Proceso Exitoso', 'Board eliminado con existo!', 'success');
+          this._sprintService.updateListSprints(this.boardData._id);
+        },
+        (err) => {
+          this._utilitiesService.openSnackBarError(err.error);
+        }
+      );
     }
   }
 

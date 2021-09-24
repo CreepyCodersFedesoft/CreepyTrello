@@ -46,4 +46,8 @@ export class TaskService {
   findTask(_id: string) {
     return this._http.get<any>(this.env + 'task/findTask/' + _id);
   }
+
+  listLogTask(log: string) {
+    return this._http.get<any>(this.env + 'task/listLogTask/' + log);
+  }
 }

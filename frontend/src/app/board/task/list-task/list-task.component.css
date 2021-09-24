@@ -1,17 +1,69 @@
+/*colores*/
+.bgInput {
+  justify-content: right;
+  background: #3A656F;
+  color: #ffffff;
+}
+
+input::placeholder {
+  color: #ffffff;
+  font-size: 1.2em;
+}
+.bgDescriptionToDo{
+  background: #17a2b8;
+  border-color:#106977;
+  border: solid 2px ;
+  border-radius: 2%;
+}
+.bgDescriptionInProgress{
+  background: #ffca6f;
+  border-color:#cf9a3d;
+  border: solid 2px ;
+  border-radius: 2%;
+}
+.bgDescriptionDone{
+  background: #00722e;
+  border-color:#1f8637;
+  border: solid 2px ;
+  border-radius: 2%;
+}
+.colorTaskToDo {
+  background: #17a2b8;
+  color: white;
+}
+.colorTaskInProgress {
+  background: #ffca6f;
+  color: black;
+}
+.colorTaskDone {
+  background: #00722e;
+  color: white;
+}
 .contentTask {
   height: 100vh !important;
   padding-left: 1%;
   padding-right: 1%;
 }
-.bgDescription{
-  background: #ebaf48;
-  border-color:#c79338;
-  border-radius: 2%;
+.colorTaskToDo .mat-icon:hover {
+  color: #2f00ff;
+  cursor: pointer;
+  padding-right: 15px;
 }
+.colorTaskDone .mat-icon:hover {
+  color: #1e682f;
+  cursor: pointer;
+  padding-right: 15px;
+}
+.colorTaskInProgress .mat-icon:hover {
+  color: #881f0d;
+  cursor: pointer;
+  padding-right: 15px;
+}
+/*colores*/
 .mat-icon {
   padding-right: 15px;
 }
-
+/*fin colores*/
 .mat-icon:hover {
   color: #ff0000;
   cursor: pointer;
@@ -19,7 +71,7 @@
 }
 
 .example-list {
-  border: solid 1px rgb(255, 255, 255);
+  border: solid 3px rgba(255, 255, 255, 0);
   min-height: 60px;
   border-radius: 4px;
   display: block;
@@ -27,17 +79,18 @@
 
 .example-box {
   padding: 10px 10px 10px 10px;
-  border-bottom: solid 1px #ffffff;
-  color: black;
+  border-bottom: solid 2px #ffffff;
+  
   flex-direction: row;
   align-items: center;
   /*justify-content: space-between*/
   box-sizing: border-box;
   cursor: move;
-  background: #ffca6f;
   font-size: 15px;
   text-align: center;
 }
+
+
 .icon {
   font-size: 18px;
 }
@@ -71,42 +124,10 @@
   flex: 1 0 auto;
 }
 
-.btnDone {
-  background-color: #3cb44b;
-  color: #ffffff;
-}
-
-.btnInProgress {
-  background-color: #f58231;
-  color: #ffffff;
-}
-
-.btnToDo {
-  background-color: #e6194b;
-  color: #ffffff;
-}
-
-.btnSelectDone {
-  color: #3cb44b;
-}
-
-.btnSelectInProgress {
-  color: #f58231;
-}
-
-.btnSelectTodo {
-  color: #e6194b;
-}
-
 .mat-icon {
   padding-right: 15px;
 }
 
-.mat-icon:hover {
-  color: #ff0000;
-  cursor: pointer;
-  padding-right: 15px;
-}
 
 .image_center {
   margin-left: auto;
@@ -131,7 +152,7 @@
 }
 
 .contentTask::-webkit-scrollbar-thumb {
-  background-color: #a16b0d;
+  background-color: #106977;
   border-radius: 20px;
   border: 0;
 }

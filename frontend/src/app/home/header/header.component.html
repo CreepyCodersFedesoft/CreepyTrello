@@ -1,22 +1,25 @@
 <mat-toolbar class="bgHeader">
-  <ul class="inicio">
-      <a *ngIf="_userService.loggedIn()"  mat-button routerLink="registerBoard">Crear Tablero</a>
-      <a *ngIf="_userService.loggedIn()"  mat-button routerLink="listBoard">Lista de Tableros</a>
+  <ul class="inicio p-0">
+      <a *ngIf="_userService.loggedIn()"  class="m-1" mat-button routerLink="registerBoard">Crear Tablero</a>
+      <a *ngIf="_userService.loggedIn()"  class="m-1" mat-button routerLink="listBoard">Lista de Tableros</a>
   </ul>
 
   <ul class="medio">
+    <!--
+      aqui va el logo
     <img
       class="img"
       src="../../../assets/img/logo/logo.gif"
       alt="logo CreepyCoders"
       routerLink="listBoard"
-    />
+    />  
+    -->
   </ul>
   
   <ul class="fin">
     <a
       *ngIf="_userService.loggedIn() && _userService.isAdmin()"
-      class="dropdown m-2"
+      class="dropdown m-1"
       mat-button
       >Administración
       <div class="dropdown-content">
@@ -29,10 +32,10 @@
       </div>
     </a>
 
-    <a *ngIf="!_userService.loggedIn()" class="m-2" mat-button routerLink="register">Sign Up</a>
-    <a *ngIf="!_userService.loggedIn()" class="m-2" mat-button routerLink="login">Login</a>
+    <a *ngIf="!_userService.loggedIn()" class="m-1" mat-button routerLink="register">Sign Up</a>
+    <a *ngIf="!_userService.loggedIn()" class="m-1" mat-button routerLink="login">Login</a>
 
-    <a mat-button class="dropdown m-2" *ngIf="this._userService.loggedIn()">
+    <a mat-button class="dropdown m-1" *ngIf="this._userService.loggedIn()">
       <img
         [src]="this.profileImage"
         class="imgDoesnExist profileConfig"

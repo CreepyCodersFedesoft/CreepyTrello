@@ -1,12 +1,26 @@
+
+.button {
+  width: 100%;
+  background-color: #3A656F;
+  color: #fff;
+}
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #3A656F;
+  display: inline-block;
+  transition: all 0.5s;
+  cursor: pointer;
+  padding: 15px 40px !important;
+  text-transform: uppercase;
+  width: fit-content;
+  text-align: center; 
+}
 .container {
   display: flex;
   flex-direction: column;
   align-items: center; 
-}
-.button {
-  width: 100%;
-  background-color: #ffca6f;
-  color: black;
 }
 .card {
   min-width: 150px;
@@ -29,7 +43,6 @@
   padding-bottom: 25%;
   background-repeat: no-repeat;
   background-image: url(../../../assets/img/metodologia.jpg);
-
 }
 mat-card-title {
   text-align: center;
@@ -46,21 +59,7 @@ input#upload {
   z-index: -1;
 }
 
-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: rgb(1, 0, 75);
-  background-color: #ffca6f;
-  display: inline-block;
-  transition: all 0.5s;
-  cursor: pointer;
-  padding: 15px 40px !important;
-  text-transform: uppercase;
-  width: fit-content;
-  text-align: center;
 
-  
-}
 #center{
   align-items: center;
 }

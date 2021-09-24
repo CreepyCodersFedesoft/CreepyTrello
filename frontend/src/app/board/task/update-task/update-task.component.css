@@ -1,4 +1,4 @@
-/*comienza colores*/
+/*Comienza colores*/
 label {
   font-size: 14px;
   font-weight: 600;
@@ -42,13 +42,12 @@ label {
 }
 .bgComponent {
   width: 100%;
-  height: auto;
+  height: 100%;
 }
 
 mat-card-title {
   text-align: center;
 }
-
 input#upload {
   width: 0.1px;
   height: 0.1px;

@@ -1,0 +1,30 @@
+
+<h3 class="text-center">Historial de la tarea</h3>
+
+<span class='col-12' *ngIf="logData"  >
+
+  <table  class='table table-striped table-hover text-center' >
+    <thead class='table-warning text-center bgcomponent'>
+      <th  scope="col">N°</th>
+      <th  scope="col">Usuario</th>
+      <th  scope="col">Acción</th>
+      <th  scope="col">Fecha</th>
+      <th  scope="col">Hora</th>
+    </thead>
+    <tbody>
+      <tr scope="row" *ngFor="let datos of logData">
+        <td></td>
+        <td>{{datos.userId.name}}</td>
+        <td>{{datos.actionType}}</td>
+        <td>{{datos.date | date}}</td>
+        <td>{{datos.date | date: "shortTime"}}</td>
+      </tr>
+    </tbody>
+
+  </table>
+</span>
+
+<div class='col-12'>
+
+<h1 *ngIf="!logData">No hay datos cargados</h1>
+</div>
