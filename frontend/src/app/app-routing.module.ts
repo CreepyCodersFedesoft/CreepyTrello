@@ -14,13 +14,11 @@ import { ListTaskComponent } from './board/task/list-task/list-task.component';
 import { LoginComponent } from './home/login/login.component';
 import { RegisterComponent } from './home/register/register.component';
 import { UpdateUserComponent } from './home/update-user/update-user.component';
-import { TaskDetailsComponent } from "./board/task/task-details/task-details.component";
+import { TaskDetailsComponent } from './board/task/task-details/task-details.component';
 import { InviteUserBoardComponent } from './board/invite-user-board/invite-user-board.component';
 import { LogTaskComponent } from './board/task/log-task/log-task.component';
 import { AuthGuard } from './guard/auth.guard';
-import { UpdateTaskComponent } from "./board/task/update-task/update-task.component";
-
-
+import { UpdateTaskComponent } from './board/task/update-task/update-task.component';
 
 const routes: Routes = [
   {
@@ -41,85 +39,82 @@ const routes: Routes = [
   {
     path: 'updateUser',
     component: UpdateUserComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: 'listBoard',
     component: ListBoardComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: 'inviteUserBoard',
     component: InviteUserBoardComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: 'registerBoard',
     component: RegisterBoardComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: 'listTask',
     component: ListTaskComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: 'createTask',
     component: CreateTaskComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: 'listComments',
     component: ListCommentsComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: 'createComment',
     component: CreateCommentsComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: 'createRole',
     component: CreateRoleComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: 'listRole',
     component: ListRoleComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: 'listUser',
     component: ListUserComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: 'sprints/:boardId',
     component: ListSprintComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: 'createSprint',
     component: CreateSprintComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
-
   {
     path: 'listTask/:_id',
     component: TaskDetailsComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
-
   {
     path: 'listLogTask',
     component: LogTaskComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
- 
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
