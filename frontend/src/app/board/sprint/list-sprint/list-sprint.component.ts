@@ -19,6 +19,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 //END CHIPS
 
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-list-sprint',
@@ -26,12 +27,16 @@ import { map, startWith } from 'rxjs/operators';
   styleUrls: ['./list-sprint.component.css'],
 })
 export class ListSprintComponent implements OnInit {
+  registerData: any;
   show: boolean = true;
   sprintData: any;
   boardData: any;
   sprintId: any;
   boardId: any;
   message: string;
+  selectedFile: any;
+  userImg: any = '';
+  registerBoard: any;
 
   //CHIPS variables utilizadas en chips
   selectable = true;
@@ -42,8 +47,11 @@ export class ListSprintComponent implements OnInit {
   emails: string[] = [];
   allMails: string[] = [];
   @ViewChild('emailInput') emailInput!: ElementRef<HTMLInputElement>;
-  //CHIPS
+  //End CHIPS
+  //Update form
+  @ViewChild('nameUpdate', {static: true}) nameUpdate!: ElementRef;
 
+  //end Update Form
   constructor(
     private _sprintService: SprintService,
     private _router: Router,
@@ -52,6 +60,7 @@ export class ListSprintComponent implements OnInit {
     private _utilitiesService: UtilitiesService,
     private _boardService: BoardService,
     private _userService: UserService,
+    private _sanitizer: DomSanitizer
   ) {
     this.sprintData = {};
     this.boardData = {};
@@ -62,27 +71,27 @@ export class ListSprintComponent implements OnInit {
     this.filteredEmails = this.emailCtrl.valueChanges.pipe(
       startWith(null),
       map((mail: string | null) =>
-      mail ? this._filter(mail) : this.allMails.slice()
+        mail ? this._filter(mail) : this.allMails.slice()
       )
-    );    
+    );
   }
 
   ngOnInit(): void {
     let now = new Date();
-    
+
     this.chargeBoard();
     this.getMails();
     this._sprintService.listSprints.subscribe((res) => {
       let anyArray: any[] = res.sprint;
       for (const i in anyArray) {
-        let start = new Date(anyArray[i].startDate)
-        let end = new Date(anyArray[i].endDate)
+        let start = new Date(anyArray[i].startDate);
+        let end = new Date(anyArray[i].endDate);
 
-        if(start <= now && now <= end){
+        if (start <= now && now <= end) {
           anyArray[i].color = 'aquamarine';
-        }else if(now < start){
+        } else if (now < start) {
           anyArray[i].color = 'lightgray';
-        }else if(end < now){
+        } else if (end < now) {
           anyArray[i].color = 'coral';
         }
         anyArray[i].sprintOptions = false;
@@ -96,11 +105,13 @@ export class ListSprintComponent implements OnInit {
   }
 
   chargeBoard() {
+
     this._boardService
       .getBoardById(this._activeRoute.snapshot.params.boardId)
       .subscribe(
         (res) => {
           this.boardData = res.board;
+          //console.log(res.board)
           this._sprintService.updateListSprints(this.boardData._id);
         },
         (err) => {
@@ -111,17 +122,16 @@ export class ListSprintComponent implements OnInit {
 
   chargeSprint(sprintId: any) {
     this.sprintId = sprintId;
-    for(let sprint of this.sprintData){
-      if(sprint._id == this.sprintId){
+    for (let sprint of this.sprintData) {
+      if (sprint._id == this.sprintId) {
         sprint.sprintOptions = !sprint.sprintOptions;
-        
-      }else{
+      } else {
         sprint.sprintOptions = false;
       }
     }
   }
 
-  onChangeSprint(e:any){
+  onChangeSprint(e: any) {
     this.chargeSprint(e);
   }
 
@@ -178,7 +188,11 @@ export class ListSprintComponent implements OnInit {
     if (result.isConfirmed) {
       this._sprintService.deleteSprint(this.sprintId).subscribe(
         (res) => {
-          this._utilitiesService.SweetAlert('Proceso Exitoso', 'Board eliminado con existo!', 'success');
+          this._utilitiesService.SweetAlert(
+            'Proceso Exitoso',
+            'Board eliminado con existo!',
+            'success'
+          );
           this._sprintService.updateListSprints(this.boardData._id);
         },
         (err) => {
@@ -189,23 +203,20 @@ export class ListSprintComponent implements OnInit {
   }
 
   //CHIPS METHODS
-  getMails(){
-    this._userService
-      .getAllEmails()
-      .subscribe(
-        (res) => {
-          for (let mail of res.user){
-            this.allMails.push(mail.email); 
-          }
-        },
-        (err) => {
-          console.log(err);
+  getMails() {
+    this._userService.getAllEmails().subscribe(
+      (res) => {
+        for (let mail of res.user) {
+          this.allMails.push(mail.email);
         }
-      ); 
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   add(event: MatChipInputEvent): void {
-
     const value = (event.value || '').trim().toLowerCase();
 
     // Add our mail
@@ -226,8 +237,10 @@ export class ListSprintComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    var index = this.emails.indexOf(event.option.viewValue.trim().toLowerCase());
-    if(index === -1){
+    var index = this.emails.indexOf(
+      event.option.viewValue.trim().toLowerCase()
+    );
+    if (index === -1) {
       this.emails.push(event.option.viewValue);
     }
     this.emailInput.nativeElement.value = '';
@@ -242,4 +255,43 @@ export class ListSprintComponent implements OnInit {
     );
   }
   //END CHIPS METHODS
+  updateBoard(description: string, name: string) {
+    const id = this.boardData._id;
+    if (!id || !name || !description) {
+      name = '';
+      description = '';
+      this.selectedFile = null;
+    } else {
+      const data = new FormData();
+      if (this.selectedFile != null) {
+        data.append('image', this.selectedFile, this.selectedFile.name);
+      }
+      data.append('_id', id);
+      data.append('name', name);
+      data.append('description', description);
+
+      this._boardService.updateBoard(data).subscribe(
+        (res) => {
+          this.chargeBoard();
+          //this._router.navigate(['/sprints/'+id]);
+          this._router.navigate(['/listBoard/']);
+          this._utilitiesService.openSnackBarSuccesfull(
+            'Successfull board updated.'
+          );
+          this.registerData = {};
+        },
+        (err) => {
+          console.log(err.error);
+          this._utilitiesService.openSnackBarError(err.error);
+        }
+      );
+    }
+  }
+
+  uploadImg(event: any) {
+    this.selectedFile = <File>event.target.files[0];
+    this.userImg = this._sanitizer.bypassSecurityTrustUrl(
+      URL.createObjectURL(this.selectedFile)
+    );
+  }
 }

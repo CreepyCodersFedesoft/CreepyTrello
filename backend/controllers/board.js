@@ -21,7 +21,7 @@ const createBoard = async (req, res) => {
     );
     boardImgUrl =
       url + "/uploads/" + moment().unix() + path.extname(req.files.image.path);
-    console.log(boardImgUrl);
+    //console.log(boardImgUrl);
   }
 
   const board = new Board({
@@ -47,6 +47,8 @@ const listBoard = async (req, res) => {
   return res.status(200).send({ board });
 };
 const updateBoard = async (req, res) => {
+
+  //console.log(req);
 
   //se valida que el id ObjectId sea valido y que los datos lleguen completos
   let validId = mongoose.Types.ObjectId.isValid(req.body._id);
@@ -96,6 +98,7 @@ const updateBoard = async (req, res) => {
     }
   }
   return res.status(200).send({ board });
+  
 };
 const getBoardById = async (req, res) => {
   const board = await Board.findById(req.params._id);
@@ -269,6 +272,8 @@ const dropListBoard = async (req, res) => {
   res.status(200).send("User deleted of board");
 };
 
+
+
 module.exports = {
   createBoard,
   listBoard,
@@ -277,5 +282,5 @@ module.exports = {
   addListBoard,
   dropListBoard,
   getBoardById,
-  getUsersOnBoard,
+  getUsersOnBoard
 };
