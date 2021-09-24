@@ -233,8 +233,7 @@ const addListBoard = async (req, res) => {
       .status(400)
       .send("Error: No board found or you are not the owner");
 
-  const doesBoardExist = await board.exists({ userList: req.body.newUserId });
-
+  const doesBoardExist = board.userList.includes(req.body.newUserId);
   if (doesBoardExist)
     return res.status(400).send("Error: User Already Invited");
 
@@ -244,7 +243,7 @@ const addListBoard = async (req, res) => {
 
   if (!board) return res.status(400).send("Error: error to update board");
 
-  res.status(200).send({ board });
+  res.status(200).send({ msg: 'Usuario/s Invitados Satisfactoriamente' });
 };
 const dropListBoard = async (req, res) => {
   //borrar a un usuario invitado del board
