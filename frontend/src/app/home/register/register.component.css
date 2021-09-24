@@ -1,9 +1,51 @@
+.banner {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 50px);
+  background-color: #f5f5f5;
+  background-size: cover;
+  background-position: center;
+  transition: all 0.1s ease-out;
+  animation: banner 28s infinite linear;
+}
+
+.banner-content a {
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid #fff;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+}
+.banner-content a:hover {
+  background-color: #fff;
+  color: #333;
+}
+@keyframes banner {
+  0% {
+    background-size: cover;
+    background-image: url("../../../assets/img/virtual.png");
+  }
+  50% {
+    background-size: cover;
+    background-image: url("../../../assets/img/virtual.png");
+  }
+  51% {
+    background-size: cover;
+    background-image: url("../../../assets/img/tablero2.jfif");
+  }
+  100% {
+    background-size: cover;
+    background-image: url("../../../assets/img/tablero2.jfif");
+  }
+}
+
 /*Comienza colores*/
+
 .main-wrapper .mat-stroked-button {
   -webkit-box-shadow: 5px 5px 6px -2px #7a7a7a;
   box-shadow: 5px 5px 6px -2px #7a7a7a;
   line-height: 54px;
-  background: #3A656F;
+  background: #3a656f;
   color: #fff;
 }
 /*Termina colores*/
@@ -55,7 +97,7 @@ body {
   -ms-transform: scale(1);
   z-index: 5;
   max-width: 30%;
-  margin-left: 35%;
+  margin-left: 8%;
   margin-top: 5%;
 }
 
