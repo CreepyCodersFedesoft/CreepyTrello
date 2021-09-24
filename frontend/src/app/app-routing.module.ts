@@ -18,7 +18,10 @@ import { TaskDetailsComponent } from './board/task/task-details/task-details.com
 import { InviteUserBoardComponent } from './board/invite-user-board/invite-user-board.component';
 import { LogTaskComponent } from './board/task/log-task/log-task.component';
 import { AuthGuard } from './guard/auth.guard';
-import { UpdateTaskComponent } from './board/task/update-task/update-task.component';
+import { UpdateTaskComponent } from "./board/task/update-task/update-task.component";
+import { HomeComponent } from "./home/home/home.component";
+
+
 
 const routes: Routes = [
   {
@@ -111,8 +114,12 @@ const routes: Routes = [
     component: LogTaskComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'home',
+    component: HomeComponent,
+    pathMatch: 'full',
+  },
 ];
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],

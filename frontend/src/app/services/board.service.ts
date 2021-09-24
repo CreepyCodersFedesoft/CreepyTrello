@@ -27,4 +27,8 @@ export class BoardService {
   deleteBoard(board: any){
     return this._http.delete<any>(this.env + 'board/deleteBoard/' + board._id);
   }
+
+  updateBoard(board: any) {
+    return this._http.put<any>(this.env + 'board/updateBoard', board);
+  }  
 }
