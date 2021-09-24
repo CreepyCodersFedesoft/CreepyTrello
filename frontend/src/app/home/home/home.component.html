@@ -1,0 +1,70 @@
+<div>
+  <link
+    href="http://fonts.googleapis.com/css?family=Grand+Hotel"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+    crossorigin="anonymous"
+  />
+  <nav class="navbar navbar-transparent navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="#">
+              <i class="bi bi-github"></i>
+              GitHub
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-envelope-o"></i>
+              Email
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main banner banner-content">
+    <div class="cover black" data-color="black"></div>
+
+    <div class="container">
+      <h1 class="logo cursive">Creepy Board</h1>
+      <div class="content">
+        <h4 class="motto">
+          Dale una fecha de finalización a tu proyecto y hazlo realidad.
+        </h4>
+        <div class="subscribe">
+          <h5 class="info-text">
+            Crea comunidad de trabajo o genera orden a tus propios proyectos.
+          </h5>
+          <div class="row text-center">
+            <button type="submit" class="boton" [routerLink]="['/register/']">
+              Crear Cuenta
+            </button>
+          </div>
+        </div>
+        <a [routerLink]="['/login/']"
+          ><div class="text-center cuenta linka">Ya tienes cuenta!</div></a
+        >
+      </div>
+    </div>
+    <div class="footer">
+      <div class="container text-center foot">
+        &copy; Diseñada por Creepy Coders 2021
+      </div>
+    </div>
+  </div>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+    crossorigin="anonymous"
+  ></script>
+</div>

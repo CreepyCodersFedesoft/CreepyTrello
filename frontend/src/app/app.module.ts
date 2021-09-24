@@ -67,6 +67,7 @@ import { LogTaskComponent } from './board/task/log-task/log-task.component';
 import { MatChipsModule } from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { UpdateTaskComponent } from './board/task/update-task/update-task.component';
+import { HomeComponent } from './home/home/home.component';
 
 
 
@@ -96,6 +97,7 @@ import { UpdateTaskComponent } from './board/task/update-task/update-task.compon
     UpdateUserAdminComponent,
     LogTaskComponent,
     UpdateTaskComponent,
+    HomeComponent,
 
 
   ],
