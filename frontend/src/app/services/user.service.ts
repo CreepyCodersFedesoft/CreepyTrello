@@ -90,6 +90,10 @@ export class UserService {
     return this._http.get<any>(this.env + 'user/getUserById/' + id);
   }
 
+  getUserByEmail(mail: String){
+    return this._http.get<any>(this.env + 'user/getUserByEmail/' + mail);
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');

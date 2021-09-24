@@ -321,6 +321,14 @@ const getUserById = async (req, res) => {
   return res.status(200).send({ user });
 };
 
+const getUserByEmail = async (req, res) => {
+  if (!req.params["email"]) return res.status(400).send("Incomplete data");
+
+  const user = await User.findOne({ email: req.params["email"] });
+  if (!user || user.length == 0) return res.status(400).send("No user found.");
+  return res.status(200).send({ user });
+};
+
 const activateUser = async (req, res) => {
   let mail = req.params["email"];
 
@@ -355,4 +363,5 @@ module.exports = {
   getUserById,
   uptdateUserByAdmin,
   getNameAndImage,
+  getUserByEmail,
 };

@@ -12,6 +12,7 @@ router.post('/createAdmin', mult, Upload, auth, validateUser, admin,   UserContr
 router.post('/login', UserController.login);
 router.get('/listUser/:name?', auth, validateUser, UserController.listUser);
 router.get('/getUserById/:_id', auth, admin, validateUser, UserController.getUserById);
+router.get('/getUserByEmail/:email',  auth, admin, validateUser, UserController.getUserByEmail);
 router.get('/listUserAll/:name?', auth, validateUser, UserController.listUserAll);
 router.get('/activateUser/:email?',  UserController.activateUser);
 router.get('/getRole/:email?', auth, validateUser, UserController.getRole);

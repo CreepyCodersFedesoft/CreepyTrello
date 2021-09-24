@@ -219,6 +219,7 @@ const deleteBoard = async (req, res) => {
 };
 const addListBoard = async (req, res) => {
   //añade un usuario invitado al board
+  console.log(req.body);
   if (!req.body._id || !req.body.newUserId)
     return res.status(400).send("Error: empty data");
 
@@ -232,7 +233,8 @@ const addListBoard = async (req, res) => {
       .status(400)
       .send("Error: No board found or you are not the owner");
 
-  const doesBoardExist = await Board.exists({ userList: req.body.newUserId });
+  const doesBoardExist = await board.exists({ userList: req.body.newUserId });
+
   if (doesBoardExist)
     return res.status(400).send("Error: User Already Invited");
 
