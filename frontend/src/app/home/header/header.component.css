@@ -67,3 +67,11 @@ mat-form-field {
   width: 300px;
   padding: 6px;
 }
+
+.img{
+  position: absolute;
+  top: -40px;
+  width: 200px;
+  height: 159px;
+  padding: 0px 10px 10px 10px;
+}
