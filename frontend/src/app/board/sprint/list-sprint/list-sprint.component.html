@@ -121,6 +121,20 @@
             </button>
           <!--FIN chips-->
           </mat-tab>
+          <mat-tab label="Usuario Invitados">
+            <div>
+              <div class="row py-2 w-100" *ngFor="let userInvited of usersOnBoard">
+                <div class="col-md-4">
+                  <img class="img-fluid imgInvited" 
+                    [src]="userInvited.userImg != '' ? userInvited.userImg: '../../../../assets/img/userExample.png'" 
+                  >
+                </div>
+                <div class="col-md-8">
+                  <p class="fs-5">{{userInvited.name}}</p>
+                </div>
+              </div>              
+            </div>
+          </mat-tab>
           <mat-tab label="Actualizar Board">
             <div class="form">
               <mat-card class="card">
