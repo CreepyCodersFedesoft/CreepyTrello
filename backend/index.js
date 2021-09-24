@@ -26,6 +26,11 @@ app.use("/api/sendMail", SendMail);
 app.use('/templates', express.static('templates'));
 app.use("/api/sprint", Sprint);
 
+app.use(express.static("public")); //a diferencia de upload, aca no damos permiso de guardar cosas sino solo de usarlo
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "public/index.html"));
+});
 
 app.listen(
   process.env.PORT || 3000, () =>
