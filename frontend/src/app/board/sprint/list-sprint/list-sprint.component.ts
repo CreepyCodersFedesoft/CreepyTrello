@@ -37,6 +37,7 @@ export class ListSprintComponent implements OnInit {
   selectedFile: any;
   userImg: any = '';
   registerBoard: any;
+  usersOnBoard: any[];
 
   //CHIPS variables utilizadas en chips
   selectable = true;
@@ -69,6 +70,7 @@ export class ListSprintComponent implements OnInit {
     this.sprintId = null;
     this.boardId = null;
     this.message = '';
+    this.usersOnBoard = [];
 
     this.filteredEmails = this.emailCtrl.valueChanges.pipe(
       startWith(null),
@@ -80,9 +82,9 @@ export class ListSprintComponent implements OnInit {
 
   ngOnInit(): void {
     let now = new Date();
-
     this.chargeBoard();
     this.getMails();
+    this.chargeListUsers();
     this._sprintService.listSprints.subscribe((res) => {
       let anyArray: any[] = res.sprint;
       for (const i in anyArray) {
@@ -104,6 +106,18 @@ export class ListSprintComponent implements OnInit {
 
   ngOnChanges(entryId: string) {
     this.chargeSprint(entryId);
+  }
+
+  chargeListUsers(){
+    this._boardService.getUsersOnBoard(this._activeRoute.snapshot.params.boardId).subscribe(
+      (res) => {
+        console.log(res);
+        this.usersOnBoard = res.filteredList;
+      },
+      (err) => {
+
+      }
+    );
   }
 
   chargeBoard() {
