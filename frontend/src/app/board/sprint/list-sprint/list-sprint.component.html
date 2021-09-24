@@ -114,9 +114,12 @@
                 </mat-option>
               </mat-autocomplete>
             </mat-form-field>
-            <button mat-fab class="color-button">
+            <button mat-fab class="color-button"
+             (click)="mailAction(emailInput.value)"
+            >
               <mat-icon>supervisor_account</mat-icon>
             </button>
+          <!--FIN chips-->
           </mat-tab>
           <mat-tab label="Actualizar Board">
             <div class="form">
@@ -167,7 +170,7 @@
             </div>
           </mat-tab>
         </mat-tab-group>
-        <!--FIN chips-->
+
 
         <!--div  *ngIf="sprintId == null" >      
       <p class="fs-5 text-center p-4">

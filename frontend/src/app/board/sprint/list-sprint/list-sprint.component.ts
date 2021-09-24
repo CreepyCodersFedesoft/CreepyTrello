@@ -46,10 +46,12 @@ export class ListSprintComponent implements OnInit {
   filteredEmails: Observable<string[]>;
   emails: string[] = [];
   allMails: string[] = [];
+
+
   @ViewChild('emailInput') emailInput!: ElementRef<HTMLInputElement>;
+  dataMail: any;
   //End CHIPS
-  //Update form
-  @ViewChild('nameUpdate', {static: true}) nameUpdate!: ElementRef;
+
 
   //end Update Form
   constructor(
@@ -292,6 +294,47 @@ export class ListSprintComponent implements OnInit {
     this.selectedFile = <File>event.target.files[0];
     this.userImg = this._sanitizer.bypassSecurityTrustUrl(
       URL.createObjectURL(this.selectedFile)
+    );
+  }
+
+  mailAction(emailInput: any){
+
+    for (let email of this.emails){   
+
+      this._userService.getUserByEmail(email).subscribe(
+        (res) => {         
+          const user = res.user;
+          const idBoard = this.boardData._id
+          let data = {};
+          data = {_id:idBoard,newUserId:user._id}
+       
+          
+
+          this.createUserBoard(data, email);
+
+        },
+        (err) => {
+          console.log(err.error);
+          this._utilitiesService.openSnackBarError(err.error);
+        }
+      );
+
+
+    }
+
+  }
+
+  createUserBoard(data:any, email:string){
+    console.log(email);
+    console.log(data),
+    this._boardService.addListBoard(data).subscribe(
+      (res) => {
+        console.log(res);              
+      },
+      (err) => {
+        console.log(err.error);
+        this._utilitiesService.openSnackBarError(err.error);
+      }
     );
   }
 }
