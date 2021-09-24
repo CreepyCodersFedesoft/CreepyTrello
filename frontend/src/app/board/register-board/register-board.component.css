@@ -38,7 +38,7 @@ label {
 }
 
 .bgComponent {
-  width: 100%;
+  width: 70%;
   height: 100%;
   padding-bottom: 25%;
   background-repeat: no-repeat;
@@ -67,7 +67,7 @@ input#upload {
 
 
 .Iam {
-  margin-left: 1150px;
+  margin-left: 80%;
   margin-top: -300px;
   padding: 2em 5em;
   font: normal 40px/50px Montserrat, sans-serif;
@@ -78,14 +78,14 @@ input#upload {
   float: left;
   margin-right: 0.3em;
   font-family: Verdana, Geneva, sans-serif;
-  font-weight: 700;
+
 }
 .Iam b {
   float: left;
   overflow: hidden;
   position: relative;
   height: 50px;
-  top: 40px;
+  top: 49px;
 }
 .Iam .innerIam {
   display: inline-block;

@@ -1,7 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /* cambios scrollbar del sidebar */
 body::-webkit-scrollbar {
@@ -9,12 +15,13 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar:vertical {
-  width:8px;
+  width: 8px;
 }
 
-body::-webkit-scrollbar-button:increment,.sidebar::-webkit-scrollbar-button {
+body::-webkit-scrollbar-button:increment,
+.sidebar::-webkit-scrollbar-button {
   display: none;
-} 
+}
 
 body::-webkit-scrollbar:horizontal {
   height: 10px;
