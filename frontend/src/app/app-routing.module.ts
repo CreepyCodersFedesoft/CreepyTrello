@@ -19,6 +19,7 @@ import { InviteUserBoardComponent } from './board/invite-user-board/invite-user-
 import { LogTaskComponent } from './board/task/log-task/log-task.component';
 import { AuthGuard } from './guard/auth.guard';
 import { UpdateTaskComponent } from "./board/task/update-task/update-task.component";
+import { HomeComponent } from "./home/home/home.component";
 
 
 
@@ -113,6 +114,11 @@ const routes: Routes = [
   {
     path: 'listLogTask',
     component: LogTaskComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
     pathMatch: 'full',
   },
  
